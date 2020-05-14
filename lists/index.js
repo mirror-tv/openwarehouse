@@ -8,5 +8,10 @@ const initialiseData = require('./initial-data');
 //const { access } = require('./lists/Permission.js');
 
 
-const UsersSchema = require('./lists/Users.js');
-keystone.createList('User', UsersSchema);
+createSchema();
+function createSchema() {
+    const UsersSchema = require('./Users.js');
+    keystone.createList('User', UsersSchema);
+}
+
+module.exports = createSchema
