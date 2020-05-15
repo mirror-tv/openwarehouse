@@ -1,5 +1,5 @@
 const { access } = require('../helper/Permission.js');
-const { Text, Select, Checkbox } = require('@keystonejs/fields');
+const { Text, Select, Checkbox, Password } = require('@keystonejs/fields');
 //const { atTracking } = require('@keystonejs/list-plugins');
 
 const status_options = [
