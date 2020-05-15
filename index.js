@@ -4,7 +4,7 @@ const { Text, Checkbox, Password } = require('@keystonejs/fields');
 const { GraphQLApp } = require('@keystonejs/app-graphql');
 const { AdminUIApp } = require('@keystonejs/app-admin-ui');
 const initialiseData = require('./initial-data');
-const {DB_ACCOUNT, DB_PWD, SERVER_IP, DB_NAME}  = require('./config/config.js')
+const {DB_ACCOUNT, DB_PWD, SERVER_IP, DB_NAME}  = require('./configs/config.js')
 const { KnexAdapter: Adapter } = require('@keystonejs/adapter-knex');
 
 // Create schema from here
