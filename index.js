@@ -23,7 +23,7 @@ const keystone = new Keystone({
   //   maxAge: 1000 * 60 * 60 * 24 * 30, // 30 days
   //   sameSite: false,
   // },
-  cookieSecrects:"UJHFVM LKJG%^*PHJFW(LHRE2"
+  cookieSecret:"UJHFVM LKJG%^*PHJFW(LHRE2"
 });
 
 // Access control functions
