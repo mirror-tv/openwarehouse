@@ -1,10 +1,10 @@
 ## Initialize
 
 yarn must be installed in running machine, dependencies are defined inside.
-
 There's no need to install entire Keystone
 
 ## Run the following
+- `docker build` 
 
 - `yarn dev` to start a dev instance of Keystone5
 - `yarn create-tables` to create tables in an empty database, if the database contains tables generated previously, skip this step.
