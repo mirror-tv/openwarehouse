@@ -8,7 +8,7 @@ const {DB_ACCOUNT, DB_PWD, SERVER_IP, DB_NAME}  = require('./configs/config.js')
 const { KnexAdapter: Adapter } = require('@keystonejs/adapter-knex');
 
 // Create schema from here
-const createSchema = require('./lists/index.js')
+// const createSchema = require('./lists/index.js')
 
 const PROJECT_NAME = 'app2';
 const adapterConfig = { knexOptions: { connection: `postgresql://${DB_ACCOUNT}:${DB_PWD}@${SERVER_IP}/${DB_NAME}` } };
@@ -69,7 +69,7 @@ keystone.createList('User', {
   },
 });
 
-createSchema(); //if exists
+// createSchema(); //if exists
 
 const authStrategy = keystone.createAuthStrategy({
   type: PasswordAuthStrategy,
