@@ -14,7 +14,8 @@ RUN apk add --no-cache build-base python2 yarn && \
     chmod +x dumb-init
 
 ADD . /build
-RUN yarn install && yarn build && yarn cache clean
+RUN yarn install
+RUN yarn build && yarn cache clean
 
 # Runtime container
 FROM node:${NODE_VERSION}-alpine
