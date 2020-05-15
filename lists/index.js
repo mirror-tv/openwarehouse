@@ -4,7 +4,7 @@ const { Select, Text, Checkbox, Password, Relationship, Integer, DateTime, Float
 const { GraphQLApp } = require('@keystonejs/app-graphql');
 const { AdminUIApp } = require('@keystonejs/app-admin-ui');
 //const { atTracking } = require('@keystonejs/list-plugins');
-const initialiseData = require('./initial-data');
+// const initialiseData = require('./initial-data');
 //const { access } = require('./lists/Permission.js');
 
 
