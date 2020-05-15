@@ -18,6 +18,7 @@ const keystone = new Keystone({
   name: PROJECT_NAME,
   adapter: new Adapter(adapterConfig),
   onConnect: process.env.CREATE_TABLES !== 'true' && initialiseData,
+  cookieSecrects:"UJHFVM LKJG%^*PHJFW(LHRE2"
 });
 
 // Access control functions
