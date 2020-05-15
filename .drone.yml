@@ -1,5 +1,5 @@
 workspace:
-  path: /drone/openwarehouse
+  path: /openwarehouse
 pipeline:
   startSlack:
     image: plugins/slack
