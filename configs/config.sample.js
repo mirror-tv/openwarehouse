@@ -1,6 +1,6 @@
 module.exports = {
-    DB_ACCOUNT: "keystone_agent",
-    DB_PWD: "BeAStableKeystone",
-    SERVER_IP: "35.194.218.138",
-    DB_NAME: "keystone5"
+    DB_ACCOUNT: "db_acc",
+    DB_PWD: "password",
+    SERVER_IP: "db_ip",
+    DB_NAME: "db_name"
 }
