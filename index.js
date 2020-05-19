@@ -8,7 +8,7 @@ const {DB_ACCOUNT, DB_PWD, SERVER_IP, DB_NAME, COOKIE_SECRET}  = require('./conf
 const { KnexAdapter: Adapter } = require('@keystonejs/adapter-knex');
 
 // Create schema from here
-const createSchema = require('./lists/index.js')
+// const createSchema = require('./lists/index.js')
 
 const PROJECT_NAME = 'app2';
 const adapterConfig = { knexOptions: { connection: `postgresql://${DB_ACCOUNT}:${DB_PWD}@${SERVER_IP}/${DB_NAME}` } };
