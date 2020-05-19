@@ -17,6 +17,7 @@
     "create-tables": "cross-env CREATE_TABLES=true keystone create-tables"
   },
   "dependencies": {
+    "@google-cloud/storage": "^5.0.0",
     "@keystonejs/adapter-knex": "^10.0.0",
     "@keystonejs/app-admin-ui": "^6.0.0",
     "@keystonejs/app-graphql": "^5.1.7",
