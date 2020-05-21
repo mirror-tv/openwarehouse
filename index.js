@@ -4,8 +4,9 @@ const { Text, Checkbox, Password } = require('@keystonejs/fields');
 const { GraphQLApp } = require('@keystonejs/app-graphql');
 const { AdminUIApp } = require('@keystonejs/app-admin-ui');
 const initialiseData = require('./initial-data.js');
-const {DB_ACCOUNT, DB_PWD, SERVER_IP, DB_NAME, COOKIE_SECRET}  = require('./configs/config.js')
+const { DB_ACCOUNT, DB_PWD, SERVER_IP, DB_NAME, COOKIE_SECRET } = require('./configs/config.js')
 const { KnexAdapter: Adapter } = require('@keystonejs/adapter-knex');
+const Stars = require('./fields/Stars');
 
 // Create schema from here
 // const createSchema = require('./lists/index.js')
@@ -23,7 +24,7 @@ const keystone = new Keystone({
   //   maxAge: 1000 * 60 * 60 * 24 * 30, // 30 days
   //   sameSite: false,
   // },
-  cookieSecret:COOKIE_SECRET
+  cookieSecret: COOKIE_SECRET
 });
 
 // Access control functions
@@ -75,6 +76,12 @@ keystone.createList('User', {
   },
 });
 
+keystone.createList('Movie', {
+  fields: {
+    name: { type: Text },
+    rating: { type: Stars, starCount: 5 }
+  }
+});
 // createSchema(); //if exists
 
 const authStrategy = keystone.createAuthStrategy({
