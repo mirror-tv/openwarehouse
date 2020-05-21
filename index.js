@@ -5,7 +5,7 @@ const { KnexAdapter: Adapter } = require('@keystonejs/adapter-knex');
 const { PasswordAuthStrategy } = require('@keystonejs/auth-password');
 
 const { DB_ACCOUNT, DB_PWD, SERVER_IP, DB_NAME, COOKIE_SECRET } = require('./configs/config.js')
-const Lists = require('./lists');
+const lists = require('./lists');
 
 const applicationName = 'Corner Stone';
 const adapterConfig = { knexOptions: { connection: `postgresql://${DB_ACCOUNT}:${DB_PWD}@${SERVER_IP}/${DB_NAME}` } };
@@ -16,7 +16,9 @@ const keystone = new Keystone({
   cookieSecret: COOKIE_SECRET
 });
 
-Lists.createLists(keystone);
+for (var name in lists) {
+  keystone.createList(name, lists[name]);
+}
 
 const authStrategy = keystone.createAuthStrategy({
   type: PasswordAuthStrategy,
