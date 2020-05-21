@@ -1,3 +1,5 @@
+/* This configuration follows YAML naming style. */
+
 module.exports = {
     main: {
         applicationName: "applicationName",
