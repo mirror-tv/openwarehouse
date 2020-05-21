@@ -16,6 +16,7 @@ RUN apk add --no-cache build-base python2 yarn && \
 ADD . /build
 RUN yarn install
 RUN yarn build && yarn cache clean
+RUN yarn migrate
 
 # Runtime container
 FROM node:${NODE_VERSION}-alpine
