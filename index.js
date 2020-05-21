@@ -4,7 +4,7 @@ const { AdminUIApp } = require('@keystonejs/app-admin-ui');
 const { KnexAdapter: Adapter } = require('@keystonejs/adapter-knex');
 const { PasswordAuthStrategy } = require('@keystonejs/auth-password');
 
-const { main, database, session } = require('./configs/config.js')
+const { main, database, session, redis: redisConf } = require('./configs/config.js')
 const lists = require('./lists');
 
 const redis = require('redis');
@@ -19,13 +19,13 @@ const keystone = new Keystone({
   cookieSecret: session.cookieSecret,
   sessionStore: new RedisStore({
     client: redis.createClient({
-      host: session.redis.host,
-      port: session.redis.port,
-      auth_pass: session.redis.authPass,
-      prefix: session.redis.prefix,
+      host: redisConf.host,
+      port: redisConf.port,
+      auth_pass: redisConf.authPass,
+      prefix: redisConf.prefix,
     }),
     options: {
-      ttl: session.redis.ttl
+      ttl: session.ttl
     }
   })
 });

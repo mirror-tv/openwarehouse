@@ -11,12 +11,12 @@ module.exports = {
     },
     session: {
         cookieSecret: "cookieSecret",
-        redis: {
-            host: "host",
-            port: "port",
-            ttl: 3600,
-            authPass: "authPass",
-            prefix: "sess"
-        }
+        ttl: 3600
+    },
+    redis: {
+        host: "host",
+        port: "port",
+        authPass: "authPass",
+        prefix: "ks-sess"
     }
 }
