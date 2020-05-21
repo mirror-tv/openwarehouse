@@ -22,7 +22,7 @@ const keystone = new Keystone({
       host: redisConf.host,
       port: redisConf.port,
       auth_pass: redisConf.authPass,
-      prefix: redisConf.prefix,
+      prefix: session.prefix,
     }),
     options: {
       ttl: session.ttl
