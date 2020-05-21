@@ -4,16 +4,30 @@ const { AdminUIApp } = require('@keystonejs/app-admin-ui');
 const { KnexAdapter: Adapter } = require('@keystonejs/adapter-knex');
 const { PasswordAuthStrategy } = require('@keystonejs/auth-password');
 
-const { DB_ACCOUNT, DB_PWD, SERVER_IP, DB_NAME, COOKIE_SECRET } = require('./configs/config.js')
+const { main, database, session } = require('./configs/config.js')
 const lists = require('./lists');
 
-const applicationName = 'Corner Stone';
-const adapterConfig = { knexOptions: { connection: `postgresql://${DB_ACCOUNT}:${DB_PWD}@${SERVER_IP}/${DB_NAME}` } };
+const redis = require('redis');
+const expressSession = require('express-session');
+const RedisStore = require('connect-redis')(expressSession);
+
+const adapterConfig = { knexOptions: { connection: `postgresql://${database.acc}:${database.pass}@${database.host}/${database.db}` } };
 
 const keystone = new Keystone({
-  name: applicationName,
+  name: main.applicationName,
   adapter: new Adapter(adapterConfig),
-  cookieSecret: COOKIE_SECRET
+  cookieSecret: session.cookieSecret,
+  sessionStore: new RedisStore({
+    client: redis.createClient({
+      host: session.redis.host,
+      port: session.redis.port,
+      auth_pass: session.redis.authPass,
+      prefix: session.redis.prefix,
+    }),
+    options: {
+      ttl: session.redis.ttl
+    }
+  })
 });
 
 for (var name in lists) {
@@ -22,7 +36,7 @@ for (var name in lists) {
 
 const authStrategy = keystone.createAuthStrategy({
   type: PasswordAuthStrategy,
-  list: 'User',
+  list: main.authList,
 });
 
 module.exports = {
