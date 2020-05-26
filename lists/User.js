@@ -1,4 +1,4 @@
-const { Text, Checkbox, Password } = require('@keystonejs/fields');
+const { Text, Checkbox, Password, DateTime } = require('@keystonejs/fields');
 
 
 const userIsAdmin = ({ authentication: { item: user } }) => Boolean(user && user.isAdmin);
@@ -37,6 +37,14 @@ module.exports = {
         },
         password: {
             type: Password,
+        },
+
+        role:{ 
+            type: Text
+        },
+
+        updatedAt:{ 
+            type: DateTime
         },
     },
     // List-level access controls

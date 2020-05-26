@@ -1,5 +1,5 @@
 const { File } = require('@keystonejs/fields');
-const GCSFile = require('../fields/GCSFile');
+const { GCSFile } = require('../fields/GCSFile');
 
 module.exports = {
     fields: {

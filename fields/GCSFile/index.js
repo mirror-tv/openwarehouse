@@ -1,7 +1,5 @@
 const { GCSFile, KnexIntegerInterface } = require('./Implementation');
-
-// We're going to extend the integer field to store
-// a number between 1-5 and represent this as a rating
+const { CloudinaryAdapter } = require('@keystonejs/file-adapters');
 const { File } = require('@keystonejs/fields');
 
 module.exports = {

@@ -1,25 +1,20 @@
 import {keystone} from "../../index";
 
 const { File } = require('@keystonejs/fields');
-// const fs = require('fs');
 const CloudStorageAdapter = require('keystone-storage-adapter-cloud-storage')
-const keyFilename = require('./configs/gcskeyfile')
+// const keyFilename = require('./configs/gcskeyfile')
+const keyFilename = './gcskeyfile.json'
 const {KnexAdapter} = require('@keystonejs/adapter-knex')
-
-// options = {"keyFilename": keyFilename}
-
-var cloudStorageAdapter = CloudStorageAdapter({keyFilename:keyFilename})
+require('dotenv').load();
+const cloudStorageAdapter = CloudStorageAdapter({keyFilename:keyFilename});
 
 class GCSFile extends File.implementation {
-  constructor(path) {
+  constructor(keystone, cloudStorageAdapter) {
     super(...arguments);
     this.keystone = keystone;
     this.fileAdapter = cloudStorageAdapter;
 
-
   }
-
-
 
   extendAdminMeta(meta) {
     return { ...meta };
@@ -27,8 +22,7 @@ class GCSFile extends File.implementation {
 }
 
 
-
 module.exports = {
   GCSFile,
-  KnexInterface,
+  // KnexAdapter,
 };
