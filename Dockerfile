@@ -7,7 +7,7 @@ ARG DUMB_INIT_VERSION=1.2.2
 FROM node:${NODE_VERSION}-alpine AS build
 ARG DUMB_INIT_VERSION
 RUN apk add tzdata
-RUN echo "Asia/Taipei" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata
+#RUN echo "Asia/Taipei" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata
 WORKDIR /build
 
 RUN apk add --no-cache build-base python2 yarn && \
