@@ -3,7 +3,8 @@
 module.exports = {
     main: {
         applicationName: "applicationName",
-        authList: "authList"
+        authList: "authList",
+        dropDatabase: true
     },
     database: {
         host: "host",
