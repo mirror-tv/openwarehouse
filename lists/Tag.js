@@ -38,14 +38,6 @@ module.exports = {
             type: Text
         },
         //og_image: { label: 'FB分享縮圖', type: Types.ImageRelationship, ref: 'Image' },
-        isAudioSiteOnly: {
-            label: '僅用於語音網站',
-            type: Checkbox
-        },
-        isFeatured: {
-            label: '置頂',
-            type: Checkbox
-        },
         css: {
             label: 'CSS',
             type: Text,
@@ -55,6 +47,14 @@ module.exports = {
             label: 'JavaScript',
             type: Text,
             isMultiline: true
+        },
+        isAudioSiteOnly: {
+            label: '僅用於語音網站',
+            type: Checkbox
+        },
+        isFeatured: {
+            label: '置頂',
+            type: Checkbox
         },
     },
     plugins: [

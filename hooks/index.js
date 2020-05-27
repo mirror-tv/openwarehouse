@@ -3,12 +3,12 @@ export default {
         {
             label: 'Content',
             path: 'content',
-            children: ['PostCategory', 'Section', 'Tag', 'Topic'],
+            children: ['PostCategory', 'Section', 'Tag', 'Topic', 'Post'],
         },
         {
             label: 'People',
             path: 'people',
-            children: ['User'],
+            children: ['User', 'Contact'],
         },
     ]
 };
