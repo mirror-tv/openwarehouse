@@ -5,18 +5,26 @@ const { KnexAdapter: Adapter } = require('@keystonejs/adapter-knex');
 const { PasswordAuthStrategy } = require('@keystonejs/auth-password');
 
 const { main, database, session, redis: redisConf } = require('./configs/config.js')
+const createDefaultAdmin = require('./helpers/createDefaultAdmin')
 const lists = require('./lists');
 
 const redis = require('redis');
 const expressSession = require('express-session');
 const RedisStore = require('connect-redis')(expressSession);
 
-const adapterConfig = { knexOptions: { connection: `postgresql://${database.acc}:${database.pass}@${database.host}/${database.db}` } };
+const adapterConfig = {
+  dropDatabase: main.dropDatabase,
+  knexOptions: {
+    client: 'postgres',
+    connection: `postgresql://${database.acc}:${database.pass}@${database.host}/${database.db}`,
+  }
+};
 
 const keystone = new Keystone({
   name: main.applicationName,
   adapter: new Adapter(adapterConfig),
   cookieSecret: session.cookieSecret,
+  onConnect: createDefaultAdmin,
   sessionStore: new RedisStore({
     client: redis.createClient({
       host: redisConf.host,
