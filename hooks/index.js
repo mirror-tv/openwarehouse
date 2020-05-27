@@ -2,12 +2,14 @@ export default {
     pages: () => [
         {
             label: 'Content',
-            path: 'content',
-            children: ['PostCategory', 'Section', 'Tag', 'Topic', 'Post'],
+            children: ['Post', 'Video', 'Audio', 'Image'],
+        },
+        {
+            label: 'Ｃlassification',
+            children: ['Topic', 'Section', 'PostCategory', 'Tag'],
         },
         {
             label: 'People',
-            path: 'people',
             children: ['User', 'Contact'],
         },
     ]

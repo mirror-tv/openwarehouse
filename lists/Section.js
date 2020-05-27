@@ -79,5 +79,5 @@ module.exports = {
     plugins: [
         atTracking(),
         byTracking(),
-    ]
+    ],
 }

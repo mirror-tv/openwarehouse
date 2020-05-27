@@ -30,7 +30,7 @@ module.exports = {
         publishedDate: {
             label: '發佈日期',
             type: DateTimeUtc,
-            defaultValue: Date.now,
+            defaultValue: new Date(),
             dependsOn: {
                 '$or': {
                     state: [
@@ -92,7 +92,11 @@ module.exports = {
             label: '作者（其他）',
             type: Text
         },
-        //heroVideo: { label: 'Leading Video', type: Types.Relationship, ref: 'Video' },
+        heroVideo: {
+            label: 'Leading Video',
+            type: Relationship,
+            ref: 'Video'
+        },
         //heroImage: { label: '首圖', type: Types.ImageRelationship, ref: 'Image' },
         heroCaption: {
             label: '首圖圖說',
@@ -148,7 +152,7 @@ module.exports = {
         },
         createTime: {
             type: DateTimeUtc,
-            defaultValue: Date.now
+            defaultValue: new Date()
         },
         isFeatured: {
             label: '置頂',
@@ -182,5 +186,9 @@ module.exports = {
     plugins: [
         atTracking(),
         byTracking(),
-    ]
+    ],
+    adminConfig: {
+        defaultColumns: 'title, name, state|20%, author|20%, categories|20%, publishedDate|20%',
+        defaultSort: '-publishedDate',
+    },
 }

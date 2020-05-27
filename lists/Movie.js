@@ -5,5 +5,5 @@ module.exports = {
     fields: {
         name: { type: Text },
         rating: { type: Stars, starCount: 5 }
-    }
+    },
 }

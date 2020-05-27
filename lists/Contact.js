@@ -40,5 +40,8 @@ module.exports = {
     plugins: [
         atTracking(),
         byTracking(),
-    ]
+    ],
+    adminConfig: {
+        defaultColumns: 'name, email, homepage'
+    },
 }

@@ -30,7 +30,14 @@ module.exports = {
             ref: 'Section',
             many: true
         },
-        //heroVideo: { label: 'Leading Video', type: Types.Relationship, ref: 'Video', dependsOn: { leading: 'video' } },
+        heroVideo: {
+            label: 'Leading Video',
+            type: Relationship,
+            ref: 'Video',
+            dependsOn: {
+                leading: 'video'
+            }
+        },
         //heroImage: { label: '首圖', type: Types.ImageRelationship, ref: 'Image', dependsOn: { leading: 'image' } },
         //heroImageSize: { label: '首圖尺寸', type: Select, options: 'extend, normal, small', default: 'normal', dependsOn: { heroImage: { '$regex': '.+/i' } } },
         og_title: {
@@ -104,5 +111,5 @@ module.exports = {
     plugins: [
         atTracking(),
         byTracking(),
-    ]
+    ],
 }
