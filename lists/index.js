@@ -5,4 +5,5 @@ module.exports = {
     Section: require('./Section'),
     Topic: require('./Topic'),
     Tag: require('./Tag'),
+    Image: require('./Image')
 }

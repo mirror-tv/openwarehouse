@@ -1,7 +1,5 @@
-const { GCSFile, KnexIntegerInterface } = require('./Implementation');
+const { GCSFile, KnexInterface } = require('./Implementation');
 
-// We're going to extend the integer field to store
-// a number between 1-5 and represent this as a rating
 const { File } = require('@keystonejs/fields');
 
 module.exports = {
@@ -15,6 +13,6 @@ module.exports = {
     },
     adapters: {
         // mongoose: MongoIntegerInterface,
-        knex: KnexIntegerInterface,
+        knex: KnexInterface,
     },
 };
