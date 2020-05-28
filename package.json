@@ -32,5 +32,8 @@
     "express-session": "^1.17.1",
     "keystone-storage-adapter-cloud-storage": "^0.0.6",
     "redis": "^3.0.2"
+  },
+  "devDependencies": {
+    "@keystonejs/build-field-types": "^5.2.7"
   }
 }

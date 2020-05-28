@@ -1,5 +1,5 @@
-const { File, Text, DateTime, Checkbox, Integer } = require('@keystonejs/fields');
-const GCSFile = require('../fields/GCSFile');
+const { File, Text, DateTime, Checkbox, Integer, Relationship } = require('@keystonejs/fields');
+// const GCSFile = require('../fields/GCSFile');
 // const resizeImage =
 
 module.exports = {
@@ -9,13 +9,10 @@ module.exports = {
         copyright:{type:Text},
         createTime:{type:DateTime},
         description:{type:Text},
-        image:{type:GCSFile},
+        image:{type:Relationship, ref:'GCSFile.id'}, // 這行會出問題
         keywords:{type:Text},
         sale:{type:Checkbox},
-        // tags:{type:},
+        // tags:{type:}, //list?
         topics:{type: Text},
-
-
     }
-
 }

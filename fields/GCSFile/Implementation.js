@@ -1,14 +1,7 @@
-// import {keystone} from "../../index";
-
-const { File } = require('@keystonejs/fields');
-// const fs = require('fs');
-// const CloudStorageAdapter = require('keystone-storage-adapter-cloud-storage')
+const { File, Text, Integer } = require('@keystonejs/fields');
 const GCSAdapter = require('../../lib/GCSAdapter')
-// const keyFilename = require('../../configs/gcskeyfile')
-const {KnexFileInterface} = require('@keystonejs/adapter-knex')
 
-// options = {"keyFilename": keyFilename}
-
+const {KnexAdapter} = require('@keystonejs/adapter-knex')
 
 class GCSFile extends File.implementation {
   constructor(path) {
@@ -18,7 +11,15 @@ class GCSFile extends File.implementation {
 
   }
 
-
+  // addToTableSchema(table){
+  //   {filename: {type:Text},
+  //     filetype: {type:Text},
+  //       gcsBucket: {type:Text},
+  //       gcsDir:{type:Text},
+  //       size: {type:Integer},
+  //       url: {type:Text},
+  //   }
+  // }
 
   extendAdminMeta(meta) {
     return { ...meta };
@@ -29,5 +30,5 @@ class GCSFile extends File.implementation {
 
 module.exports = {
   GCSFile,
-  KnexFileInterface,
+  KnexAdapter,
 };
