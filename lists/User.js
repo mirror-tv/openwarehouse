@@ -51,8 +51,8 @@ module.exports = {
         byTracking(),
     ],
     access: {
-        read: access.userIsAdminOrOwner,
-        update: access.userIsAdminOrOwner,
+        read: access.userIsAdminOrModerator,
+        update: access.userIsAdminOrModeratorOrOwner,
         create: access.userIsAdminOrModerator,
         delete: access.userIsAdminOrModerator,
         auth: true,

@@ -13,10 +13,11 @@ const userOwnsItem = ({ authentication: { item: user } }) => {
     return { id: user.id };
 };
 
-const userIsAdminOrOwner = auth => {
+const userIsAdminOrModeratorOrOwner = auth => {
     const isAdmin = access.userIsAdmin(auth);
+    const isModerator = access.userIsModerator(auth);
     const isOwner = access.userOwnsItem(auth);
-    return isAdmin ? isAdmin : isOwner;
+    return isAdmin || isModerator || isOwner;
 };
 
 const userIsAdminOrModerator = auth => {
@@ -25,6 +26,6 @@ const userIsAdminOrModerator = auth => {
     return isAdmin ? isAdmin : isModerator;
 };
 
-const access = { userIsAdmin, userIsModerator, userIsEditor, userIsAuthor, userIsContributor, userIsAdminOrOwner, userIsAdminOrModerator, userOwnsItem };
+const access = { userIsAdmin, userIsModerator, userIsEditor, userIsAuthor, userIsContributor, userIsAdminOrModeratorOrOwner, userIsAdminOrModerator, userOwnsItem };
 
 module.exports = access
