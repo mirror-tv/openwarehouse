@@ -57,6 +57,6 @@ module.exports = {
         byTracking(),
     ],
     adminConfig: {
-        defaultColumns: "title, name",
+        defaultColumns: 'title, name',
     },
 }

@@ -5,9 +5,10 @@ module.exports = {
     Audio: require('./Audio'),
     Topic: require('./Topic'),
     Section: require('./Section'),
-    PostCategory: require('./PostCategory'),
+    Category: require('./Category'),
     Tag: require('./Tag'),
     Contact: require('./Contact'),
     User: require('./User'),
+    Company: require('./Company'),
     Movie: require('./Movie'),
 }

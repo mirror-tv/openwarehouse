@@ -1,4 +1,4 @@
-const { Text, Url, Location } = require('@keystonejs/fields');
+const { Text, Url } = require('@keystonejs/fields');
 const { Markdown } = require('@keystonejs/fields-markdown');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
 

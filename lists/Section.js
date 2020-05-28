@@ -21,13 +21,13 @@ module.exports = {
         categories: {
             label: '分類',
             type: Relationship,
-            ref: 'PostCategory',
+            ref: 'Category',
             many: true
         },
         extend_cats: {
             label: '其他分類',
             type: Relationship,
-            ref: 'PostCategory',
+            ref: 'Category',
             many: true
         },
         //heroImage: { label: '首圖', type: Types.ImageRelationship, ref: 'Image' },

@@ -52,11 +52,11 @@ module.exports = {
   apps: [
     new GraphQLApp({
       enableDefaultRoute: true,
-      authStrategy,
+      //authStrategy,
     }),
     new AdminUIApp({
       enableDefaultRoute: true,
-      hooks: require.resolve('./hooks'),
+      hooks: require.resolve('./hook'),
       authStrategy,
     }),
   ],

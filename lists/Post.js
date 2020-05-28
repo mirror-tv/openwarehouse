@@ -49,7 +49,7 @@ module.exports = {
         categories: {
             label: '分類',
             type: Relationship,
-            ref: 'PostCategory',
+            ref: 'Category',
             many: true
         },
         writers: {

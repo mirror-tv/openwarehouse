@@ -17,7 +17,7 @@ module.exports = {
         categories: {
             label: '分類',
             type: Relationship,
-            ref: 'PostCategory',
+            ref: 'Category',
             many: true
         },
         //coverPhoto: { label: '首圖', type: Types.ImageRelationship, ref: 'Image' },

@@ -5,12 +5,12 @@ export default {
             children: ['Post', 'Image', 'Video', 'Audio'],
         },
         {
-            label: 'Ｃlassification',
-            children: ['Topic', 'Section', 'PostCategory', 'Tag'],
+            label: 'Class',
+            children: ['Topic', 'Section', 'Category', 'Tag'],
         },
         {
             label: 'People',
-            children: ['User', 'Contact'],
+            children: ['User', 'Contact', 'Company'],
         },
     ]
 };
