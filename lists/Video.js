@@ -31,15 +31,9 @@ module.exports = {
             type: Text,
             isMultiline: true
         },
-        /*video: {
-            type: Types.GcsFile,
-            initial: true,
-            autoCleanup: true,
-            datePrefix: 'YYYYMMDDHHmmss',
-            bucket: bucket,
-            destination: 'assets/videos/',
-            publicRead: true,
-        },*/
+        video:{
+            type:Relationship, ref:'GCSFile', many:false
+        },
         tags: {
             label: '標籤',
             type: Relationship,
