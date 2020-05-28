@@ -1,11 +1,15 @@
-const { Text, Checkbox, Select, Relationship } = require('@keystonejs/fields');
+const { Text, Select, Relationship, File } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
-const access = require('../helpers/access');
+const { GCSAdapter } = require('../lib/GCSAdapter');
 
 module.exports = {
     fields: {
-        title: {
-            label: '標題',
+        file: {
+            type: File,
+            adapter: GCSAdapter,
+            isRequired: true,
+        },
+        description: {
             type: Text
         },
         copyright: {

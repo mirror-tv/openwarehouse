@@ -4,6 +4,11 @@ const access = require('../helpers/access');
 
 module.exports = {
     fields: {
+        file: {
+            type: File,
+            adapter: GCSAdapter,
+            isRequired: true,
+        },
         title: {
             label: '標題',
             type: Text,
