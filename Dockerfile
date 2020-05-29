@@ -6,7 +6,6 @@ ARG DUMB_INIT_VERSION=1.2.2
 # Build container
 FROM node:${NODE_VERSION}-alpine AS build
 ARG DUMB_INIT_VERSION
-
 WORKDIR /build
 
 RUN apk add --no-cache build-base python2 yarn && \
