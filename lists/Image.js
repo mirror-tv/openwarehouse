@@ -2,12 +2,13 @@ const { Text, Select, Relationship, File } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
 const { GCSAdapter } = require('../lib/GCSAdapter');
 const access = require('../helpers/access');
+const gcsDir = 'assets/images/'
 
 module.exports = {
     fields: {
         file: {
             type: File,
-            adapter: GCSAdapter,
+            adapter: new GCSAdapter(gcsDir=gcsDir),
             isRequired: true,
         },
         description: {
