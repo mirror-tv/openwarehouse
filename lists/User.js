@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const { Text, Checkbox, Password, DateTime } = require('@keystonejs/fields');
 
 
@@ -20,11 +19,6 @@ const userIsAdminOrOwner = auth => {
 };
 
 const access = { userIsAdmin, userOwnsItem, userIsAdminOrOwner };
-=======
-const { Text, Checkbox, Password, Select, Relationship } = require('@keystonejs/fields');
-const { atTracking, byTracking } = require('@keystonejs/list-plugins');
-const access = require('../helpers/access');
->>>>>>> 17cd2bae38627c9f0ff608dd5500451f1af81e21
 
 module.exports = {
     fields: {
