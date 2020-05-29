@@ -1,5 +1,6 @@
-const { Text, Relationship } = require('@keystonejs/fields');
+const { Text, Relationship, File } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
+const { GCSAdapter } = require('../lib/GCSAdapter');
 const access = require('../helpers/access');
 
 module.exports = {

@@ -1,6 +1,7 @@
 const { Text, Checkbox, Select, Relationship, File, DateTime } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
 const { GCSAdapter } = require('../lib/GCSAdapter');
+const access = require('../helpers/access');
 
 module.exports = {
     fields: {
@@ -36,9 +37,9 @@ module.exports = {
             type: Text,
             isMultiline: true
         },
-        video:{
-            type:Relationship, ref:'GCSFile', many:false
-        },
+        // video:{
+        //     type:Relationship, ref:'GCSFile', many:false
+        // },
         tags: {
             label: '標籤',
             type: Relationship,
