@@ -69,7 +69,7 @@ module.exports = {
         }
     },
     adminConfig: {
-        defaultColumns: 'name, email, role, isAdmin',
+        defaultColumns: 'name, email, role, isAdmin, createdAt',
         defaultSort: '-createdAt'
     },
 }

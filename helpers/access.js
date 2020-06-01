@@ -6,15 +6,12 @@ const userIsContributor = ({ authentication: { item: user } }) => Boolean(user &
 const userIsNotContributor = ({ authentication: { item: user } }) => Boolean(user && user.role != 'contributor');
 
 const userOwnsItem = ({ authentication: { item: user }, listKey }) => {
-    if (!user) {
-        return false;
-    }
+    if (!user) return false;
 
-    if (listKey == 'User') {
+    if (listKey == 'User')
         return { id: user.id };
-    }
 
-    return { author: { id: user.id } };
+    return { createdBy: { id: user.id } };
 };
 
 const userIsAdminOrModeratorOrOwner = auth => {

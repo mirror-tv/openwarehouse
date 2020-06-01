@@ -191,11 +191,7 @@ module.exports = {
         isAdBlocked: {
             label: 'Google 廣告違規',
             type: Checkbox
-        },
-        author: {
-            type: AuthedRelationship,
-            ref: 'User',
-        },
+        }
     },
     plugins: [
         atTracking(),
@@ -207,7 +203,7 @@ module.exports = {
         delete: access.userIsAdminOrModeratorOrOwner,
     },
     adminConfig: {
-        defaultColumns: 'slug, title, state, categories, author, publishTime',
+        defaultColumns: 'slug, title, state, categories, createdBy, publishTime',
         defaultSort: '-publishTime',
     },
 }
