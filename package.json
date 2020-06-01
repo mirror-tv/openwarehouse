@@ -24,6 +24,7 @@
     "@keystonejs/app-graphql": "^5.1.7",
     "@keystonejs/auth-password": "^5.1.7",
     "@keystonejs/fields": "^10.0.0",
+    "@keystonejs/fields-authed-relationship": "^1.0.5",
     "@keystonejs/fields-datetime-utc": "^6.0.0",
     "@keystonejs/fields-markdown": "^5.1.11",
     "@keystonejs/file-adapters": "^6.0.2",

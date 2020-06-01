@@ -3,14 +3,18 @@ const userIsModerator = ({ authentication: { item: user } }) => Boolean(user && 
 const userIsEditor = ({ authentication: { item: user } }) => Boolean(user && user.role == 'editor');
 const userIsAuthor = ({ authentication: { item: user } }) => Boolean(user && user.role == 'author');
 const userIsContributor = ({ authentication: { item: user } }) => Boolean(user && user.role == 'contributor');
+const userIsNotContributor = ({ authentication: { item: user } }) => Boolean(user && user.role != 'contributor');
 
-const userOwnsItem = ({ authentication: { item: user } }) => {
+const userOwnsItem = ({ authentication: { item: user }, listKey }) => {
     if (!user) {
         return false;
     }
-    // Instead of a boolean, you can return a GraphQL query:
-    // https://www.keystonejs.com/api/access-control#graphqlwhere
-    return { id: user.id };
+
+    if (listKey == 'User') {
+        return { id: user.id };
+    }
+
+    return { author: { id: user.id } };
 };
 
 const userIsAdminOrModeratorOrOwner = auth => {
@@ -26,6 +30,6 @@ const userIsAdminOrModerator = auth => {
     return isAdmin ? isAdmin : isModerator;
 };
 
-const access = { userIsAdmin, userIsModerator, userIsEditor, userIsAuthor, userIsContributor, userIsAdminOrModeratorOrOwner, userIsAdminOrModerator, userOwnsItem };
+const access = { userIsAdmin, userIsModerator, userIsEditor, userIsAuthor, userIsContributor, userIsNotContributor, userIsAdminOrModeratorOrOwner, userIsAdminOrModerator, userOwnsItem };
 
 module.exports = access
