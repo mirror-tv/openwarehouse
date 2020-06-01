@@ -1,5 +1,6 @@
-const { Text, Checkbox, Password, DateTime } = require('@keystonejs/fields');
-
+const { Text, Checkbox, Password, DateTime, Select } = require('@keystonejs/fields');
+const { atTracking, byTracking} = require('@keystonejs/list-plugins');
+const access = require('../helpers/access');
 
 const userIsAdmin = ({ authentication: { item: user } }) => Boolean(user && user.isAdmin);
 
@@ -64,11 +65,11 @@ module.exports = {
             }
         },
 
-        role:{ 
+        role:{
             type: Text
         },
 
-        updatedAt:{ 
+        updatedAt:{
             type: DateTime
         },
     },
