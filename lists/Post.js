@@ -124,11 +124,11 @@ module.exports = {
         },
         //brief: { label: '前言', type: Types.Html, wysiwyg: true, height: 150 },
         //content: { label: '內文', type: Types.Html, wysiwyg: true, height: 400 },
-        topics: {
+        topic: {
             label: '專題',
             type: Relationship,
             ref: 'Topic',
-            many: true
+            //many: true
         },
         tags: {
             label: '標籤',
@@ -148,11 +148,11 @@ module.exports = {
             ref: 'Post',
             many: true
         },
-        relatedTopics: {
+        relatedTopic: {
             label: '相關專題',
             type: Relationship,
             ref: 'Topic',
-            hidden: true
+            //many: true
         },
         ogTitle: {
             label: 'FB 分享標題',
@@ -207,7 +207,7 @@ module.exports = {
         delete: access.userIsAdminOrModeratorOrOwner,
     },
     adminConfig: {
-        defaultColumns: 'title, slug, state, author, categories, publishTime',
+        defaultColumns: 'slug, title, state, categories, author, publishTime',
         defaultSort: '-publishTime',
     },
 }

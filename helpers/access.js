@@ -18,18 +18,25 @@ const userOwnsItem = ({ authentication: { item: user }, listKey }) => {
 };
 
 const userIsAdminOrModeratorOrOwner = auth => {
-    const isAdmin = access.userIsAdmin(auth);
-    const isModerator = access.userIsModerator(auth);
-    const isOwner = access.userOwnsItem(auth);
+    const isAdmin = userIsAdmin(auth);
+    const isModerator = userIsModerator(auth);
+    const isOwner = userOwnsItem(auth);
     return isAdmin || isModerator || isOwner;
 };
 
 const userIsAdminOrModerator = auth => {
-    const isAdmin = access.userIsAdmin(auth);
-    const isModerator = access.userIsModerator(auth);
-    return isAdmin ? isAdmin : isModerator;
+    const isAdmin = userIsAdmin(auth);
+    const isModerator = userIsModerator(auth);
+    return isAdmin || isModerator;
 };
 
-const access = { userIsAdmin, userIsModerator, userIsEditor, userIsAuthor, userIsContributor, userIsNotContributor, userIsAdminOrModeratorOrOwner, userIsAdminOrModerator, userOwnsItem };
+const userIsAboveAuthorOrOwner = auth => {
+    const isAuthor = userIsAuthor(auth);
+    const isContributor = userIsContributor(auth);
+    const isOwner = userOwnsItem(auth);
+    return !(isAuthor || isContributor) || isOwner;
+}
+
+const access = { userIsAdmin, userIsAdminOrModerator, userIsAdminOrModeratorOrOwner, userIsAboveAuthorOrOwner, userOwnsItem, userIsContributor, userIsNotContributor };
 
 module.exports = access

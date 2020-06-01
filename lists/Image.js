@@ -4,7 +4,6 @@ const { atTracking, byTracking } = require('@keystonejs/list-plugins');
 
 module.exports = {
     fields: {
-
         description: {
             type: Text
         },
