@@ -51,7 +51,7 @@ module.exports = {
         byTracking(),
     ],
     access: {
-        read: access.userIsAdminOrModerator,
+        read: access.userIsAdminOrModeratorOrOwner,
         update: access.userIsAdminOrModeratorOrOwner,
         create: access.userIsAdminOrModerator,
         delete: access.userIsAdminOrModerator,
@@ -71,5 +71,6 @@ module.exports = {
     },
     adminConfig: {
         defaultColumns: 'name, email, role, isAdmin',
+        defaultSort: '-createdAt'
     },
 }
