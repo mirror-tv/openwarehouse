@@ -81,9 +81,9 @@ module.exports = {
         byTracking(),
     ],
     access: {
-        update: access.userIsAdminOrModeratorOrOwner,
+        update: access.userIsAboveAuthorOrOwner,
         create: access.userIsNotContributor,
-        delete: access.userIsAdminOrModeratorOrOwner,
+        delete: access.userIsAboveAuthorOrOwner,
     },
     adminConfig: {
         defaultColumns: 'title, video, tags, state, publishTime, createdAt',

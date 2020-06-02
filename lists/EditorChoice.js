@@ -21,9 +21,9 @@ module.exports = {
         byTracking(),
     ],
     access: {
-        update: access.userIsAboveAuthor,
+        update: access.userIsAdminOrModeratorOrOwner,
         create: access.userIsAboveAuthor,
-        delete: access.userIsAboveAuthor,
+        delete: access.userIsAdminOrModeratorOrOwner,
     },
     adminConfig: {
         defaultColumns: 'choice, state, createdAt',

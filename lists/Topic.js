@@ -156,7 +156,7 @@ module.exports = {
         isFeatured: {
             label: '置頂',
             type: Checkbox
-        }
+        },
     },
     plugins: [
         atTracking(),
