@@ -28,7 +28,7 @@ module.exports = {
             type: Relationship,
             ref: 'Tag',
             many: true
-        }
+        },
     },
     plugins: [
         atTracking(),

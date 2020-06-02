@@ -48,7 +48,6 @@ module.exports = {
         state: {
             label: '狀態',
             type: Select,
-            dataType: 'string',
             options: 'draft, published, scheduled',
             defaultValue: 'draft'
         },

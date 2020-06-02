@@ -29,7 +29,7 @@ module.exports = {
         keywords: {
             label: '關鍵字',
             type: Text,
-        }
+        },
     },
     plugins: [
         atTracking(),

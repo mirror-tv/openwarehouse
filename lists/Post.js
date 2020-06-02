@@ -5,7 +5,7 @@ const access = require('../helpers/access');
 module.exports = {
     fields: {
         slug: {
-            label: 'slug',
+            label: 'Slug',
             type: Slug,
             isRequired: true,
             isUnique: true
@@ -189,7 +189,7 @@ module.exports = {
         isAdBlocked: {
             label: 'Google 廣告違規',
             type: Checkbox
-        }
+        },
     },
     plugins: [
         atTracking(),
