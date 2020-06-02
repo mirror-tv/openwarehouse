@@ -1,19 +1,21 @@
 const { Text, Checkbox, Select, Relationship } = require('@keystonejs/fields');
-const { DateTimeUtc } = require('@keystonejs/fields-datetime-utc');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
+const access = require('../helpers/access');
 
 module.exports = {
     fields: {
         description: {
+            label: '敘述',
             type: Text
         },
         copyright: {
+            label: '版權',
             type: Select,
             dataType: 'string',
             options: 'Creative-Commons, Copyrighted',
             defaultValue: 'Copyrighted'
         },
-        topics: {
+        topic: {
             label: '專題',
             type: Relationship,
             ref: 'Topic'
@@ -25,22 +27,21 @@ module.exports = {
             many: true
         },
         keywords: {
+            label: '關鍵字',
             type: Text,
-        },
-        createTime: {
-            type: DateTimeUtc,
-            defaultValue: new Date()
-        },
-        sale: {
-            type: Checkbox
-        },
+        }
     },
     plugins: [
         atTracking(),
         byTracking(),
     ],
+    access: {
+        update: access.userIsAdminOrModeratorOrOwner,
+        create: access.userIsNotContributor,
+        delete: access.userIsAdminOrModeratorOrOwner,
+    },
     adminConfig: {
-        defaultColumns: 'description',//, image',
-        defaultSort: '-createTime',
+        defaultColumns: 'description, createdAt', // image
+        defaultSort: '-createdAt',
     },
 }
