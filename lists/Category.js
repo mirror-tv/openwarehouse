@@ -8,10 +8,10 @@ module.exports = {
             label: "Slug",
             type: Slug,
             isRequired: true,
-            isUnique: true
+            isUnique: true,
         },
-        title: {
-            label: "標題",
+        name: {
+            label: "名稱",
             type: Text,
             isRequired: true
         },
@@ -39,7 +39,7 @@ module.exports = {
     ],
     access: {
         update: access.userIsAdminOrModeratorOrOwner,
-        create: access.userIsNotContributor,
+        create: access.userIsAboveAuthor,
         delete: access.userIsAdminOrModeratorOrOwner,
     },
     adminConfig: {

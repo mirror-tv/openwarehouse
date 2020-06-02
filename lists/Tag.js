@@ -1,5 +1,6 @@
 const { Slug, Text, Relationship } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
+const { uuid } = require('uuidv4');
 const access = require('../helpers/access');
 
 module.exports = {
@@ -7,6 +8,18 @@ module.exports = {
         slug: {
             label: 'Slug',
             type: Slug,
+            generate: uuid,
+            makeUnique: uuid,
+            isUnique: true,
+            regenerateOnUpdate: false,
+            access: {
+                create: false,
+                update: false,
+            }
+        },
+        name: {
+            label: '名稱',
+            type: Text,
             isRequired: true,
             isUnique: true
         },
@@ -30,11 +43,11 @@ module.exports = {
     ],
     access: {
         update: access.userIsAdminOrModeratorOrOwner,
-        create: access.userIsNotContributor,
+        create: access.userIsContributor,
         delete: access.userIsAdminOrModeratorOrOwner,
     },
     adminConfig: {
-        defaultColumns: 'slug, ogTitle, ogDescription, ogImage, createdAt',
+        defaultColumns: 'slug, name, createdAt',
         defaultSort: '-createdAt',
     },
 }
