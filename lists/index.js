@@ -1,5 +1,6 @@
 module.exports = {
     Post: require('./Post'),
+    EditorChoice: require('./EditorChoice'),
     Image: require('./Image'),
     Video: require('./Video'),
     Audio: require('./Audio'),

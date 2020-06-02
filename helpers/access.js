@@ -27,13 +27,19 @@ const userIsAdminOrModerator = auth => {
     return isAdmin || isModerator;
 };
 
-const userIsAboveAuthorOrOwner = auth => {
+const userIsAboveAuthor = auth => {
     const isAuthor = userIsAuthor(auth);
     const isContributor = userIsContributor(auth);
     const isOwner = userOwnsItem(auth);
-    return !(isAuthor || isContributor) || isOwner;
+    return !(isAuthor || isContributor);
 }
 
-const access = { userIsAdmin, userIsAdminOrModerator, userIsAdminOrModeratorOrOwner, userIsAboveAuthorOrOwner, userOwnsItem, userIsContributor, userIsNotContributor };
+const userIsAboveAuthorOrOwner = auth => {
+    const isAboveAuthor = userIsAboveAuthor(auth);
+    const isOwner = userOwnsItem(auth);
+    return isAboveAuthor || isOwner;
+}
+
+const access = { userIsAdmin, userIsAdminOrModerator, userIsAdminOrModeratorOrOwner, userIsAboveAuthor, userIsAboveAuthorOrOwner, userOwnsItem, userIsContributor, userIsNotContributor };
 
 module.exports = access

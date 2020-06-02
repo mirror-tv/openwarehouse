@@ -2,7 +2,7 @@ export default {
     pages: () => [
         {
             label: 'Content',
-            children: ['Post', 'Image', 'Video', 'Audio'],
+            children: ['Post', 'EditorChoice', 'Image', 'Video', 'Audio'],
         },
         {
             label: 'Class',
