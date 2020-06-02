@@ -26,13 +26,6 @@ module.exports = {
                 update: access.userIsAdminOrModerator,
             }
         },
-        company: {
-            type: Relationship,
-            ref: 'Company.users'
-        },
-        address: {
-            type: Text
-        },
         isAdmin: {
             type: Checkbox,
             access: {

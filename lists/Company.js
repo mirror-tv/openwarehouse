@@ -17,11 +17,6 @@ module.exports = {
         twitter: {
             label: 'Twitter',
             type: Text
-        },
-        users: {
-            type: Relationship,
-            ref: 'User.company',
-            many: true
         }
     },
     plugins: [
