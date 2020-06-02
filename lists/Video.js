@@ -86,7 +86,7 @@ module.exports = {
         delete: access.userIsAdminOrModeratorOrOwner,
     },
     adminConfig: {
-        defaultColumns: 'title, video, tags, createdAt',
+        defaultColumns: 'title, video, tags, state, publishTime, createdAt',
         defaultSort: '-createdAt',
     },
 }
