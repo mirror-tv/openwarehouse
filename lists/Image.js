@@ -41,7 +41,7 @@ module.exports = {
         delete: access.userIsAdminOrModeratorOrOwner,
     },
     adminConfig: {
-        defaultColumns: 'description, createdAt', // image
+        defaultColumns: 'description, image, createdAt',
         defaultSort: '-createdAt',
     },
 }

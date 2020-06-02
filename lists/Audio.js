@@ -1,14 +1,14 @@
 const { Text, Relationship } = require('@keystonejs/fields');
-const { DateTimeUtc } = require('@keystonejs/fields-datetime-utc');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
+const access = require('../helpers/access');
 
 module.exports = {
     fields: {
         title: {
+            label: '標題',
             type: Text,
             isRequired: true
         },
-        //description: { type: Types.Html, wysiwyg: true, height: 150 },
         /*audio: {
             type: Types.GcsFile,
             initial: true,
@@ -18,24 +18,30 @@ module.exports = {
             destination: 'assets/audios/',
             publicRead: true,
         },*/
-        //coverPhoto: { type: Types.ImageRelationship, ref: 'Image' },
+        coverPhoto: {
+            label: '封面照片',
+            type: Relationship,
+            ref: 'Image'
+        },
         tags: {
+            label: '標籤',
             type: Relationship,
             ref: 'Tag',
             many: true
-        },
-        createTime: {
-            type: DateTimeUtc,
-            defaultValue: new Date()
-        },
+        }
     },
     plugins: [
         atTracking(),
         byTracking(),
     ],
+    access: {
+        update: access.userIsAdminOrModeratorOrOwner,
+        create: access.userIsNotContributor,
+        delete: access.userIsAdminOrModeratorOrOwner,
+    },
     adminConfig: {
-        defaultColumns: 'title, audio, tags',
-        defaultSort: '-createTime',
+        defaultColumns: 'title, audio, tags, createdAt',
+        defaultSort: '-createdAt',
     },
     plural: 'Audios'
 }
