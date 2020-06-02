@@ -1,6 +1,4 @@
-const { Slug, Text, Checkbox, Select, Relationship } = require('@keystonejs/fields');
-const { DateTimeUtc } = require('@keystonejs/fields-datetime-utc');
-const { AuthedRelationship } = require('@keystonejs/fields-authed-relationship');
+const { Slug, Text, Checkbox, Select, Relationship, DateTime } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
 const access = require('../helpers/access');
 
@@ -29,7 +27,7 @@ module.exports = {
         },
         publishTime: {
             label: '發佈時間',
-            type: DateTimeUtc,
+            type: DateTime,
             /*dependsOn: {
                 '$or': {
                     state: [
