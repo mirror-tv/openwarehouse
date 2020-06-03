@@ -41,7 +41,7 @@ module.exports = {
     },
     plugins: [
         atTracking(),
-        byTracking(),
+        //byTracking(),
     ],
     access: {
         read: access.userIsAdminOrModeratorOrOwner,

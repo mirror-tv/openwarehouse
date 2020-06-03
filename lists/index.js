@@ -11,5 +11,7 @@ module.exports = {
     Contact: require('./Contact'),
     User: require('./User'),
     Company: require('./Company'),
-    MyFile: require('./myFile'), //先寫一個測試看看他會長怎樣
+    /*
+    MyFile: require('./myFile'), 先寫一個測試看看他會長怎樣
+    */
 }
