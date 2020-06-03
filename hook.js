@@ -12,5 +12,9 @@ export default {
             label: 'People',
             children: ['User', 'Contact', 'Company'],
         },
+        {
+            label: 'Other',
+            children: ['Partner'],
+        }
     ]
 };

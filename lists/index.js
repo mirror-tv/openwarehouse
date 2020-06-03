@@ -12,6 +12,7 @@ module.exports = {
     Contact: require('./Contact'),
     User: require('./User'),
     Company: require('./Company'),
+    Partner: require('./Partner'),
     /*
     MyFile: require('./myFile'), 先寫一個測試看看他會長怎樣
     */
