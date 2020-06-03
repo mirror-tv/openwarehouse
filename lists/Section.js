@@ -64,7 +64,7 @@ module.exports = {
         delete: access.userIsAdminOrModeratorOrOwner,
     },
     adminConfig: {
-        defaultColumns: 'slug, title, categories, style, isFeatured, isAudioSiteOnly, createdAt',
+        defaultColumns: 'slug, name, categories, style, isFeatured, isAudioSiteOnly, createdAt',
         defaultSort: '-createdAt',
     },
 }
