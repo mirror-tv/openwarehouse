@@ -4,6 +4,7 @@ module.exports = {
     Image: require('./Image'),
     Video: require('./Video'),
     Audio: require('./Audio'),
+    Event: require('./Event'),
     Topic: require('./Topic'),
     Section: require('./Section'),
     Category: require('./Category'),
