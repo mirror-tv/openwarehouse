@@ -42,9 +42,9 @@ module.exports = {
         byTracking(),
     ],
     access: {
-        update: access.userIsAdminOrModeratorOrOwner,
-        create: access.userIsContributor,
-        delete: access.userIsAdminOrModeratorOrOwner,
+        update: access.userIsAboveAuthorOrOwner,
+        create: access.userIsNotContributor,
+        delete: access.userIsAboveAuthorOrOwner,
     },
     adminConfig: {
         defaultColumns: 'slug, name, createdAt',

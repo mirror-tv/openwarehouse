@@ -30,7 +30,6 @@ const userIsAdminOrModerator = auth => {
 const userIsAboveAuthor = auth => {
     const isAuthor = userIsAuthor(auth);
     const isContributor = userIsContributor(auth);
-    const isOwner = userOwnsItem(auth);
     return !(isAuthor || isContributor);
 }
 
