@@ -14,7 +14,7 @@ export default {
         },
         {
             label: 'Other',
-            children: ['Partner'],
+            children: ['Partner', 'External'],
         }
     ]
 };

@@ -7,7 +7,8 @@ module.exports = {
         slug: {
             label: 'Slug',
             type: Slug,
-            isRequired: true
+            isRequired: true,
+            isUnique: true,
         },
         display: {
             label: '中文名稱',

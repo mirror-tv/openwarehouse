@@ -1,13 +1,14 @@
-const { Text, DateTime, Select, Relationship, Url, Checkbox } = require('@keystonejs/fields');
+const { Slug, Text, DateTime, Select, Relationship, Url, Checkbox } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
 const access = require('../helpers/access');
 
 module.exports = {
     fields: {
-        name: {
-            label: '名稱',
-            type: Text,
-            isRequired: true
+        slug: {
+            label: 'Slug',
+            type: Slug,
+            isRequired: true,
+            isUnique: true,
         },
         state: {
             label: '狀態',
@@ -18,7 +19,8 @@ module.exports = {
         publishTime: {
             label: '發佈時間',
             type: DateTime,
-            defaultValue: new Date(),
+            format: 'MMMM Do YYYY, hh:mm:ss A',
+            defaultValue: new Date().toISOString(),
             /*dependsOn: {
                 '$or': {
                     state: [
@@ -42,12 +44,15 @@ module.exports = {
         startTime: {
             label: '開始時間',
             type: DateTime,
+            format: 'MMMM Do YYYY, hh:mm:ss A',
+            defaultValue: new Date().toISOString(),
             isRequired: true,
-            yearPickerType: 'select' //Currently, this option won't generete a dropdown menu
+            yearPickerType: 'select' // this option seems not work
         },
         endTime: {
             label: '結束時間',
-            type: DateTime
+            type: DateTime,
+            format: 'MMMM Do YYYY, hh:mm:ss A',
         },
         video: {
             label: '影片',

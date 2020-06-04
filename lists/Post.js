@@ -13,7 +13,8 @@ module.exports = {
         title: {
             label: '標題',
             type: Text,
-            isRequired: true
+            isRequired: true,
+            defaultValue: 'untitled'
         },
         subtitle: {
             label: '副標',
@@ -28,6 +29,8 @@ module.exports = {
         publishTime: {
             label: '發佈時間',
             type: DateTime,
+            format: 'MMMM Do YYYY, hh:mm:ss A',
+            defaultValue: new Date().toISOString(),
             /*dependsOn: {
                 '$or': {
                     state: [
@@ -103,17 +106,17 @@ module.exports = {
             label: '首圖圖說',
             type: Text
         },
-        /*heroImageSize: {
+        heroImageSize: {
             label: '首圖尺寸',
             type: Select,
             options: 'extend, normal, small',
             default: 'normal',
-            dependsOn: {
+            /*dependsOn: {
                 heroImage: {
                     '$regex': '.+/i'
                 }
-            }
-        },*/
+            }*/
+        },
         style: {
             label: '樣式',
             type: Select,
@@ -126,7 +129,6 @@ module.exports = {
             label: '專題',
             type: Relationship,
             ref: 'Topic',
-            //many: true
         },
         tags: {
             label: '標籤',
@@ -134,7 +136,6 @@ module.exports = {
             ref: 'Tag',
             many: true
         },
-        //albums: { label: '專輯', type: Types.Relationship, ref: 'Album', many: true },
         audio: {
             label: '音檔',
             type: Relationship,
@@ -150,7 +151,6 @@ module.exports = {
             label: '相關專題',
             type: Relationship,
             ref: 'Topic',
-            //many: true
         },
         ogTitle: {
             label: 'FB 分享標題',

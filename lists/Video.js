@@ -54,7 +54,8 @@ module.exports = {
         publishTime: {
             label: '發佈時間',
             type: DateTime,
-            defaultValue: new Date(),
+            format: 'MMMM Do YYYY, hh:mm:ss A',
+            defaultValue: new Date().toISOString(),
             /*dependsOn: {
                 '$or': {
                     state: [
