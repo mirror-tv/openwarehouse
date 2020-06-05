@@ -9,6 +9,10 @@ export default {
             children: ['Topic', 'Section', 'Category', 'Tag'],
         },
         {
+            label: 'Watch',
+            children: ['Watch', 'WatchBrand', 'WatchStore', 'WatchFunction'],
+        },
+        {
             label: 'People',
             children: ['User', 'Contact', 'Company'],
         },
