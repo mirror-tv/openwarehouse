@@ -25,6 +25,7 @@ const handlePastedText = (text, html, editorState, onChange) => {
         let newState = handleDraftEditorPastedText(html, editorState);
         if (newState) {
             onChange(newState);
+
             return true;
         }
     }
