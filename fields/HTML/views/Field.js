@@ -9,13 +9,11 @@ const HtmlField = ({ onChange, autoFocus, field, value, errors }) => {
     const editorState = value ? value : EditorState.createEmpty();
 
     return (
-        <FieldContainer>
-            <div css={{ display: 'flex', flex: 1 }}>
-                <Editor
-                    editorState={editorState}
-                    onEditorStateChange={onChange}
-                />
-            </div>
+        <FieldContainer >
+            <Editor
+                editorState={editorState}
+                onEditorStateChange={onChange}
+            />
         </FieldContainer>
     );
 };
