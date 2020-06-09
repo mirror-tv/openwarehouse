@@ -7,8 +7,9 @@ module.exports = {
     type: 'HTML',
     implementation: Implementation,
     views: {
-        Controller: Text.views.Controller,
+        Controller: require.resolve('./views/Controller'),
         Field: importView('./views/Field'),
+        Cell: require.resolve('./views/Cell'),
         Filter: Text.views.Filter,
     },
     adapters: {

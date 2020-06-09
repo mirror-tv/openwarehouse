@@ -8,6 +8,7 @@ module.exports = {
       // { option1: null, option2: null }
       defaultValue = options.reduce((prev, next) => ({ ...prev, [next]: null }), {});
     }
+    console.log(defaultValue);
     return defaultValue;
   },
 };

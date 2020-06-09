@@ -9,11 +9,13 @@ class MultiCheckController extends FieldController {
 
   // Allow JSON values to be stored as String
   serialize = data => {
+    console.log('serialize', data);
     return data[this.path] ? JSON.stringify(data[this.path]) : undefined;
   };
 
   // Allow string values to be returned as JSON
   deserialize = data => {
+    console.log('deserialize', data);
     return data[this.path] ? JSON.parse(data[this.path]) : null;
   };
 

@@ -1,6 +1,6 @@
 const { Text } = require('@keystonejs/fields');
 
-class HTMLImplementation extends Text.implementation {
+class HtmlImplementation extends Text.implementation {
     constructor(path, { editorConfig }) {
         super(...arguments);
         this.editorConfig = editorConfig;
@@ -15,7 +15,7 @@ class HTMLImplementation extends Text.implementation {
 }
 
 module.exports = {
-    Implementation: HTMLImplementation,
+    Implementation: HtmlImplementation,
     MongoIntegerInterface: Text.adapters.mongoose,
     KnexIntegerInterface: Text.adapters.knex,
 };
