@@ -1,5 +1,5 @@
 import FieldController from '@keystonejs/fields/Controller';
-import { convertToEditorState, fetchData } from './dataHandler';
+import { convertToEditorState, fetchData } from './dataConverter';
 
 class HtmlController extends FieldController {
     constructor(config, ...args) {
@@ -7,12 +7,10 @@ class HtmlController extends FieldController {
     }
 
     serialize = data => {
-        console.log('serialize', data);
         return data[this.path] ? JSON.stringify(fetchData(data[this.path])) : undefined;
     };
 
     deserialize = data => {
-        console.log('deserialize', data);
         return convertToEditorState(data[this.path] ? JSON.parse(data[this.path]) : null);
     };
 

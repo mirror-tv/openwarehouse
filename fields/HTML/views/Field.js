@@ -4,7 +4,11 @@ import { FieldContainer } from '@arch-ui/fields';
 import { EditorState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import { handleDraftEditorPastedText } from "draftjs-conductor";
+import { builtInButtons, customButtons } from './customToolbar';
+
 import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import 'font-awesome/css/font-awesome.min.css';
+
 
 const HtmlField = ({ onChange, autoFocus, field, value, errors }) => {
     const editorState = value ? value : EditorState.createEmpty();
@@ -15,21 +19,19 @@ const HtmlField = ({ onChange, autoFocus, field, value, errors }) => {
                 editorState={editorState}
                 onEditorStateChange={onChange}
                 handlePastedText={handlePastedText}
+                toolbar={builtInButtons}
+                toolbarCustomButtons={customButtons}
             />
         </FieldContainer>
     );
 };
 
 const handlePastedText = (text, html, editorState, onChange) => {
-    if (html) {
-        let newState = handleDraftEditorPastedText(html, editorState);
-        if (newState) {
-            onChange(newState);
-
-            return true;
-        }
+    let newEditorState = handleDraftEditorPastedText(html, editorState);
+    if (newEditorState) {
+        onChange(newEditorState);
+        return true;
     }
-
     return false;
 }
 

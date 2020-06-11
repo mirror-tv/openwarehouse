@@ -1,6 +1,4 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/core';
-import { fetchData } from './dataHandler';
+import { fetchData } from './dataConverter';
 
 export default function HtmlCell({ data }) {
     return JSON.stringify(fetchData(data));
