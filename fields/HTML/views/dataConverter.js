@@ -1,5 +1,5 @@
 import { EditorState, convertFromRaw, convertToRaw } from 'draft-js';
-import DraftConverter from './K3/editor/draft-converter';
+import DraftConverter from './K3/draft-converter';
 
 export function convertToEditorState(data) {
 

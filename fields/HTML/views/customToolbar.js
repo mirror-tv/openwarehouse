@@ -1,8 +1,7 @@
-
-import { YoutubeLink } from './K3/editor';
+/** @jsx jsx */
+import { jsx } from '@emotion/core';
 
 export const customButtons = [
-    YoutubeLink
 ];
 
 export const builtInButtons = {

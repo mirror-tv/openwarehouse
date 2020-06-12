@@ -7,7 +7,6 @@ import { handleDraftEditorPastedText } from "draftjs-conductor";
 import { builtInButtons, customButtons } from './customToolbar';
 
 import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import 'font-awesome/css/font-awesome.min.css';
 
 
 const HtmlField = ({ onChange, autoFocus, field, value, errors }) => {
