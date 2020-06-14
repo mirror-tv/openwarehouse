@@ -17,6 +17,14 @@ module.exports = {
                 update: false,
             }
         },
+        sortOrder: {
+            label: '排序順位',
+            type: Integer,
+            isUnique: true
+            /*dependsOn: {
+                type: 'timeline'
+            }*/
+        },
         title: {
             label: '標題',
             type: Text,
@@ -36,11 +44,6 @@ module.exports = {
             label: '前言',
             type: Wysiwyg
         },*/
-        heroImage: {
-            label: '專題主圖',
-            type: Relationship,
-            ref: 'Image'
-        },
         leading: {
             label: '標頭樣式',
             type: Select,
@@ -109,14 +112,6 @@ module.exports = {
             label: '資料來源',
             type: Select,
             options: 'posts, activities',
-            /*dependsOn: {
-                type: 'timeline'
-            }*/
-        },
-        sortOrder: {
-            label: '排序順位',
-            type: Integer,
-            isUnique: true
             /*dependsOn: {
                 type: 'timeline'
             }*/
