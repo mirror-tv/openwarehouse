@@ -29,7 +29,7 @@ module.exports = {
         publishTime: {
             label: '發佈時間',
             type: DateTime,
-            format: 'MMMM Do YYYY, hh:mm:ss A',
+            format: 'MM/DD/YYYY hh:mm A',
             defaultValue: new Date().toISOString(),
             /*dependsOn: {
                 '$or': {
@@ -201,7 +201,7 @@ module.exports = {
         delete: access.userIsAboveAuthorOrOwner,
     },
     adminConfig: {
-        defaultColumns: 'slug, title, state, categories, createdBy, publishTime',
+        defaultColumns: 'slug, title, state, categories, createdBy, publishTime, updatedAt',
         defaultSort: '-publishTime',
     },
     labelField: 'title'
