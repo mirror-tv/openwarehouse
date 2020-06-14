@@ -43,5 +43,6 @@ module.exports = {
         defaultColumns: 'title, audio, tags, createdAt',
         defaultSort: '-createdAt',
     },
-    plural: 'Audios'
+    plural: 'Audios',
+    labelField: 'title'
 }
