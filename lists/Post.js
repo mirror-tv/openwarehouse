@@ -204,4 +204,5 @@ module.exports = {
         defaultColumns: 'slug, title, state, categories, createdBy, publishTime',
         defaultSort: '-publishTime',
     },
+    labelField: 'title'
 }
