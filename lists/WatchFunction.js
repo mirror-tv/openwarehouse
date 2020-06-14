@@ -22,4 +22,5 @@ module.exports = {
         defaultColumns: 'function, createdAt',
         defaultSort: '-createdAt',
     },
+    labelField: 'function'
 }
