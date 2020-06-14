@@ -110,7 +110,7 @@ module.exports = {
             label: '首圖尺寸',
             type: Select,
             options: 'extend, normal, small',
-            default: 'normal',
+            defaultValue: 'normal',
             /*dependsOn: {
                 heroImage: {
                     '$regex': '.+/i'
