@@ -41,7 +41,7 @@ module.exports = {
         delete: access.userIsAboveAuthorOrOwner,
     },
     adminConfig: {
-        defaultColumns: 'description, image, createdAt',
+        defaultColumns: 'title, image, createdAt',
         defaultSort: '-createdAt',
     },
     labelField: 'title'
