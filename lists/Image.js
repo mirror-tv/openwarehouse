@@ -4,8 +4,8 @@ const access = require('../helpers/access');
 
 module.exports = {
     fields: {
-        description: {
-            label: '敘述',
+        title: {
+            label: '標題',
             type: Text
         },
         copyright: {
@@ -44,4 +44,5 @@ module.exports = {
         defaultColumns: 'description, image, createdAt',
         defaultSort: '-createdAt',
     },
+    labelField: 'title'
 }
