@@ -1,9 +1,14 @@
-const { Select, Relationship } = require('@keystonejs/fields');
+const { Integer, Select, Relationship } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
 const access = require('../helpers/access');
 
 module.exports = {
     fields: {
+        sortOrder: {
+            label: '排序順位',
+            type: Integer,
+            isUnique: true
+        },
         choice: {
             label: '精選文章',
             type: Relationship,
