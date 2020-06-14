@@ -4,11 +4,10 @@ const access = require('../helpers/access');
 
 module.exports = {
     fields: {
-        slug: {
-            label: 'Slug',
-            type: Slug,
+        name: {
+            label: '名稱',
+            type: Text,
             isRequired: true,
-            isUnique: true,
         },
         state: {
             label: '狀態',
@@ -76,6 +75,7 @@ module.exports = {
         embedCode: {
             label: 'Embed Code',
             type: Text,
+            isMultiline: true,
             /*dependsOn: {
                 '$or': [
                     { 'eventType': 'embedded' },
