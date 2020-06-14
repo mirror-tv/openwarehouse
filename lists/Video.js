@@ -28,7 +28,8 @@ module.exports = {
         },
         description: {
             label: '敘述',
-            type: Text
+            type: Text,
+            isMultiline: true
         },
         /*video: {
             type: Types.GcsFile,
@@ -90,4 +91,5 @@ module.exports = {
         defaultColumns: 'title, video, tags, state, publishTime, createdAt',
         defaultSort: '-createdAt',
     },
+    labelField: 'title'
 }
