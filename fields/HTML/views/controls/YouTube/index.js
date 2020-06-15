@@ -159,7 +159,7 @@ class YouTube extends Component {
                         title: "YouTube Link"
                     },
                     labels: {
-                        first: "Yotube ID",
+                        first: "YouTube ID",
                         last: "Description"
                     }
                 }}
