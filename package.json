@@ -18,6 +18,7 @@
     "migrate": "cross-env CREATE_TABLES=true keystone upgrade-relationships --migration"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.13.0",
     "@google-cloud/storage": "^5.0.0",
     "@keystonejs/adapter-knex": "^10.0.0",
     "@keystonejs/app-admin-ui": "^6.0.0",

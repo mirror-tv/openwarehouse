@@ -1,7 +1,9 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
+import { YouTube } from './controls';
 
 export const customButtons = [
+    <YouTube />
 ];
 
 export const builtInButtons = {
