@@ -13,7 +13,6 @@ export const builtInButtons = {
         "fontSize",
         "list",
         "link",
-        "embedded",
         "image",
         "history",
     ],
