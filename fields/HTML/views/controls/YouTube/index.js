@@ -76,7 +76,7 @@ class YouTube extends Component {
         let contentState = Modifier.replaceText(
             editorState.getCurrentContent(),
             selection,
-            `${id}`,
+            ' ',
             editorState.getCurrentInlineStyle(),
             entityKey
         );
@@ -88,8 +88,8 @@ class YouTube extends Component {
 
         // insert a blank space after link
         selection = newEditorState.getSelection().merge({
-            anchorOffset: selection.get('anchorOffset') + id.length,
-            focusOffset: selection.get('anchorOffset') + id.length,
+            anchorOffset: selection.get('anchorOffset') + 1,
+            focusOffset: selection.get('anchorOffset') + 1,
         });
         newEditorState = EditorState.acceptSelection(newEditorState, selection);
         contentState = Modifier.insertText(
@@ -146,35 +146,43 @@ class YouTube extends Component {
         });
     };
 
+    prepareLayoutConfig = () => ({
+        style: {
+            icon: undefined,
+            className: 'fab fa-youtube',
+            title: "YouTube Link"
+        },
+        labels: {
+            first: "YouTube ID",
+            last: "Description"
+        },
+        isRequired: {
+            first: true,
+            last: false
+        }
+    });
+
+    prepareLayoutCurrentState = (youtube) => ({
+        twoInputs: {
+            first: (youtube && youtube.id) || '',
+            last: (youtube && youtube.description) || ''
+        },
+        selectionText: ''
+    });
+
     render() {
         const { translations } = this.props;
         const { expanded } = this.state;
-        const { youtube, selectionText } = this.getCurrentValues();
+        const { youtube } = this.getCurrentValues();
         return (
             <TwoInputs
-                config={{
-                    twoInputs: {
-                        icon: undefined,
-                        className: 'fab fa-youtube',
-                        title: "YouTube Link"
-                    },
-                    labels: {
-                        first: "YouTube ID",
-                        last: "Description"
-                    }
-                }}
                 translations={translations}
                 expanded={expanded}
                 onExpandEvent={this.onExpandEvent}
                 doExpand={this.doExpand}
                 doCollapse={this.doCollapse}
-                currentState={{
-                    twoInputs: {
-                        first: (youtube && youtube.id) || '',
-                        last: (youtube && youtube.description) || ''
-                    },
-                    selectionText,
-                }}
+                config={this.prepareLayoutConfig()}
+                currentState={this.prepareLayoutCurrentState(youtube)}
                 onChange={this.onChange}
             />
         );

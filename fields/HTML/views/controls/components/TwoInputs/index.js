@@ -81,7 +81,7 @@ class TwoInputs extends Component {
 
     renderAddModal() {
         const {
-            config: { popupClassName, labels },
+            config: { popupClassName, labels, isRequired },
             doCollapse,
             translations,
         } = this.props;
@@ -117,7 +117,7 @@ class TwoInputs extends Component {
                     <button
                         className="rdw-link-modal-btn"
                         onClick={this.add}
-                        disabled={!firstInput || !lastInput}
+                        disabled={(isRequired.first && !firstInput) || (isRequired.last && !lastInput)}
                     >
                         {translations['generic.add']}
                     </button>
@@ -131,7 +131,7 @@ class TwoInputs extends Component {
 
     render() {
         const {
-            config: { twoInputs, className },
+            config: { style, className },
             expanded,
         } = this.props;
         const { showModal } = this.state;
@@ -142,13 +142,13 @@ class TwoInputs extends Component {
             >
                 <Option
                     value="unordered-list-item"
-                    className={classNames(twoInputs.className)}
+                    className={classNames(style.className)}
                     onClick={this.signalExpandShowModal}
                     aria-haspopup="true"
                     aria-expanded={showModal}
-                    title={twoInputs.title}
+                    title={style.title}
                 >
-                    <img src={twoInputs.icon} alt="" />
+                    <img src={style.icon} alt="" />
                 </Option>
                 {expanded && showModal ? this.renderAddModal() : undefined}
             </div>
