@@ -1,6 +1,5 @@
 import { EditorState, convertFromRaw, convertToRaw } from 'draft-js';
 import DraftConverter from './K3/draft-converter';
-import decorators from './controls/decorators'
 
 export function convertToEditorState(data) {
 

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Entity } from 'draft-js';
 
 function strategy(contentBlock, callback, contentState) {
     contentBlock.findEntityRanges(character => {

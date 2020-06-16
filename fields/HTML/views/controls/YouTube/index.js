@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { RichUtils, EditorState, Modifier } from 'draft-js';
+import { EditorState, Modifier } from 'draft-js';
 import {
     getSelectionText,
     getEntityRange,
