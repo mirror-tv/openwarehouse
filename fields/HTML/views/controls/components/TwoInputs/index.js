@@ -105,9 +105,9 @@ class TwoInputs extends Component {
                 <label className="rdw-link-modal-label" htmlFor="linkTarget">
                     {labels['last']}
                 </label>
-                <input
+                <textarea
                     id="lastInput"
-                    className="rdw-link-modal-input"
+                    className="rdw-link-modal-textarea"
                     onChange={this.updateValue}
                     onBlur={this.updateValue}
                     name="lastInput"

@@ -22,8 +22,8 @@
   left: 5px;
   display: flex;
   flex-direction: column;
-  width: 235px;
-  height: 205px;
+  width: 360px;
+  height: 270px;
   border: 1px solid #F1F1F1;
   padding: 15px;
   border-radius: 2px;
@@ -42,7 +42,18 @@
   margin-bottom: 15px;
   padding: 0 5px;
 }
+.rdw-link-modal-textarea {
+  margin-top: 5px;
+  border-radius: 2px;
+  border: 1px solid #F1F1F1;
+  height: 90px;
+  margin-bottom: 15px;
+  padding: 0 5px;
+}
 .rdw-link-modal-input:focus {
+  outline: none;
+}
+.rdw-link-modal-textarea:focus {
   outline: none;
 }
 .rdw-link-modal-buttonsection {
