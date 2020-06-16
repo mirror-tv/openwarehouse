@@ -5,7 +5,7 @@ import { EditorState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import { handleDraftEditorPastedText } from "draftjs-conductor";
 import { builtInButtons, customButtons } from './customToolbar';
-import decorators from './controls/decorators'
+import decorators from './editor/decorators'
 
 import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
