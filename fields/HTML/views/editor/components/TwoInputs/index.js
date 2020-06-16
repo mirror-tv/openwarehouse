@@ -56,13 +56,13 @@ class TwoInputs extends Component {
     signalExpandShowModal = () => {
         const {
             onExpandEvent,
-            currentState: { twoInputs, selectionText },
+            currentState: { twoInputs },
         } = this.props;
         onExpandEvent();
         this.setState({
             showModal: true,
             lastInput: (twoInputs && twoInputs.last) || '',
-            firstInput: (twoInputs && twoInputs.first) || selectionText,
+            firstInput: (twoInputs && twoInputs.first) || '',
         });
     };
 

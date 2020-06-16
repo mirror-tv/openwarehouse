@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { EditorState, Modifier } from 'draft-js';
-import {
-    getSelectionText,
-    getEntityRange,
-    getSelectionEntity,
-} from 'draftjs-utils';
+import { getEntityRange, getSelectionEntity } from 'draftjs-utils';
 
 import TwoInputs from '../../components/TwoInputs';
 
@@ -23,7 +19,6 @@ class YouTube extends Component {
         this.state = {
             expanded: false,
             youtube: undefined,
-            selectionText: undefined,
             currentEntity: editorState ? getSelectionEntity(editorState) : undefined,
         };
         modalHandler.registerCallBack(this.expandCollapse);
@@ -110,7 +105,6 @@ class YouTube extends Component {
                 currentEntity &&
                 contentState.getEntity(currentEntity).get('data').description;
         }
-        currentValues.selectionText = getSelectionText(editorState);
         return currentValues;
     };
 
@@ -152,9 +146,8 @@ class YouTube extends Component {
     prepareLayoutCurrentState = (youtube) => ({
         twoInputs: {
             first: (youtube && youtube.id) || '',
-            last: (youtube && youtube.description) || ''
+            last: (youtube && youtube.description) || '',
         },
-        selectionText: ''
     });
 
     render() {

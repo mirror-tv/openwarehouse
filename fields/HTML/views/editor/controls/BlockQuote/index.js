@@ -4,8 +4,9 @@ import { EditorState, Modifier } from 'draft-js';
 import { getEntityRange, getSelectionEntity } from 'draftjs-utils';
 
 import TwoInputs from '../../components/TwoInputs';
+import '../../css/main.css';
 
-class EmbedCode extends Component {
+class BlockQuote extends Component {
     static propTypes = {
         editorState: PropTypes.object,
         onChange: PropTypes.func,
@@ -18,7 +19,7 @@ class EmbedCode extends Component {
         const { editorState, modalHandler } = this.props;
         this.state = {
             expanded: false,
-            embedCode: undefined,
+            blockQuote: undefined,
             currentEntity: editorState ? getSelectionEntity(editorState) : undefined,
         };
         modalHandler.registerCallBack(this.expandCollapse);
@@ -40,7 +41,7 @@ class EmbedCode extends Component {
         this.signalExpanded = !this.state.expanded;
     };
 
-    onChange = (caption, code) => {
+    onChange = (quotedBy, quote) => {
         const { editorState, onChange } = this.props;
         const { currentEntity } = this.state;
         let selection = editorState.getSelection();
@@ -63,10 +64,9 @@ class EmbedCode extends Component {
 
         let contentState = editorState.getCurrentContent();
         contentState = Modifier.splitBlock(contentState, selection);
-        contentState = contentState.createEntity('EMBEDCODE', 'IMMUTABLE', {
-            caption: caption,
-            code: code,
-            alignment: 'center',
+        contentState = contentState.createEntity('BLOCKQUOTE', 'IMMUTABLE', {
+            quotedBy: quotedBy,
+            quote: quote,
         });
         const entityKey = contentState.getLastCreatedEntityKey();
 
@@ -95,16 +95,16 @@ class EmbedCode extends Component {
         const currentValues = {};
         if (
             currentEntity &&
-            contentState.getEntity(currentEntity).get('type') === 'EMBEDCODE'
+            contentState.getEntity(currentEntity).get('type') === 'BLOCKQUOTE'
         ) {
-            currentValues.embedCode = {};
+            currentValues.blockQuote = {};
             const entityRange =
                 currentEntity && getEntityRange(editorState, currentEntity);
-            currentValues.embedCode.caption =
-                currentEntity && contentState.getEntity(currentEntity).get('data').caption;
-            currentValues.embedCode.code =
+            currentValues.blockQuote.quotedBy =
+                currentEntity && contentState.getEntity(currentEntity).get('data').quotedBy;
+            currentValues.blockQuote.quote =
                 currentEntity &&
-                contentState.getEntity(currentEntity).get('data').code;
+                contentState.getEntity(currentEntity).get('data').quote;
         }
         return currentValues;
     };
@@ -131,12 +131,12 @@ class EmbedCode extends Component {
     prepareLayoutConfig = () => ({
         style: {
             icon: undefined,
-            className: 'fa fa-code',
-            title: "Embed Code"
+            className: 'fa fa-quote-left',
+            title: "Block Quote"
         },
         labels: {
-            first: "Caption",
-            last: "Code"
+            first: "Quoted By",
+            last: "Quote"
         },
         isRequired: {
             first: true,
@@ -144,17 +144,17 @@ class EmbedCode extends Component {
         }
     });
 
-    prepareLayoutCurrentState = (embedCode) => ({
+    prepareLayoutCurrentState = (blockQuote) => ({
         twoInputs: {
-            first: (embedCode && embedCode.caption) || '',
-            last: (embedCode && embedCode.code) || '',
+            first: (blockQuote && blockQuote.quotedBy) || '',
+            last: (blockQuote && blockQuote.quote) || '',
         },
     });
 
     render() {
         const { translations } = this.props;
         const { expanded } = this.state;
-        const { embedCode } = this.getCurrentValues();
+        const { blockQuote } = this.getCurrentValues();
         return (
             <TwoInputs
                 translations={translations}
@@ -163,11 +163,11 @@ class EmbedCode extends Component {
                 doExpand={this.doExpand}
                 doCollapse={this.doCollapse}
                 config={this.prepareLayoutConfig()}
-                currentState={this.prepareLayoutCurrentState(embedCode)}
+                currentState={this.prepareLayoutCurrentState(blockQuote)}
                 onChange={this.onChange}
             />
         );
     }
 }
 
-export default EmbedCode;
+export default BlockQuote;
