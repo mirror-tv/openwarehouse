@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from '@emotion/core';
 import React from 'react';
 
 function strategy(contentBlock, callback, contentState) {
@@ -13,7 +15,7 @@ function strategy(contentBlock, callback, contentState) {
 const component = (props) => {
     const { id, description } = props.contentState.getEntity(props.entityKey).getData();
     return (
-        <div>
+        <div style={{ backgroundColor: "GhostWhite" }}>
             <iframe
                 width="560"
                 alt={description}

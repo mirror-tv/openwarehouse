@@ -8,8 +8,9 @@ import {
 } from 'draftjs-utils';
 
 import TwoInputs from '../components/TwoInputs';
+import '../decorators/main.css';
 
-class YouTube extends Component {
+class EmbedCode extends Component {
     static propTypes = {
         editorState: PropTypes.object,
         onChange: PropTypes.func,
@@ -22,7 +23,7 @@ class YouTube extends Component {
         const { editorState, modalHandler } = this.props;
         this.state = {
             expanded: false,
-            youtube: undefined,
+            embedCode: undefined,
             selectionText: undefined,
             currentEntity: editorState ? getSelectionEntity(editorState) : undefined,
         };
@@ -45,7 +46,7 @@ class YouTube extends Component {
         this.signalExpanded = !this.state.expanded;
     };
 
-    onChange = (id, description) => {
+    onChange = (caption, code) => {
         const { editorState, onChange } = this.props;
         const { currentEntity } = this.state;
         let selection = editorState.getSelection();
@@ -68,9 +69,10 @@ class YouTube extends Component {
 
         let contentState = editorState.getCurrentContent();
         contentState = Modifier.splitBlock(contentState, selection);
-        contentState = contentState.createEntity('YOUTUBE', 'IMMUTABLE', {
-            id: id,
-            description: description,
+        contentState = contentState.createEntity('EMBEDCODE', 'IMMUTABLE', {
+            caption: caption,
+            code: code,
+            alignment: 'center',
         });
         const entityKey = contentState.getLastCreatedEntityKey();
 
@@ -99,16 +101,16 @@ class YouTube extends Component {
         const currentValues = {};
         if (
             currentEntity &&
-            contentState.getEntity(currentEntity).get('type') === 'YOUTUBE'
+            contentState.getEntity(currentEntity).get('type') === 'EMBEDCODE'
         ) {
-            currentValues.youtube = {};
+            currentValues.embedCode = {};
             const entityRange =
                 currentEntity && getEntityRange(editorState, currentEntity);
-            currentValues.youtube.id =
-                currentEntity && contentState.getEntity(currentEntity).get('data').id;
-            currentValues.youtube.description =
+            currentValues.embedCode.caption =
+                currentEntity && contentState.getEntity(currentEntity).get('data').caption;
+            currentValues.embedCode.code =
                 currentEntity &&
-                contentState.getEntity(currentEntity).get('data').description;
+                contentState.getEntity(currentEntity).get('data').code;
         }
         currentValues.selectionText = getSelectionText(editorState);
         return currentValues;
@@ -136,23 +138,23 @@ class YouTube extends Component {
     prepareLayoutConfig = () => ({
         style: {
             icon: undefined,
-            className: 'fab fa-youtube',
-            title: "YouTube Link"
+            className: 'fa fa-code',
+            title: "Embed Code"
         },
         labels: {
-            first: "YouTube ID",
-            last: "Description"
+            first: "Caption",
+            last: "Code"
         },
         isRequired: {
             first: true,
-            last: false
+            last: true
         }
     });
 
-    prepareLayoutCurrentState = (youtube) => ({
+    prepareLayoutCurrentState = (embedCode) => ({
         twoInputs: {
-            first: (youtube && youtube.id) || '',
-            last: (youtube && youtube.description) || ''
+            first: (embedCode && embedCode.caption) || '',
+            last: (embedCode && embedCode.code) || ''
         },
         selectionText: ''
     });
@@ -160,7 +162,7 @@ class YouTube extends Component {
     render() {
         const { translations } = this.props;
         const { expanded } = this.state;
-        const { youtube } = this.getCurrentValues();
+        const { embedCode } = this.getCurrentValues();
         return (
             <TwoInputs
                 translations={translations}
@@ -169,11 +171,11 @@ class YouTube extends Component {
                 doExpand={this.doExpand}
                 doCollapse={this.doCollapse}
                 config={this.prepareLayoutConfig()}
-                currentState={this.prepareLayoutCurrentState(youtube)}
+                currentState={this.prepareLayoutCurrentState(embedCode)}
                 onChange={this.onChange}
             />
         );
     }
 }
 
-export default YouTube;
+export default EmbedCode;

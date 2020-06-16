@@ -1,5 +1,7 @@
-import YouTube from "./YouTube";
+import YouTube from './YouTube';
+import EmbedCode from './EmbedCode'
 
 export {
-    YouTube
+    YouTube,
+    EmbedCode,
 };

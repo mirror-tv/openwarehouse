@@ -1,5 +1,8 @@
-import youtube from './youtubeDecorator'
+import youtubeDecorator from './youtubeDecorator'
+import embedCodeDecorator from './embedCodeDecorator'
+
 
 export default [
-    youtube
+    youtubeDecorator,
+    embedCodeDecorator
 ];
