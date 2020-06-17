@@ -1,4 +1,5 @@
 import React from 'react';
+import htmlParser from 'html-react-parser';
 
 function strategy(contentBlock, callback, contentState) {
     contentBlock.findEntityRanges(character => {
@@ -18,7 +19,7 @@ const component = (props) => {
                 className={`embedded ${alignment}`}
                 title={caption}
             >
-                {code}
+                {htmlParser(code)}
             </div>
             <h6>{caption}</h6>
         </div>
