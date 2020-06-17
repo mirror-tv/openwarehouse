@@ -131,7 +131,7 @@ class BlockQuote extends Component {
     prepareLayoutConfig = () => ({
         style: {
             icon: undefined,
-            className: 'fa fa-quote-left',
+            className: 'fa fa-quote-right',
             title: "Block Quote"
         },
         labels: {
