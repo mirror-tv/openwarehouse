@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import htmlParser from 'html-react-parser';
 
 function strategy(contentBlock, callback, contentState) {
@@ -20,6 +21,11 @@ const component = (props) => {
                 title={caption}
             >
                 {htmlParser(code)}
+                <Helmet>
+                    {code.match(/<script.*\/script>/g).map(script => {
+                        return htmlParser(script);
+                    })}
+                </Helmet>
             </div>
             <h6>{caption}</h6>
         </div>

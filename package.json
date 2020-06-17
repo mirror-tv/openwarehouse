@@ -40,6 +40,7 @@
     "html-react-parser": "^0.13.0",
     "keystone-storage-adapter-cloud-storage": "^0.0.6",
     "react-draft-wysiwyg": "^1.14.5",
+    "react-helmet": "^6.1.0",
     "redis": "^3.0.2",
     "shortid": "^2.2.15",
     "uuidv4": "^6.1.0"
