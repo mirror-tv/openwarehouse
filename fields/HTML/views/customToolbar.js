@@ -12,7 +12,6 @@ export const builtInButtons = {
     options: [
         "inline",
         "blockType",
-        "fontSize",
         "list",
         "link",
         "image",
