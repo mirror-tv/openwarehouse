@@ -6,13 +6,15 @@ const gcsDir = 'assets/images/'
 
 module.exports = {
     fields: {
+        title: {
+            label : '標題',
+            type: Text,
+            isRequired: true
+        },
         file: {
             type: File,
             adapter: new ImageAdapter(gcsDir),
             isRequired: true,
-        },
-        description: {
-            type: Text
         },
         copyright: {
             label: '版權',
@@ -34,10 +36,7 @@ module.exports = {
         },
         keywords: {
             label: '關鍵字',
-            type: Text,
-        },
-        image: {
-            type: Relationship, ref: 'GCSFile', many: false
+            type: Text
         },
         urlOriginal: { type: Url, access: { read: false, create: true } },
         urlDesktopSized: { type: Url, access: { read: false, create: true } },
@@ -58,8 +57,6 @@ module.exports = {
         defaultColumns: 'title, image, createdAt',
         defaultSort: '-createdAt',
     },
-    labelField: 'title',
-
     hooks: {
         // Hooks for create and update operations
         resolveInput: ({ operation, existingItem, resolvedData, originalInput }) => {
@@ -74,6 +71,6 @@ module.exports = {
             console.log("resolveInput RESOLVED DATA", resolvedData)
             return resolvedData
         },
-
-    }
+    },
+    labelField: 'title',
 }
