@@ -1,6 +1,6 @@
-const { Text, Select, Relationship, File } = require('@keystonejs/fields');
+const { Text, Select, Relationship, File, Url } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
-const { GCSAdapter } = require('../lib/GCSAdapter');
+const { ImageAdapter } = require('../lib/ImageAdapter');
 const access = require('../helpers/access');
 const gcsDir = 'assets/images/'
 
@@ -8,7 +8,7 @@ module.exports = {
     fields: {
         file: {
             type: File,
-            adapter: new GCSAdapter(gcsDir),
+            adapter: new ImageAdapter(gcsDir),
             isRequired: true,
         },
         description: {
@@ -36,6 +36,14 @@ module.exports = {
             label: '關鍵字',
             type: Text,
         },
+        image: {
+            type: Relationship, ref: 'GCSFile', many: false
+        },
+        urlOriginal: { type: Url, access: { read: false, create: true } },
+        urlDesktopSized: { type: Url, access: { read: false, create: true } },
+        urlMobileSized: { type: Url, access: { read: false, create: true } },
+        urlTabletSized: { type: Url, access: { read: false, create: true } },
+        urlTinySized: { type: Url, access: { read: false, create: true } },
     },
     plugins: [
         atTracking(),
@@ -50,5 +58,22 @@ module.exports = {
         defaultColumns: 'title, image, createdAt',
         defaultSort: '-createdAt',
     },
-    labelField: 'title'
+    labelField: 'title',
+
+    hooks: {
+        // Hooks for create and update operations
+        resolveInput: ({ operation, existingItem, resolvedData, originalInput }) => {
+            if (resolvedData.file) {
+                resolvedData.urlOriginal = resolvedData.file._meta.url.urlOriginal
+                resolvedData.urlDesktopSized = resolvedData.file._meta.url.urlDesktopSized
+                resolvedData.urlMobileSized = resolvedData.file._meta.url.urlMobileSized
+                resolvedData.urlTabletSized = resolvedData.file._meta.url.urlTabletSized
+                resolvedData.urlTinySized = resolvedData.file._meta.url.urlTinySized
+            }
+
+            console.log("resolveInput RESOLVED DATA", resolvedData)
+            return resolvedData
+        },
+
+    }
 }
