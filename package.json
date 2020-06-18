@@ -40,6 +40,8 @@
     "imagemagick-stream": "^4.1.1",
     "iptc-reader": "^1.0.0",
     "keystone-storage-adapter-cloud-storage": "^0.0.6",
+    "react-draft-wysiwyg": "^1.14.5",
+    "react-helmet": "^6.1.0",
     "redis": "^3.0.2",
     "request": "^2.88.2",
     "uuid4": "^2.0.2",
