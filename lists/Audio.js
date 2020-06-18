@@ -1,9 +1,16 @@
-const { Text, Relationship } = require('@keystonejs/fields');
+const { Text, Relationship, File } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
+const { GCSAdapter } = require('../lib/GCSAdapter');
 const access = require('../helpers/access');
+const gcsDir = 'assets/audios/'
 
 module.exports = {
     fields: {
+        file: {
+            type: File,
+            adapter: new GCSAdapter(gcsDir),
+            isRequired: true,
+        },
         title: {
             label: '標題',
             type: Text,
