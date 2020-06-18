@@ -25,6 +25,10 @@ module.exports = {
             destination: 'assets/audios/',
             publicRead: true,
         },*/
+        audio:{
+            type:Relationship, ref:'GCSFile', many:false
+        },
+
         coverPhoto: {
             label: '封面照片',
             type: Relationship,

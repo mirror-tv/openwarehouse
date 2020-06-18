@@ -39,9 +39,9 @@ module.exports = {
             type: Text,
             isMultiline: true
         },
-        // video:{
-        //     type:Relationship, ref:'GCSFile', many:false
-        // },
+        video:{
+            type:Relationship, ref:'GCSFile', many:false
+        },
         tags: {
             label: '標籤',
             type: Relationship,
