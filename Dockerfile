@@ -13,7 +13,8 @@ RUN apk add --no-cache build-base python2 yarn && \
     chmod +x dumb-init \
     && apk add imagemagick \
     && apk add graphicsmagick \
-    && apk add ffmpeg 
+    && apk add ffmpeg \
+    && apk add ffprobe
 
 ADD . /build
 RUN yarn install
