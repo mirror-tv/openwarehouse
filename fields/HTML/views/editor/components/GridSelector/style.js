@@ -47,11 +47,6 @@ export default {
         margin: '18px 12px 12px',
         marginLeft: 'auto',
     },
-    clear: {
-        margin: '18px 12px 12px',
-        marginRight: '8px',
-        marginLeft: 'auto',
-    },
     gridList: {
         width: 'auto',
         margin: '8px 1px 8px !important',
@@ -75,5 +70,13 @@ export default {
     },
     editingTitleClearIcon: {
         color: 'white',
+    },
+    editingTextField: {
+        width: '99%',
+        '& div': {
+            '& input': {
+                color: 'white',
+            },
+        }
     },
 }

@@ -12,7 +12,7 @@ import styleSheet from './style';
 
 const useStyles = makeStyles(styleSheet);
 
-const GirdSelector = (props) => {
+const GridSelector = (props) => {
     const { total, page, pagedData, onPageChange, onChange, TileComponent, EditingTileComponent, isMultipleSelection } = props;
     const [selectedData, setSelectedData] = useState([]);
     const [selectedUIDs, setSelectedUIDs] = useState([]);
@@ -26,11 +26,16 @@ const GirdSelector = (props) => {
         popupState.close();
     }
 
+    const search = (event) => {
+        event.preventDefault();
+        console.log(event.target.value);
+    }
+
     const selectPage = (event, page) => {
         onPageChange(page);
     }
 
-    const selectTile = (event) => {
+    const clickTile = (event) => {
         const index = event.target.getAttribute('id').match(/\d+/)[0];
         if (!selectedUIDs.includes(pagedData[index].id)) {
             if (!isMultipleSelection) {
@@ -62,6 +67,13 @@ const GirdSelector = (props) => {
         setSelectedData([]);
     };
 
+    const editTitle = (event) => {
+        const index = event.target.getAttribute('id').match(/\d+/)[0];
+        const newSelectedData = [...selectedData];
+        newSelectedData[index].title = event.target.value.trim();
+        setSelectedData(newSelectedData);
+    }
+
     return (
         <div className={classes.root}>
             <IconButton
@@ -81,14 +93,16 @@ const GirdSelector = (props) => {
                 {...bindPopover(popupState)}
             >
                 <div className={classes.header}>
-                    <TextField
-                        className={classes.search}
-                        id="outlined-search"
-                        label="Search Images"
-                        type="search"
-                        variant="outlined"
-                        size="small"
-                    />
+                    <form onSubmit={search}>
+                        <TextField
+                            className={classes.search}
+                            id="outlined-search"
+                            label="Search Images"
+                            type="search"
+                            variant="outlined"
+                            size="small"
+                        />
+                    </form>
                     <Button
                         className={classes.save}
                         variant="contained"
@@ -111,7 +125,7 @@ const GirdSelector = (props) => {
                             <GridListTile
                                 key={`paged-data-${index}`}
                                 cols={1}
-                                onClick={selectTile}
+                                onClick={clickTile}
                             >
                                 <TileComponent id={`paged-data-${index}`} data={data} />
                                 {
@@ -162,6 +176,20 @@ const GirdSelector = (props) => {
                                         actionPosition="right"
                                         className={classes.editingTileTitleBar}
                                     />
+                                    <GridListTileBar
+                                        titlePosition="bottom"
+                                        title={
+                                            <TextField
+                                                className={classes.editingTextField}
+                                                id={`selected-data-${index}`}
+                                                variant="outlined"
+                                                value={data.title}
+                                                size="small"
+                                                onChange={editTitle}
+                                            />
+                                        }
+                                        actionPosition="right"
+                                    />
                                 </GridListTile>
                             ))
                         }
@@ -172,4 +200,19 @@ const GirdSelector = (props) => {
     );
 }
 
-export default GirdSelector;
+GridSelector.propTypes = {
+    total: PropTypes.number.isRequired,
+    page: PropTypes.number.isRequired,
+    pagedData: PropTypes.array.isRequired,
+    onPageChange: PropTypes.func.isRequired,
+    onChange: PropTypes.func.isRequired,
+    TileComponent: PropTypes.func.isRequired,
+    EditingTileComponent: PropTypes.func,
+    isMultipleSelection: PropTypes.bool,
+};
+
+GridSelector.defaultProps = {
+    isMultipleSelection: false,
+}
+
+export default GridSelector;

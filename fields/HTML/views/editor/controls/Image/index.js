@@ -117,7 +117,6 @@ const Image = (props) => {
             onChange={saveImage}
             TileComponent={ImageTile}
             EditingTileComponent={ImageEditingTile}
-            isMultipleSelection={true}
         />
     );
 }
