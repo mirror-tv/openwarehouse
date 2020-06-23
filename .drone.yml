@@ -32,6 +32,7 @@ pipeline:
     commands:
     - gcloud source repos clone configs ../configs
     - cp ../configs/mirror-media/openwarehouse/dev/config.js ./configs/config.js
+    - cp ../configs/mirror-media/openwarehouse/dev/gcskeyfile.json ./configs/gcskeyfile.json
     when:
       event: [push]
       branch: [dev]
