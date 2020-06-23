@@ -63,12 +63,18 @@ export default {
         borderRadius: 2,
         margin: 2,
     },
-    editingTileTitleBar: {
-        background:
+    editingTopTitleBar: {
+        /* background:
             'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
+            'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)', */
+        background: 'none',
+    },
+    editingBottomTitleBar: {
+        background:
+            'linear-gradient(to top, rgba(0,0,0,0.7) 0%, ' +
             'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
     },
-    editingTitleClearIcon: {
+    editingClearIcon: {
         color: 'white',
     },
     editingTextField: {
@@ -76,6 +82,9 @@ export default {
         '& div': {
             '& input': {
                 color: 'white',
+            },
+            '& fieldset': {
+                border: 'none',
             },
         }
     },

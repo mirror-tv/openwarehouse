@@ -13,6 +13,8 @@ const Image = (props) => {
     const [total, setTotal] = useState(0);
     const [page, setPage] = useState(1);
     const [pagedData, setPagedData] = useState([]);
+    const [searchText, setSearchText] = useState("");
+
 
     useEffect(() => {
         function getTotal() {
@@ -87,7 +89,6 @@ const Image = (props) => {
                     objectFit: 'cover',
                     height: '100%',
                     width: '100%',
-                    zIndex: -3,
                 }}
             />
         );
@@ -113,7 +114,9 @@ const Image = (props) => {
             total={total}
             page={page}
             pagedData={pagedData}
+            searchText={searchText}
             onPageChange={setPage}
+            onSearchTextChange={setSearchText}
             onChange={saveImage}
             TileComponent={ImageTile}
             EditingTileComponent={ImageEditingTile}

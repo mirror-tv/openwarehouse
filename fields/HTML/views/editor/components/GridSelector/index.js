@@ -13,7 +13,7 @@ import styleSheet from './style';
 const useStyles = makeStyles(styleSheet);
 
 const GridSelector = (props) => {
-    const { total, page, pagedData, onPageChange, onChange, TileComponent, EditingTileComponent, isMultipleSelection } = props;
+    const { total, page, pagedData, searchText, onPageChange, onChange, TileComponent, EditingTileComponent, isMultipleSelection } = props;
     const [selectedData, setSelectedData] = useState([]);
     const [selectedUIDs, setSelectedUIDs] = useState([]);
     const popupState = usePopupState({ variant: 'popover', popupId: 'imagePopover' })
@@ -101,6 +101,7 @@ const GridSelector = (props) => {
                             type="search"
                             variant="outlined"
                             size="small"
+                            value={searchText}
                         />
                     </form>
                     <Button
@@ -138,7 +139,7 @@ const GridSelector = (props) => {
                                             </IconButton>
                                         }
                                         actionPosition="right"
-                                        className={classes.editingTileTitleBar}
+                                        className={classes.editingTopTitleBar}
                                     />
                                 }
                             </GridListTile>
@@ -169,12 +170,12 @@ const GridSelector = (props) => {
                                     <GridListTileBar
                                         titlePosition="top"
                                         actionIcon={
-                                            <IconButton className={classes.editingTitleClearIcon} onClick={removeTile(index)}>
+                                            <IconButton className={classes.editingClearIcon} onClick={removeTile(index)}>
                                                 <Clear />
                                             </IconButton>
                                         }
                                         actionPosition="right"
-                                        className={classes.editingTileTitleBar}
+                                        className={classes.editingTopTitleBar}
                                     />
                                     <GridListTileBar
                                         titlePosition="bottom"
@@ -189,6 +190,7 @@ const GridSelector = (props) => {
                                             />
                                         }
                                         actionPosition="right"
+                                        className={classes.editingBottomTitleBar}
                                     />
                                 </GridListTile>
                             ))
@@ -204,7 +206,9 @@ GridSelector.propTypes = {
     total: PropTypes.number.isRequired,
     page: PropTypes.number.isRequired,
     pagedData: PropTypes.array.isRequired,
+    searchText: PropTypes.string.isRequired,
     onPageChange: PropTypes.func.isRequired,
+    onSearchTextChange: PropTypes.func.isRequired,
     onChange: PropTypes.func.isRequired,
     TileComponent: PropTypes.func.isRequired,
     EditingTileComponent: PropTypes.func,
