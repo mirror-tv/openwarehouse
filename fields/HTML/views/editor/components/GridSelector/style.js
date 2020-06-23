@@ -47,6 +47,11 @@ export default {
         margin: '18px 12px 12px',
         marginLeft: 'auto',
     },
+    clear: {
+        margin: '18px 12px 12px',
+        marginRight: '8px',
+        marginLeft: 'auto',
+    },
     gridList: {
         width: 'auto',
         margin: '8px 1px 8px !important',
@@ -55,10 +60,8 @@ export default {
         width: 'max-content',
         margin: '16px auto',
     },
-    selectedTile: {
-        border: '2px dotted #D84315',
-        borderRadius: 2,
-        margin: '2 !important',
+    pagedTitleCheckIcon: {
+        color: 'red',
     },
     editingTile: {
         border: '2px dotted #D84315',
@@ -72,6 +75,5 @@ export default {
     },
     editingTitleClearIcon: {
         color: 'white',
-
     },
 }

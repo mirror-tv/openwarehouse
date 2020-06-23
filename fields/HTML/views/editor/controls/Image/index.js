@@ -87,6 +87,7 @@ const Image = (props) => {
                     objectFit: 'cover',
                     height: '100%',
                     width: '100%',
+                    zIndex: -3,
                 }}
             />
         );
