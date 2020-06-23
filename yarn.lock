@@ -1511,7 +1511,7 @@
 
 "@emotion/sheet@0.9.4":
   version "0.9.4"
-  resolved "https://registry.yarnpkg.com/@emotion/sheet/runtime@^7.0.0-/sheet-0.9.4.tgz#894374bea39ec30f489bbfc3438192b9774d32e5"
+  resolved "https://registry.yarnpkg.com/@emotion/sheet/-/sheet-0.9.4.tgz#894374bea39ec30f489bbfc3438192b9774d32e5"
   integrity sha512-zM9PFmgVSqBw4zL101Q0HrBVTGmpAxFZH/pYx/cjJT5advXguvcgjHFTCaIO3enL/xr89vK2bh0Mfyj9aa0ANA==
 
 "@emotion/styled-base@^10.0.27":
