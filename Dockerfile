@@ -10,11 +10,7 @@ WORKDIR /build
 
 RUN apk add --no-cache build-base python2 yarn && \
     wget -O dumb-init -q https://github.com/Yelp/dumb-init/releases/download/v${DUMB_INIT_VERSION}/dumb-init_${DUMB_INIT_VERSION}_amd64 && \
-    chmod +x dumb-init \
-    && apk add imagemagick \
-    && apk add graphicsmagick \
-    && apk add ffmpeg 
-
+    chmod +x dumb-init 
 ADD . /build
 RUN yarn install
 RUN yarn build && yarn cache clean
@@ -22,7 +18,7 @@ RUN yarn migrate
 
 # Runtime container
 FROM node:${NODE_VERSION}-alpine
-
+RUN apk add imagemagick graphicsmagick ffmpeg
 WORKDIR /app
 
 COPY --from=build /build /app
