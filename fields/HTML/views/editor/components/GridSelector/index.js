@@ -14,22 +14,22 @@ const defaultColumns = 4;
 const useStyles = makeStyles(styleSheet);
 
 const GridSelector = (props) => {
-    const { total, page, pagedData, searchText, onPageChange, onChange, TileComponent, EditingTileComponent, isMultipleSelection } = props;
+    const { pageNumbers, page, pagedData, searchText, onPageChange, onSearchTextChange, onChange, TileComponent, EditingTileComponent, isMultipleSelection } = props;
     const [selectedData, setSelectedData] = useState([]);
     const [selectedUIDs, setSelectedUIDs] = useState([]);
     const popupState = usePopupState({ variant: 'popover', popupId: 'imagePopover' })
     const { width } = useWindowDimensions();
     const classes = useStyles({ width, defaultColumns, currentRows: pagedData / defaultColumns });
 
-    const save = selectedData => {
-        onChange();
+    const save = event => {
+        onChange(selectedData);
         clean();
         popupState.close();
     }
 
     const search = (event) => {
         event.preventDefault();
-        console.log(event.target.value);
+        onSearchTextChange(event.target.value);
     }
 
     const selectPage = (event, page) => {
@@ -71,6 +71,7 @@ const GridSelector = (props) => {
     const editTitle = (event) => {
         const index = event.target.getAttribute('id').match(/\d+/)[0];
         const newSelectedData = [...selectedData];
+        newSelectedData[index] = { ...newSelectedData[index] }
         newSelectedData[index].title = event.target.value.trim();
         setSelectedData(newSelectedData);
     }
@@ -94,17 +95,16 @@ const GridSelector = (props) => {
                 {...bindPopover(popupState)}
             >
                 <div className={classes.header}>
-                    <form onSubmit={search}>
-                        <TextField
-                            className={classes.search}
-                            id="outlined-search"
-                            label="Search Images"
-                            type="search"
-                            variant="outlined"
-                            size="small"
-                            value={searchText}
-                        />
-                    </form>
+                    <TextField
+                        className={classes.search}
+                        id="outlined-search"
+                        label="Search Images"
+                        type="search"
+                        variant="outlined"
+                        size="small"
+                        value={searchText}
+                        onChange={search}
+                    />
                     <Button
                         className={classes.save}
                         variant="contained"
@@ -147,11 +147,11 @@ const GridSelector = (props) => {
                         ))}
                     </GridList>
                     {
-                        total > 0 &&
+                        pageNumbers > 0 &&
                         <div>
                             <Pagination
                                 className={classes.pagination}
-                                count={total}
+                                count={pageNumbers}
                                 page={page}
                                 siblingCount={2}
                                 variant="outlined"
@@ -209,7 +209,7 @@ const GridSelector = (props) => {
 }
 
 GridSelector.propTypes = {
-    total: PropTypes.number.isRequired,
+    pageNumbers: PropTypes.number.isRequired,
     page: PropTypes.number.isRequired,
     pagedData: PropTypes.array.isRequired,
     searchText: PropTypes.string.isRequired,

@@ -5,12 +5,6 @@ const userIsAuthor = ({ authentication: { item: user } }) => Boolean(user && use
 const userIsContributor = ({ authentication: { item: user } }) => Boolean(user && user.role == 'contributor');
 const userIsNotContributor = ({ authentication: { item: user } }) => Boolean(user && user.role != 'contributor');
 
-const allowGraphQLRead = ({ authentication: { item: user }, listKey }) => {
-    if (user) return false;
-
-    return true;
-};
-
 const userOwnsItem = ({ authentication: { item: user }, listKey }) => {
     if (!user) return false;
 
@@ -54,7 +48,6 @@ const access = {
     userOwnsItem,
     userIsContributor,
     userIsNotContributor,
-    allowGraphQLRead
 };
 
 module.exports = access

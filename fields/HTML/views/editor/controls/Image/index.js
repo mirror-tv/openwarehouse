@@ -2,64 +2,31 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { EditorState, Modifier } from 'draft-js';
 import { getEntityRange, getSelectionEntity } from 'draftjs-utils';
-import { createApolloFetch } from 'apollo-fetch';
 
 import GridSelector from '../../components/GridSelector'
-import dummy from './dummy';
+import { setPages, setData } from '../../utils/fetchData';
 
-const maxImageNumberPerPage = 12;
-
-const fetch = createApolloFetch({
-    uri: '/admin/api',
-});
+const config = {
+    list: 'Image',
+    readableColumn: 'title',
+    urlColumn: 'urlDesktopSized',
+    maxImageNumberPerPage: 12,
+}
 
 const Image = (props) => {
     const { onChange, editorState } = props;
-    const [total, setTotal] = useState(0);
+    const [pageNumbers, setPageNumbers] = useState(0);
     const [page, setPage] = useState(1);
     const [pagedData, setPagedData] = useState([]);
     const [searchText, setSearchText] = useState("");
 
+    useEffect(() => {
+        setPages(config, searchText, setPageNumbers);
+    }, [searchText])
 
     useEffect(() => {
-        (async () => {
-            const { data: { _allImagesMeta: { count } } } = await fetch({
-                query: `
-                query {
-                    _allImagesMeta {
-                      count
-                    }
-                }`,
-            });
-            setTotal(Math.ceil(count / maxImageNumberPerPage));
-        })();
-    })
-
-    useEffect(() => {
-        /* function getPagedData() {
-            const offset = (page - 1) * maxImageNumberPerPage;
-            return dummy.slice(offset, offset + maxImageNumberPerPage);
-        } */
-
-        (async () => {
-            const { data: { allImages } } = await fetch({
-                query: `
-                query getImages($search: String!, $skip: Int!, $first: Int!) {
-                    allImages(search: $search, skip: $skip, first: $first) {
-                      id
-                      title
-                      urlDesktopSized
-                    }
-                }`,
-                variables: {
-                    search: searchText,
-                    skip: (page - 1) * maxImageNumberPerPage,
-                    first: maxImageNumberPerPage,
-                },
-            });
-            setPagedData(allImages);
-        })();
-    }, [page])
+        setData(config, searchText, page, setPagedData);
+    }, [searchText, pageNumbers, page])
 
     const saveImage = selectedData => {
         const currentEntity = getSelectionEntity(editorState);
@@ -83,10 +50,7 @@ const Image = (props) => {
 
         let contentState = editorState.getCurrentContent();
         contentState = Modifier.splitBlock(contentState, selection);
-        contentState = contentState.createEntity('IMAGE', 'IMMUTABLE', {
-            title: 'dummy_title',
-            url: 'dummy_url',
-        });
+        contentState = contentState.createEntity('IMAGE', 'IMMUTABLE', selectedData);
         const entityKey = contentState.getLastCreatedEntityKey();
 
         contentState = Modifier.replaceText(
@@ -139,7 +103,7 @@ const Image = (props) => {
 
     return (
         <GridSelector
-            total={total}
+            pageNumbers={pageNumbers}
             page={page}
             pagedData={pagedData}
             searchText={searchText}

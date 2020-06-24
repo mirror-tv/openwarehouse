@@ -41,36 +41,36 @@ module.exports = {
         urlOriginal: {
             type: Url,
             access: {
-                read: access.allowGraphQLRead,
-                create: true
+                create: false,
+                update: false,
             }
         },
         urlDesktopSized: {
             type: Url,
             access: {
-                read: access.allowGraphQLRead,
-                create: true
+                create: false,
+                update: false,
             }
         },
         urlMobileSized: {
             type: Url,
             access: {
-                read: access.allowGraphQLRead,
-                create: true
+                create: false,
+                update: false,
             }
         },
         urlTabletSized: {
             type: Url,
             access: {
-                read: access.allowGraphQLRead,
-                create: true
+                create: false,
+                update: false,
             }
         },
         urlTinySized: {
             type: Url,
             access: {
-                read: access.allowGraphQLRead,
-                create: true
+                create: false,
+                update: false,
             }
         },
     },
