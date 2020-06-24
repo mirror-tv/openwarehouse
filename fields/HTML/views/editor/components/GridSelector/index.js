@@ -10,6 +10,7 @@ import { usePopupState, bindTrigger, bindPopover } from 'material-ui-popup-state
 import { useWindowDimensions } from '../../hooks/useWindowDimensions';
 import styleSheet from './style';
 
+const defaultColumns = 4;
 const useStyles = makeStyles(styleSheet);
 
 const GridSelector = (props) => {
@@ -18,7 +19,7 @@ const GridSelector = (props) => {
     const [selectedUIDs, setSelectedUIDs] = useState([]);
     const popupState = usePopupState({ variant: 'popover', popupId: 'imagePopover' })
     const { width } = useWindowDimensions();
-    const classes = useStyles({ width });
+    const classes = useStyles({ width, defaultColumns, currentRows: pagedData / defaultColumns });
 
     const save = selectedData => {
         onChange();
@@ -118,8 +119,8 @@ const GridSelector = (props) => {
                 <div className={classes.body}>
                     <GridList
                         className={classes.gridList}
-                        cellHeight={width / 4 / 2}
-                        cols={4}
+                        cellHeight={width / defaultColumns / 2}
+                        cols={defaultColumns}
                         spacing={1}
                     >
                         {pagedData.map((data, index) => (
@@ -145,16 +146,21 @@ const GridSelector = (props) => {
                             </GridListTile>
                         ))}
                     </GridList>
-                    <Pagination
-                        className={classes.pagination}
-                        count={total}
-                        page={page}
-                        siblingCount={2}
-                        variant="outlined"
-                        shape="rounded"
-                        onChange={selectPage}
-                    />
-                    <Divider light={true} />
+                    {
+                        total > 0 &&
+                        <div>
+                            <Pagination
+                                className={classes.pagination}
+                                count={total}
+                                page={page}
+                                siblingCount={2}
+                                variant="outlined"
+                                shape="rounded"
+                                onChange={selectPage}
+                            />
+                            <Divider light={true} />
+                        </div>
+                    }
                     <GridList
                         className={classes.gridList}
                         cellHeight={width / 2 / 2}
