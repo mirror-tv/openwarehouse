@@ -20,6 +20,7 @@ export default {
     popover: {
         '& .MuiPopover-paper': {
             width: '80%',
+            minWidth: '400px',
             top: '50% !important',
             left: '50% !important',
             transform: 'translate(-50%, -50%) !important',
@@ -36,7 +37,7 @@ export default {
         overflow: 'hidden',
     },
     body: {
-        height: props => `${0.9 * props.width / 2}px`,
+        height: props => `${0.84 * props.width / 2}px`,
         overflowY: 'scroll',
     },
     search: {
