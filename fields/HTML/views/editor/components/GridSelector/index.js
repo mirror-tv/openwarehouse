@@ -22,7 +22,7 @@ const GridSelector = (props) => {
     const classes = useStyles({ width, defaultColumns, currentRows: pagedData / defaultColumns });
 
     const save = event => {
-        selectedData && onChange(selectedData);
+        selectedData.length > 0 && onChange(selectedData);
         clean();
         popupState.close();
     }
@@ -47,7 +47,7 @@ const GridSelector = (props) => {
             }
         } else {
             const deletingIndex = selectedData.findIndex(data => data.id == pagedData[index].id);
-            removeIndexFromSelectedData(deletingIndex);
+            removeIndexFromSelectedData(deletingIndex); and
         }
     }
 
