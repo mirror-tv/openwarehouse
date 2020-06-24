@@ -37,7 +37,10 @@ export default {
         overflow: 'hidden',
     },
     body: {
-        height: props => `${0.84 * props.width / 2}px`,
+        height: ({ width, defaultColumns, currentRows }) => {
+            const height = width / defaultColumns / 2;
+            return `${0.84 * width / 2 - height * (defaultColumns - currentRows)}px`
+        },
         overflowY: 'scroll',
     },
     search: {

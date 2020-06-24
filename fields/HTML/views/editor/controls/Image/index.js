@@ -2,11 +2,16 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { EditorState, Modifier } from 'draft-js';
 import { getEntityRange, getSelectionEntity } from 'draftjs-utils';
+import { createApolloFetch } from 'apollo-fetch';
 
 import GridSelector from '../../components/GridSelector'
 import dummy from './dummy';
 
 const maxImageNumberPerPage = 12;
+
+const fetch = createApolloFetch({
+    uri: '/admin/api',
+});
 
 const Image = (props) => {
     const { onChange, editorState } = props;
@@ -17,20 +22,43 @@ const Image = (props) => {
 
 
     useEffect(() => {
-        function getTotal() {
-            return Math.ceil(dummy.length / maxImageNumberPerPage);
-        }
-
-        setTotal(getTotal());
+        (async () => {
+            const { data: { _allImagesMeta: { count } } } = await fetch({
+                query: `
+                query {
+                    _allImagesMeta {
+                      count
+                    }
+                }`,
+            });
+            setTotal(Math.ceil(count / maxImageNumberPerPage));
+        })();
     })
 
     useEffect(() => {
-        function getPagedData() {
+        /* function getPagedData() {
             const offset = (page - 1) * maxImageNumberPerPage;
             return dummy.slice(offset, offset + maxImageNumberPerPage);
-        }
+        } */
 
-        setPagedData(getPagedData());
+        (async () => {
+            const { data: { allImages } } = await fetch({
+                query: `
+                query getImages($search: String!, $skip: Int!, $first: Int!) {
+                    allImages(search: $search, skip: $skip, first: $first) {
+                      id
+                      title
+                      urlDesktopSized
+                    }
+                }`,
+                variables: {
+                    search: searchText,
+                    skip: (page - 1) * maxImageNumberPerPage,
+                    first: maxImageNumberPerPage,
+                },
+            });
+            setPagedData(allImages);
+        })();
     }, [page])
 
     const saveImage = selectedData => {
@@ -83,7 +111,7 @@ const Image = (props) => {
         return (
             <img
                 id={id}
-                src={data.url}
+                src={data.urlDesktopSized}
                 alt={data.title}
                 style={{
                     objectFit: 'cover',
@@ -98,7 +126,7 @@ const Image = (props) => {
         const { data } = props;
         return (
             <img
-                src={data.url}
+                src={data.urlDesktopSized}
                 alt={data.title}
                 style={{
                     objectFit: 'cover',
@@ -122,6 +150,11 @@ const Image = (props) => {
             EditingTileComponent={ImageEditingTile}
         />
     );
+}
+
+Image.propTypes = {
+    onChange: PropTypes.func,
+    editorState: PropTypes.object,
 }
 
 export default Image;

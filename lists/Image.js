@@ -7,7 +7,7 @@ const gcsDir = 'assets/images/'
 module.exports = {
     fields: {
         title: {
-            label : '標題',
+            label: '標題',
             type: Text,
             isRequired: true
         },
@@ -38,11 +38,41 @@ module.exports = {
             label: '關鍵字',
             type: Text
         },
-        urlOriginal: { type: Url, access: { read: false, create: true } },
-        urlDesktopSized: { type: Url, access: { read: false, create: true } },
-        urlMobileSized: { type: Url, access: { read: false, create: true } },
-        urlTabletSized: { type: Url, access: { read: false, create: true } },
-        urlTinySized: { type: Url, access: { read: false, create: true } },
+        urlOriginal: {
+            type: Url,
+            access: {
+                read: access.allowGraphQLRead,
+                create: true
+            }
+        },
+        urlDesktopSized: {
+            type: Url,
+            access: {
+                read: access.allowGraphQLRead,
+                create: true
+            }
+        },
+        urlMobileSized: {
+            type: Url,
+            access: {
+                read: access.allowGraphQLRead,
+                create: true
+            }
+        },
+        urlTabletSized: {
+            type: Url,
+            access: {
+                read: access.allowGraphQLRead,
+                create: true
+            }
+        },
+        urlTinySized: {
+            type: Url,
+            access: {
+                read: access.allowGraphQLRead,
+                create: true
+            }
+        },
     },
     plugins: [
         atTracking(),
