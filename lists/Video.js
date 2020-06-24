@@ -76,6 +76,10 @@ module.exports = {
             type: Checkbox,
             defaultValue: true
         },
+        meta:{
+            label: '中繼資料',
+            type: Text
+        },
     },
     plugins: [
         atTracking(),
@@ -89,6 +93,14 @@ module.exports = {
     adminConfig: {
         defaultColumns: 'title, video, tags, state, publishTime, createdAt',
         defaultSort: '-createdAt',
+    },
+    hooks: {
+        resolveInput: ({ operation, existingItem, resolvedData, originalInput }) => {
+            if (resolvedData.file) {
+                resolvedData.meta = resolvedData.file._meta
+            }
+            return resolvedData
+        },
     },
     labelField: 'title'
 }
