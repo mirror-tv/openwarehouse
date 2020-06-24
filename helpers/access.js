@@ -8,7 +8,7 @@ const userIsNotContributor = ({ authentication: { item: user } }) => Boolean(use
 const allowGraphQLRead = ({ authentication: { item: user }, listKey }) => {
     if (user) return false;
 
-    return false;
+    return true;
 };
 
 const userOwnsItem = ({ authentication: { item: user }, listKey }) => {
