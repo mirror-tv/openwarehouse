@@ -29,8 +29,6 @@ const Image = (props) => {
     }, [searchText, pageNumbers, page])
 
     const saveImage = selectedData => {
-        if (!selectedData) return;
-
         const currentEntity = getSelectionEntity(editorState);
         let selection = editorState.getSelection();
 

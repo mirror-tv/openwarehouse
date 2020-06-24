@@ -22,7 +22,7 @@ const GridSelector = (props) => {
     const classes = useStyles({ width, defaultColumns, currentRows: pagedData / defaultColumns });
 
     const save = event => {
-        onChange(selectedData);
+        selectedData && onChange(selectedData);
         clean();
         popupState.close();
     }
