@@ -30,6 +30,7 @@ const GridSelector = (props) => {
     const search = (event) => {
         event.preventDefault();
         onSearchTextChange(event.target.value);
+        onPageChange(1);
     }
 
     const selectPage = (event, page) => {
@@ -66,6 +67,7 @@ const GridSelector = (props) => {
 
     const clean = () => {
         setSelectedData([]);
+        onPageChange(1);
     };
 
     const editTitle = (event) => {
