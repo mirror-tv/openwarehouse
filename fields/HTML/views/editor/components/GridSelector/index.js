@@ -47,7 +47,7 @@ const GridSelector = (props) => {
             }
         } else {
             const deletingIndex = selectedData.findIndex(data => data.id == pagedData[index].id);
-            removeIndexFromSelectedData(deletingIndex); and
+            removeIndexFromSelectedData(deletingIndex);
         }
     }
 
