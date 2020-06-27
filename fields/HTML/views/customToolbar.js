@@ -1,12 +1,13 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import { YouTube, EmbedCode, BlockQuote, Image } from './editor/controls';
+import { YouTube, EmbedCode, BlockQuote, Image, Annotation } from './editor/controls';
 
 export const customButtons = [
     <YouTube />,
     <EmbedCode />,
     <BlockQuote />,
     <Image />,
+    <Annotation />,
 ];
 
 export const builtInButtons = {
