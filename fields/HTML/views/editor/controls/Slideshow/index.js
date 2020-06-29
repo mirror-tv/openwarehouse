@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { EditorState, Modifier } from 'draft-js';
 import { getEntityRange, getSelectionEntity } from 'draftjs-utils';
-import { PanoramaOutlined } from '@material-ui/icons'
+import SlideshowIcon from '@material-ui/icons/Slideshow'
 
 import GridSelector from '../../components/GridSelector'
 import { setPages, setData } from '../../utils/fetchData';
@@ -14,7 +14,7 @@ const dataConfig = {
     maxImageNumberPerPage: 12,
 }
 
-const Image = (props) => {
+const Slideshow = (props) => {
     const { onChange, editorState } = props;
     const [pageNumbers, setPageNumbers] = useState(0);
     const [page, setPage] = useState(1);
@@ -51,7 +51,7 @@ const Image = (props) => {
 
         let contentState = editorState.getCurrentContent();
         contentState = Modifier.splitBlock(contentState, selection);
-        contentState = contentState.createEntity('IMAGE', 'IMMUTABLE', selectedData);
+        contentState = contentState.createEntity('SLIDESHOW', 'IMMUTABLE', selectedData);
         const entityKey = contentState.getLastCreatedEntityKey();
 
         contentState = Modifier.replaceText(
@@ -111,16 +111,17 @@ const Image = (props) => {
             onPageChange={setPage}
             onSearchTextChange={setSearchText}
             onChange={saveImage}
-            ButtonIconComponent={PanoramaOutlined}
+            ButtonIconComponent={SlideshowIcon}
             TileComponent={ImageTile}
             EditingTileComponent={ImageEditingTile}
+            isMultipleSelection={true}
         />
     );
 }
 
-Image.propTypes = {
+Slideshow.propTypes = {
     onChange: PropTypes.func,
     editorState: PropTypes.object,
 }
 
-export default Image;
+export default Slideshow;

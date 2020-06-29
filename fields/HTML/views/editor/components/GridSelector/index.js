@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Popover, IconButton, TextField, GridList, GridListTile, Divider, Button, GridListTileBar } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
-import { PanoramaOutlined, Clear, CheckCircleOutline } from '@material-ui/icons'
+import { PanoramaOutlined, Clear, Check } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/core/styles';
 import { usePopupState, bindTrigger, bindPopover } from 'material-ui-popup-state/hooks'
 
@@ -14,7 +14,7 @@ const defaultColumns = 4;
 const useStyles = makeStyles(styleSheet);
 
 const GridSelector = (props) => {
-    const { pageNumbers, page, pagedData, searchText, onPageChange, onSearchTextChange, onChange, TileComponent, EditingTileComponent, isMultipleSelection } = props;
+    const { pageNumbers, page, pagedData, searchText, onPageChange, onSearchTextChange, onChange, ButtonIconComponent, TileComponent, EditingTileComponent, isMultipleSelection } = props;
     const [selectedData, setSelectedData] = useState([]);
     const [selectedUIDs, setSelectedUIDs] = useState([]);
     const popupState = usePopupState({ variant: 'popover', popupId: 'imagePopover' })
@@ -86,7 +86,7 @@ const GridSelector = (props) => {
                 disableRipple={true}
                 {...bindTrigger(popupState)}
             >
-                <PanoramaOutlined />
+                <ButtonIconComponent />
             </IconButton>
             <Popover
                 className={classes.popover}
@@ -138,7 +138,7 @@ const GridSelector = (props) => {
                                         titlePosition="top"
                                         actionIcon={
                                             <IconButton className={classes.pagedTitleCheckIcon} disableRipple={true}>
-                                                <CheckCircleOutline />
+                                                <Check />
                                             </IconButton>
                                         }
                                         actionPosition="right"
@@ -218,6 +218,7 @@ GridSelector.propTypes = {
     onPageChange: PropTypes.func.isRequired,
     onSearchTextChange: PropTypes.func.isRequired,
     onChange: PropTypes.func.isRequired,
+    ButtonIconComponent: PropTypes.elementType.isRequired,
     TileComponent: PropTypes.func.isRequired,
     EditingTileComponent: PropTypes.func,
     isMultipleSelection: PropTypes.bool,
