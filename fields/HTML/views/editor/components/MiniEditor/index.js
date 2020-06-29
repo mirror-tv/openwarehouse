@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Editor } from 'react-draft-wysiwyg';
 import { Dialog, DialogContent, DialogContentText, DialogTitle, DialogActions, TextField, Button } from '@material-ui/core';
 import { EditorState } from 'draft-js';
@@ -54,10 +54,12 @@ const MiniEditor = (props) => {
         setText(event.target.value);
     };
 
-    // Fill-in pre-selected text if text state is empty
-    if (text == "" && getPreSelectedText() != "") {
-        setText(getPreSelectedText());
-    }
+    // Fill-in pre-selected text if text state is empty, and it's just expanded
+    useEffect(() => {
+        if (text == "" && getPreSelectedText() != "") {
+            setText(getPreSelectedText());
+        }
+    }, [expanded])
 
     return (
         <div
