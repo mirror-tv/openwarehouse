@@ -40,6 +40,10 @@ module.exports = {
             label: '中繼資料',
             type: Text
         },
+        url:{
+            label: '檔案網址',
+            type: Text
+        }
     },
     plugins: [
         atTracking(),

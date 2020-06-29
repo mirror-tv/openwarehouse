@@ -1,4 +1,4 @@
-const { Text, Checkbox, Select, Relationship, File, DateTime } = require('@keystonejs/fields');
+const { Text, Checkbox, Select, Relationship, File, DateTime, Url } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
 const { GCSAdapter } = require('../lib/GCSAdapter');
 const access = require('../helpers/access');
@@ -80,6 +80,11 @@ module.exports = {
             label: '中繼資料',
             type: Text
         },
+
+        url:{
+            label: '檔案網址',
+            type: Text
+        }
     },
     plugins: [
         atTracking(),
@@ -98,6 +103,7 @@ module.exports = {
         resolveInput: ({ operation, existingItem, resolvedData, originalInput }) => {
             if (resolvedData.file) {
                 resolvedData.meta = resolvedData.file._meta
+                resolvedData.url = resolvedData.file._meta.url
             }
             return resolvedData
         },
