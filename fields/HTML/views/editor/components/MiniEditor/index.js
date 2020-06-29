@@ -43,12 +43,15 @@ const MiniEditor = (props) => {
         clear();
     };
     const doExpand = () => setExpanded(true);;
-    const save = () => {
+
+    // Event handlers
+    const handleSave = () => {
         onSave(text, editorState.getCurrentContent());
         doCollapse();
     };
-
-    // Event handlers
+    const handleCancel = () => {
+        doCollapse();
+    };
     const onEditorStateChange = (state) => setEditor(state);;
     const handleTextChange = (event) => {
         setText(event.target.value);
@@ -104,10 +107,10 @@ const MiniEditor = (props) => {
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button variant="contained" color="primary" onClick={save} >
+                    <Button variant="contained" color="primary" onClick={handleSave} >
                         Save
                     </Button>
-                    <Button variant="contained" color="secondary" onClick={doCollapse}>
+                    <Button variant="contained" color="secondary" onClick={handleCancel}>
                         Cancel
                     </Button>
                 </DialogActions>
