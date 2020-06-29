@@ -59,7 +59,7 @@ const MiniEditor = (props) => {
 
     // Fill-in pre-selected text if text state is empty, and it's just expanded
     useEffect(() => {
-        if (text == "" && getPreSelectedText() != "") {
+        if (expanded && !text && getPreSelectedText()) {
             setText(getPreSelectedText());
         }
     }, [expanded])
