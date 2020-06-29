@@ -29,16 +29,17 @@ const MiniEditor = (props) => {
     const [editorState, setEditor] = useState(EditorState.createEmpty());
 
     // States cleaners
-    const clearEditor = () => setEditor(EditorState.createEmpty());;
-    const clearText = () => setText("");;
-    const statesCleaners = [clearEditor, clearText];
+    const statesCleaners = [
+        () => setEditor(EditorState.createEmpty()),
+        () => setText(""),
+        () => setExpanded(false),
+    ];
     const clear = () => {
         statesCleaners.map(fn => fn());
     };
 
-    // Helper funtions
+    // Bussiness Logic Funtions
     const doCollapse = () => {
-        setExpanded(false);
         clear();
     };
     const doExpand = () => setExpanded(true);;
