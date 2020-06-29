@@ -86,7 +86,6 @@ const MiniEditor = (props) => {
                 <DialogTitle id="alert-dialog-title">{title.text}</DialogTitle>
                 <DialogContent>
                     <TextField
-                        autoFocus
                         required={true}
                         margin="dense"
                         id="title"
