@@ -31,7 +31,7 @@ const Video = (props) => {
     const saveData = selectedData => {
         const currentEntity = getSelectionEntity(editorState);
         let selection = editorState.getSelection();
-        console.log(selectedData);
+
         if (currentEntity) {
             const entityRange = getEntityRange(editorState, currentEntity);
             const isBackward = selection.getIsBackward();
