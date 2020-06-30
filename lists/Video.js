@@ -84,6 +84,10 @@ module.exports = {
         url:{
             label: '檔案網址',
             type: Text
+        },
+        duration:{
+            label: '影片長度（秒）',
+            type: Number
         }
     },
     plugins: [
@@ -104,6 +108,7 @@ module.exports = {
             if (resolvedData.file) {
                 resolvedData.meta = resolvedData.file._meta
                 resolvedData.url = resolvedData.file._meta.url
+                resolvedData.duration = resolvedData.file._meta.duration
             }
             return resolvedData
         },
