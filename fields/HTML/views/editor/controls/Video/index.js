@@ -2,18 +2,18 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { EditorState, Modifier } from 'draft-js';
 import { getEntityRange, getSelectionEntity } from 'draftjs-utils';
-import { PanoramaOutlined } from '@material-ui/icons'
+import { Videocam } from '@material-ui/icons'
 
 import GridSelector from '../../components/GridSelector'
 import { setPages, setData } from '../../utils/fetchData';
 
 const dataConfig = {
-    list: 'Image',
-    columns: ['title', 'urlDesktopSized'],
+    list: 'Video',
+    columns: ['title', 'description', 'url'],
     maxItemsPerPage: 12,
 }
 
-const Image = (props) => {
+const Video = (props) => {
     const { onChange, editorState } = props;
     const [pageNumbers, setPageNumbers] = useState(0);
     const [page, setPage] = useState(1);
@@ -31,7 +31,7 @@ const Image = (props) => {
     const saveData = selectedData => {
         const currentEntity = getSelectionEntity(editorState);
         let selection = editorState.getSelection();
-
+        console.log(selectedData);
         if (currentEntity) {
             const entityRange = getEntityRange(editorState, currentEntity);
             const isBackward = selection.getIsBackward();
@@ -50,7 +50,7 @@ const Image = (props) => {
 
         let contentState = editorState.getCurrentContent();
         contentState = Modifier.splitBlock(contentState, selection);
-        contentState = contentState.createEntity('IMAGE', 'IMMUTABLE', selectedData);
+        contentState = contentState.createEntity('VIDEO', 'IMMUTABLE', selectedData);
         const entityKey = contentState.getLastCreatedEntityKey();
 
         contentState = Modifier.replaceText(
@@ -70,37 +70,50 @@ const Image = (props) => {
         onChange(newEditorState);
     }
 
-    const ImageTile = props => {
+    const VideoTile = props => {
         const { id, data, eventHandler } = props;
         const onClick = event => eventHandler(id);
 
         return (
-            <img
+            <div
                 id={id}
-                src={data.urlDesktopSized}
-                alt={data.title}
-                style={{
-                    objectFit: 'cover',
-                    height: '100%',
-                    width: '100%',
-                }}
                 onClick={onClick}
-            />
-        );
-    };
-
-    const ImageEditingTile = props => {
-        const { data } = props;
-        return (
-            <img
-                src={data.urlDesktopSized}
-                alt={data.title}
                 style={{
-                    objectFit: 'cover',
-                    height: '100%',
-                    width: '100%',
+                    border: '2px dotted #D84315',
+                    borderRadius: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: '98%',
+                    padding: -10,
                 }}
-            />
+            >
+                <div
+                    style={{
+                        position: 'relative',
+                        paddingTop: '40%',
+                        flex: 1,
+                        overflow: 'hidden',
+                    }}
+                >
+                    <video
+                        style={{
+                            top: 0,
+                            left: 0,
+                            height: '100%',
+                            width: '100%',
+                            position: 'absolute',
+                            objectFit: 'cover',
+                            objectPosition: 'center',
+                        }}
+                        controls>
+                        <source src={data.url} type="video/mp4" />
+                    </video>
+                </div>
+                <div style={{ width: '100%', flex: 1 }}>
+                    <p style={{ fontSize: '14px', fontWeight: 'bold', fontFamily: 'Noto Sans TC,sans-serif' }}>{data.title}</p>
+                    <p style={{ fontSize: '10px', fontFamily: 'Noto Sans TC,sans-serif' }}>{data.description}</p>
+                </div>
+            </div >
         );
     };
 
@@ -113,9 +126,9 @@ const Image = (props) => {
             onPageChange={setPage}
             onSearchTextChange={setSearchText}
             onChange={saveData}
-            ButtonIconComponent={PanoramaOutlined}
-            TileComponent={ImageTile}
-            EditingTileComponent={ImageEditingTile}
+            ButtonIconComponent={Videocam}
+            TileComponent={VideoTile}
+            ratio={1.3}
         />
     );
 }
@@ -125,4 +138,4 @@ Image.propTypes = {
     editorState: PropTypes.object,
 }
 
-export default Image;
+export default Video;

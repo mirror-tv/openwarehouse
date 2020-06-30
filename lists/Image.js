@@ -12,6 +12,7 @@ module.exports = {
             isRequired: true
         },
         file: {
+            label: '檔案',
             type: File,
             adapter: new ImageAdapter(gcsDir),
             isRequired: true,

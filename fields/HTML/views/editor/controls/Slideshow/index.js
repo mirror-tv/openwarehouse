@@ -9,9 +9,8 @@ import { setPages, setData } from '../../utils/fetchData';
 
 const dataConfig = {
     list: 'Image',
-    readableColumn: 'title',
-    urlColumn: 'urlDesktopSized',
-    maxImageNumberPerPage: 12,
+    columns: ['title', 'urlDesktopSized'],
+    maxItemsPerPage: 12,
 }
 
 const Slideshow = (props) => {
@@ -29,7 +28,7 @@ const Slideshow = (props) => {
         setData(dataConfig, searchText, page, setPagedData);
     }, [searchText, pageNumbers, page])
 
-    const saveImage = selectedData => {
+    const saveData = selectedData => {
         const currentEntity = getSelectionEntity(editorState);
         let selection = editorState.getSelection();
 
@@ -72,7 +71,9 @@ const Slideshow = (props) => {
     }
 
     const ImageTile = props => {
-        const { id, data } = props;
+        const { id, data, eventHandler } = props;
+        const onClick = event => eventHandler(id);
+
         return (
             <img
                 id={id}
@@ -83,6 +84,7 @@ const Slideshow = (props) => {
                     height: '100%',
                     width: '100%',
                 }}
+                onClick={onClick}
             />
         );
     };
@@ -110,7 +112,7 @@ const Slideshow = (props) => {
             searchText={searchText}
             onPageChange={setPage}
             onSearchTextChange={setSearchText}
-            onChange={saveImage}
+            onChange={saveData}
             ButtonIconComponent={SlideshowIcon}
             TileComponent={ImageTile}
             EditingTileComponent={ImageEditingTile}

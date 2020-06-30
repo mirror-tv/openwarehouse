@@ -4,12 +4,21 @@ const fetch = createApolloFetch({
     uri: '/admin/api',
 });
 
-export const setPages = ({ list, readableColumn, maxImageNumberPerPage }, search, setCallBack) => {
+function generateSelectString(columns) {
+    return columns.join('\n');
+}
+
+function generateWhereString(columns) {
+    return `{OR: [${columns.map(column => `{${column}_contains: $search}`).join()}]}`;
+}
+
+export const setPages = ({ list, columns, maxItemsPerPage }, search, setCallBack) => {
     (async () => {
-        const { data: { _allImagesMeta: { count } } } = await fetch({
+        const whereString = generateWhereString(columns);
+        const { data: { [`_all${list}sMeta`]: { count } } } = await fetch({
             query: `
             query($search: String!) {
-                _all${list}sMeta(where: {${readableColumn}_contains: $search}) {
+                _all${list}sMeta(where: ${whereString}) {
                   count
                 }
             }`,
@@ -17,25 +26,26 @@ export const setPages = ({ list, readableColumn, maxImageNumberPerPage }, search
                 search: search,
             },
         });
-        setCallBack(Math.ceil(count / maxImageNumberPerPage));
+        setCallBack(Math.ceil(count / maxItemsPerPage));
     })();
 }
 
-export const setData = ({ list, readableColumn, urlColumn, maxImageNumberPerPage }, search, page, setCallBack) => {
+export const setData = ({ list, columns, maxItemsPerPage }, search, page, setCallBack) => {
     (async () => {
+        const selectString = generateSelectString(columns);
+        const whereString = generateWhereString(columns);
         const { data } = await fetch({
             query: `
             query fetch${list}s($search: String!, $skip: Int!, $first: Int!) {
-                all${list}s(where: {${readableColumn}_contains: $search}, skip: $skip, first: $first) {
+                all${list}s(where: ${whereString}, skip: $skip, first: $first) {
                   id
-                  ${readableColumn}
-                  ${urlColumn}
+                  ${selectString}
                 }
             }`,
             variables: {
                 search: search,
-                skip: (page - 1) * maxImageNumberPerPage,
-                first: maxImageNumberPerPage,
+                skip: (page - 1) * maxItemsPerPage,
+                first: maxItemsPerPage,
             },
         });
         setCallBack(data[`all${list}s`]);

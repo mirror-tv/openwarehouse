@@ -18,7 +18,7 @@ const properties = {
     transitionDuration: 500,
     infinite: true,
     indicators: true,
-    arrows: false,
+    arrows: true,
     pauseOnHover: true,
     onChange: (oldIndex, newIndex) => { }
 }

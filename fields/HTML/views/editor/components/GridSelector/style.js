@@ -37,9 +37,9 @@ export default {
         overflow: 'hidden',
     },
     body: {
-        height: ({ width, defaultColumns, currentRows }) => {
-            const height = width / defaultColumns / 2;
-            return `${0.84 * width / 2 - height * (defaultColumns - currentRows)}px`
+        height: ({ width, defaultColumns, currentRows, ratio }) => {
+            const height = width / defaultColumns / ratio;
+            return `${0.84 * width / ratio - height * (defaultColumns - currentRows)}px`
         },
         overflowY: 'scroll',
     },

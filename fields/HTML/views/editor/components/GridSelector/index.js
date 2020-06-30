@@ -3,18 +3,19 @@ import PropTypes from 'prop-types';
 
 import { Popover, IconButton, TextField, GridList, GridListTile, Divider, Button, GridListTileBar } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
-import { PanoramaOutlined, Clear, Check } from '@material-ui/icons'
+import { Clear, Check } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/core/styles';
 import { usePopupState, bindTrigger, bindPopover } from 'material-ui-popup-state/hooks'
 
 import { useWindowDimensions } from '../../hooks/useWindowDimensions';
 import styleSheet from './style';
 
-const defaultColumns = 4;
 const useStyles = makeStyles(styleSheet);
 
 const GridSelector = (props) => {
-    const { pageNumbers, page, pagedData, searchText, onPageChange, onSearchTextChange, onChange, ButtonIconComponent, TileComponent, EditingTileComponent, isMultipleSelection } = props;
+    const { pageNumbers, page, pagedData, searchText, onPageChange,
+        onSearchTextChange, onChange, ButtonIconComponent, TileComponent,
+        EditingTileComponent, isMultipleSelection, defaultColumns, ratio } = props;
     const [selectedData, setSelectedData] = useState([]);
     const [selectedUIDs, setSelectedUIDs] = useState([]);
     const popupState = usePopupState({ variant: 'popover', popupId: 'imagePopover' })
@@ -37,8 +38,9 @@ const GridSelector = (props) => {
         onPageChange(page);
     }
 
-    const clickTile = (event) => {
-        const index = event.target.getAttribute('id').match(/\d+/)[0];
+    const clickTile = (id) => {
+        //const index = event.target.getAttribute('id').match(/\d+/)[0];
+        const index = id.match(/\d+/)[0];
         if (!selectedUIDs.includes(pagedData[index].id)) {
             if (!isMultipleSelection) {
                 setSelectedData([pagedData[index]]);
@@ -121,7 +123,7 @@ const GridSelector = (props) => {
                 <div className={classes.body}>
                     <GridList
                         className={classes.gridList}
-                        cellHeight={width / defaultColumns / 2}
+                        cellHeight={width / defaultColumns / ratio}
                         cols={defaultColumns}
                         spacing={1}
                     >
@@ -129,9 +131,12 @@ const GridSelector = (props) => {
                             <GridListTile
                                 key={`paged-data-${index}`}
                                 cols={1}
-                                onClick={clickTile}
                             >
-                                <TileComponent id={`paged-data-${index}`} data={data} />
+                                <TileComponent
+                                    id={`paged-data-${index}`}
+                                    data={data}
+                                    eventHandler={clickTile}
+                                />
                                 {
                                     selectedUIDs.includes(data.id)
                                     && <GridListTileBar
@@ -163,47 +168,48 @@ const GridSelector = (props) => {
                             <Divider light={true} />
                         </div>
                     }
-                    <GridList
-                        className={classes.gridList}
-                        cellHeight={width / 2 / 2}
-                        cols={2.04}
-                        spacing={12}
-                    >
-                        {
-                            selectedData
-                            && EditingTileComponent
-                            && selectedData.map((data, index) => (
-                                <GridListTile className={classes.editingTile} key={`selected-data-${index}`} cols={1}>
-                                    <EditingTileComponent id={`selected-data-${index}`} data={data} />
-                                    <GridListTileBar
-                                        titlePosition="top"
-                                        actionIcon={
-                                            <IconButton className={classes.editingClearIcon} onClick={removeTile(index)}>
-                                                <Clear />
-                                            </IconButton>
-                                        }
-                                        actionPosition="right"
-                                        className={classes.editingTopTitleBar}
-                                    />
-                                    <GridListTileBar
-                                        titlePosition="bottom"
-                                        title={
-                                            <TextField
-                                                className={classes.editingTextField}
-                                                id={`selected-data-${index}`}
-                                                variant="outlined"
-                                                value={data.title}
-                                                size="small"
-                                                onChange={editTitle}
-                                            />
-                                        }
-                                        actionPosition="right"
-                                        className={classes.editingBottomTitleBar}
-                                    />
-                                </GridListTile>
-                            ))
-                        }
-                    </GridList>
+                    {
+                        EditingTileComponent &&
+                        <GridList
+                            className={classes.gridList}
+                            cellHeight={width / 2 / 2}
+                            cols={2.04}
+                            spacing={12}
+                        >
+                            {
+                                selectedData.map((data, index) => (
+                                    <GridListTile className={classes.editingTile} key={`selected-data-${index}`} cols={1}>
+                                        <EditingTileComponent id={`selected-data-${index}`} data={data} />
+                                        <GridListTileBar
+                                            titlePosition="top"
+                                            actionIcon={
+                                                <IconButton className={classes.editingClearIcon} onClick={removeTile(index)}>
+                                                    <Clear />
+                                                </IconButton>
+                                            }
+                                            actionPosition="right"
+                                            className={classes.editingTopTitleBar}
+                                        />
+                                        <GridListTileBar
+                                            titlePosition="bottom"
+                                            title={
+                                                <TextField
+                                                    className={classes.editingTextField}
+                                                    id={`selected-data-${index}`}
+                                                    variant="outlined"
+                                                    value={data.title}
+                                                    size="small"
+                                                    onChange={editTitle}
+                                                />
+                                            }
+                                            actionPosition="right"
+                                            className={classes.editingBottomTitleBar}
+                                        />
+                                    </GridListTile>
+                                ))
+                            }
+                        </GridList>
+                    }
                 </div>
             </Popover>
         </div >
@@ -222,10 +228,14 @@ GridSelector.propTypes = {
     TileComponent: PropTypes.func.isRequired,
     EditingTileComponent: PropTypes.func,
     isMultipleSelection: PropTypes.bool,
+    defaultColumns: PropTypes.number,
+    ratio: PropTypes.number,
 };
 
 GridSelector.defaultProps = {
     isMultipleSelection: false,
+    defaultColumns: 4,
+    ratio: 2,
 }
 
 export default GridSelector;
