@@ -6,25 +6,16 @@ const gcsDir = 'assets/audios/'
 
 module.exports = {
     fields: {
-        file: {
-            type: File,
-            adapter: new GCSAdapter(gcsDir),
-            isRequired: true,
-        },
         title: {
             label: '標題',
             type: Text,
             isRequired: true
         },
-        /*audio: {
-            type: Types.GcsFile,
-            initial: true,
-            autoCleanup: true,
-            datePrefix: 'YYYYMMDDHHmmss',
-            bucket: bucket,
-            destination: 'assets/audios/',
-            publicRead: true,
-        },*/
+        file: {
+            type: File,
+            adapter: new GCSAdapter(gcsDir),
+            isRequired: true,
+        },
         coverPhoto: {
             label: '封面照片',
             type: Relationship,
@@ -36,7 +27,7 @@ module.exports = {
             ref: 'Tag',
             many: true
         },
-        meta:{
+        meta: {
             label: '中繼資料',
             type: Text
         },

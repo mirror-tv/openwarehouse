@@ -18,7 +18,7 @@ module.exports = {
         publishTime: {
             label: '發佈時間',
             type: DateTime,
-            format: 'MM/DD/YYYY hh:mm A',
+            format: 'MM/dd/yyyy HH:mm',
             defaultValue: new Date().toISOString(),
             /*dependsOn: {
                 '$or': {
@@ -43,7 +43,7 @@ module.exports = {
         startTime: {
             label: '開始時間',
             type: DateTime,
-            format: 'MM/DD/YYYY hh:mm A',
+            format: 'MM/dd/yyyy HH:mm',
             defaultValue: new Date().toISOString(),
             isRequired: true,
             yearPickerType: 'select' // this option seems not work
@@ -51,7 +51,7 @@ module.exports = {
         endTime: {
             label: '結束時間',
             type: DateTime,
-            format: 'MM/DD/YYYY hh:mm A',
+            format: 'MM/dd/yyyy HH:mm',
         },
         video: {
             label: '影片',

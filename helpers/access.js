@@ -39,6 +39,15 @@ const userIsAboveAuthorOrOwner = auth => {
     return isAboveAuthor || isOwner;
 }
 
-const access = { userIsAdmin, userIsAdminOrModerator, userIsAdminOrModeratorOrOwner, userIsAboveAuthor, userIsAboveAuthorOrOwner, userOwnsItem, userIsContributor, userIsNotContributor };
+const access = {
+    userIsAdmin,
+    userIsAdminOrModerator,
+    userIsAdminOrModeratorOrOwner,
+    userIsAboveAuthor,
+    userIsAboveAuthorOrOwner,
+    userOwnsItem,
+    userIsContributor,
+    userIsNotContributor,
+};
 
 module.exports = access
