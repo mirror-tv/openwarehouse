@@ -2,15 +2,16 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { EditorState, Modifier } from 'draft-js';
 import { getEntityRange, getSelectionEntity } from 'draftjs-utils';
-import { Videocam } from '@material-ui/icons'
+import { Videocam } from '@material-ui/icons';
 
 import GridSelector from '../../components/GridSelector'
 import { setPages, setData } from '../../utils/fetchData';
+import { getUrlExtension } from '../../utils/common';
 
 const dataConfig = {
     list: 'Video',
     columns: ['title', 'description', 'url'],
-    maxItemsPerPage: 12,
+    maxItemsPerPage: 8,
 }
 
 const Video = (props) => {
@@ -81,8 +82,6 @@ const Video = (props) => {
                 style={{
                     border: '2px dotted #D84315',
                     borderRadius: 2,
-                    //display: 'flex',
-                    //flexDirection: 'column',
                     height: 'calc(100% - 4px)',
                 }}
             >
@@ -105,15 +104,14 @@ const Video = (props) => {
                             objectPosition: 'center',
                         }}
                         controls>
-                        <source src={data.url} type="video/mp4" />
+                        <source src={data.url} type={`video/${getUrlExtension(data.url)}`} />
                     </video>
                 </div>
                 <div
                     style={{
                         width: '100%',
-                        minHeight: '33%',
-                        maxHeight: '33%',
-                        //overflowWrap: 'break-word',
+                        minHeight: '44%',
+                        maxHeight: '44%',
                         paddingTop: '4px',
                         paddingBottom: '4px',
                         wordWrap: 'break-word',

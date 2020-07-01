@@ -9,7 +9,8 @@ function generateSelectString(columns) {
 }
 
 function generateWhereString(columns) {
-    return `{OR: [${columns.map(column => `{${column}_contains: $search}`).join()}]}`;
+    const exclusion = ['duration'];
+    return `{OR: [${columns.filter(column => !exclusion.includes(column)).map(column => `{${column}_contains: $search}`).join()}]}`;
 }
 
 export const setPages = ({ list, columns, maxItemsPerPage }, search, setCallBack) => {

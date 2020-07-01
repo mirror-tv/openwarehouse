@@ -4,6 +4,7 @@ import blockQuoteDecorator from './blockQuoteDecorator';
 import imageDecorator from './imageDecorator';
 import slideshowDecorator from './slideshowDecorator';
 import videoDecorator from './videoDecorator';
+import audioDecorator from './audioDecorator';
 
 export default [
     youtubeDecorator,
@@ -12,4 +13,5 @@ export default [
     imageDecorator,
     slideshowDecorator,
     videoDecorator,
+    audioDecorator
 ];

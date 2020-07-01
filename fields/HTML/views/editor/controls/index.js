@@ -4,6 +4,7 @@ import BlockQuote from './BlockQuote';
 import Image from './Image';
 import Slideshow from './Slideshow';
 import Video from './Video';
+import Audio from './Audio';
 
 
 export {
@@ -13,4 +14,5 @@ export {
     Image,
     Slideshow,
     Video,
+    Audio,
 };
