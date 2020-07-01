@@ -5,7 +5,6 @@ import classNames from 'classnames';
 function strategy(contentBlock, callback, contentState) {
     contentBlock.findEntityRanges(character => {
         const entityKey = character.getEntity();
-        console.log("AnnotationType", AnnotationType);
         return (
             entityKey !== null &&
             contentState.getEntity(entityKey).getType() === AnnotationType
