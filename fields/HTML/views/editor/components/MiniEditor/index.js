@@ -42,7 +42,11 @@ const MiniEditor = (props) => {
     const doCollapse = () => {
         clear();
     };
-    const doExpand = () => setExpanded(true);;
+    const doExpand = () => {
+        // HACK workaround
+        document.activeElement.blur();
+        setExpanded(true);
+    };
 
     // Event handlers
     const handleSave = () => {
