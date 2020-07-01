@@ -5,6 +5,7 @@ import { EditorState } from 'draft-js';
 // FIXME customize mini editor
 import { builtInButtons } from '../../../customToolbar';
 import classNames from 'classnames';
+import Option from '../Option';
 
 // TODO Improve css
 import './styles.css';
