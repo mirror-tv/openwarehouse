@@ -103,7 +103,7 @@ const MiniEditor = (props) => {
                         onChange={handleTextChange}
                         value={text} />
                     <Editor
-                        initialEditorState={editorState}
+                        editorState={editorState}
                         wrapperClassName="wrapper-class"
                         editorClassName="editor-class"
                         toolbarClassName="toolbar-class"
