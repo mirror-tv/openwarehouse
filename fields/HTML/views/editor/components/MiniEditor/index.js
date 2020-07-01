@@ -74,13 +74,16 @@ const MiniEditor = (props) => {
             aria-label="rdw-link-control"
             onClick={(e) => e.stopPropagation()}
         >
-            <div
+            <Option
+                value="unordered-list-item"
                 className={classNames(style.className)}
+                onClick={doExpand}
                 aria-haspopup="true"
                 aria-expanded={expanded}
-                onClick={doExpand}
                 title={style.title}
-            />
+            >
+                <img src={style.icon} alt="" />
+            </Option>
             <Dialog
                 open={expanded}
                 onClose={doCollapse}
