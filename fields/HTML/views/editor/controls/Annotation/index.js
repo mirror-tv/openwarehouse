@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { EditorState, convertToRaw, Modifier } from 'draft-js';
-import draftToHtml from 'draftjs-to-html';
+import { EditorState, Modifier } from 'draft-js';
 import { getSelectedBlock, getSelectionEntity, getEntityRange } from "draftjs-utils";
 
 
@@ -26,7 +25,7 @@ export default (props) => {
 
     const getPreSelectedText = () => getSelectedBlock(editorState).getText();;
 
-    const onSave = (text, miniContentState) => {
+    const onSave = (text, html) => {
         const currentEntity = editorState ? getSelectionEntity(editorState) : undefined;
         let selection = editorState.getSelection();
 
@@ -50,7 +49,7 @@ export default (props) => {
         contentState = Modifier.splitBlock(contentState, selection);
         contentState = contentState.createEntity(AnnotationType, 'IMMUTABLE', {
             text: text,
-            annotation: draftToHtml(convertToRaw(miniContentState)),
+            annotation: html,
 
         });
         const entityKey = contentState.getLastCreatedEntityKey();

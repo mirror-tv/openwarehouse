@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Editor } from 'react-draft-wysiwyg';
 import { Dialog, DialogContent, DialogContentText, DialogTitle, DialogActions, TextField, Button } from '@material-ui/core';
-import { EditorState } from 'draft-js';
+import { EditorState, convertToRaw } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
 // FIXME customize mini editor
 import { builtInButtons } from '../../../customToolbar';
 import classNames from 'classnames';
@@ -21,7 +22,7 @@ const MiniEditor = (props) => {
             title,
         },
         getPreSelectedText, // () => string
-        onSave, // (text, ContentState) => {...}
+        onSave, // (text, html) => {...}
     } = props;
 
     // Use states
@@ -51,7 +52,7 @@ const MiniEditor = (props) => {
 
     // Event handlers
     const handleSave = () => {
-        onSave(text, editorState.getCurrentContent());
+        onSave(text, draftToHtml(convertToRaw(editorState.getCurrentContent())));
         doCollapse();
     };
     const handleCancel = () => {
