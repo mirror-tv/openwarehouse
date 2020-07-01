@@ -12,6 +12,7 @@ export const AnnotationType = "ANNOTATION";
 export default (props) => {
     const { editorState, onChange } = props;
 
+    // TODO
     const generateContentBlock = () => {
         const selectedType = getSelectedBlocksType(editorState);
 
@@ -24,11 +25,9 @@ export default (props) => {
     }
 
     const getPreSelectedText = () => getSelectedBlock(editorState).getText();;
-    // TODO customDecorators
 
-    const onSave = (text, contentState) => {
+    const onSave = (text, miniContentState) => {
         const currentEntity = editorState ? getSelectionEntity(editorState) : undefined;
-
         let selection = editorState.getSelection();
 
         if (currentEntity) {
@@ -46,16 +45,18 @@ export default (props) => {
                 });
             }
         }
-        let currentContentState = editorState.getCurrentContent();
-        currentContentState = Modifier.splitBlock(currentContentState, selection);
-        currentContentState = currentContentState.createEntity(AnnotationType, 'IMMUTABLE', {
-            pureAnnotationText: text,
-            annotation: draftToHtml(convertToRaw(contentState)),
-        });
-        const entityKey = currentContentState.getLastCreatedEntityKey();
 
-        currentContentState = Modifier.replaceText(
-            currentContentState,
+        let contentState = editorState.getCurrentContent();
+        contentState = Modifier.splitBlock(contentState, selection);
+        contentState = contentState.createEntity(AnnotationType, 'IMMUTABLE', {
+            text: text,
+            annotation: draftToHtml(convertToRaw(miniContentState)),
+
+        });
+        const entityKey = contentState.getLastCreatedEntityKey();
+
+        contentState = Modifier.replaceText(
+            contentState,
             selection,
             ' ',
             undefined,
@@ -64,7 +65,7 @@ export default (props) => {
 
         const newEditorState = EditorState.push(
             editorState,
-            currentContentState,
+            contentState,
             'insert-characters'
         );
 

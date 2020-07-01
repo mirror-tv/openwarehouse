@@ -14,19 +14,19 @@ function strategy(contentBlock, callback, contentState) {
 }
 
 const component = (props) => {
-    const { annotation, pureAnnotationText } = props.contentState.getEntity(props.entityKey).getData();
+    const { text, annotation } = props.contentState.getEntity(props.entityKey).getData();
     const [expanded, setExpanded] = useState(false);
     return (
         <abbr
             className="annotation"
-            title={pureAnnotationText}
+            title={text}
             style={{ cursor: 'pointer', borderBottom: 0 }}
         >
             <span
                 onClick={() => setExpanded(!expanded)}
                 style={{ color: 'red' }}
             >
-                {pureAnnotationText}
+                {text}
                 <span className={classNames(expanded ? 'up' : '', 'indicator')} />
             </span>
             <span
@@ -34,7 +34,7 @@ const component = (props) => {
                 dangerouslySetInnerHTML={{ __html: annotation }}
                 style={{
                     display: expanded ? 'block' : 'none',
-                    backgroundColor: 'white',
+                    backgroundColor: '#F7F7FF',
                     padding: '16px',
                     fontSize: '15px',
                     lineHeight: 1.5,
