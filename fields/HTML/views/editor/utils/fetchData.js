@@ -37,7 +37,7 @@ export const setData = ({ list, columns, maxItemsPerPage }, search, page, setCal
         const { data } = await fetch({
             query: `
             query fetch${list}s($search: String!, $skip: Int!, $first: Int!) {
-                all${list}s(where: ${whereString}, skip: $skip, first: $first) {
+                all${list}s(where: ${whereString}, skip: $skip, first: $first, sortBy: id_DESC) {
                   id
                   ${selectString}
                 }

@@ -31,7 +31,7 @@ const Video = (props) => {
     const saveData = selectedData => {
         const currentEntity = getSelectionEntity(editorState);
         let selection = editorState.getSelection();
-        console.log(selectedData);
+
         if (currentEntity) {
             const entityRange = getEntityRange(editorState, currentEntity);
             const isBackward = selection.getIsBackward();
@@ -81,18 +81,17 @@ const Video = (props) => {
                 style={{
                     border: '2px dotted #D84315',
                     borderRadius: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: '98%',
-                    padding: -10,
+                    //display: 'flex',
+                    //flexDirection: 'column',
+                    height: 'calc(100% - 4px)',
                 }}
             >
                 <div
                     style={{
                         position: 'relative',
-                        paddingTop: '40%',
-                        flex: 1,
+                        paddingTop: '56%',
                         overflow: 'hidden',
+                        margin: '1px',
                     }}
                 >
                     <video
@@ -109,9 +108,41 @@ const Video = (props) => {
                         <source src={data.url} type="video/mp4" />
                     </video>
                 </div>
-                <div style={{ width: '100%', flex: 1 }}>
-                    <p style={{ fontSize: '14px', fontWeight: 'bold', fontFamily: 'Noto Sans TC,sans-serif' }}>{data.title}</p>
-                    <p style={{ fontSize: '10px', fontFamily: 'Noto Sans TC,sans-serif' }}>{data.description}</p>
+                <div
+                    style={{
+                        width: '100%',
+                        minHeight: '33%',
+                        maxHeight: '33%',
+                        //overflowWrap: 'break-word',
+                        paddingTop: '4px',
+                        paddingBottom: '4px',
+                        wordWrap: 'break-word',
+                        boxSizing: 'border-box',
+                        display: 'flex',
+                        flexDirection: 'column',
+                    }}
+                >
+                    <p
+                        style={{
+                            fontSize: '14px',
+                            fontWeight: 'bold',
+                            fontFamily: 'Noto Sans TC,sans-serif',
+                            margin: '8px 8px'
+                        }}
+                    >
+                        {data.title}
+                    </p>
+                    <p
+                        style={{
+                            fontSize: '10px',
+                            fontFamily: 'Noto Sans TC,sans-serif',
+                            margin: '0px 8px',
+                            overflow: 'hidden',
+                            flex: 1
+                        }}
+                    >
+                        {data.description}
+                    </p>
                 </div>
             </div >
         );
@@ -128,7 +159,8 @@ const Video = (props) => {
             onChange={saveData}
             ButtonIconComponent={Videocam}
             TileComponent={VideoTile}
-            ratio={1.3}
+            ratio={1.6}
+            spacing={4}
         />
     );
 }

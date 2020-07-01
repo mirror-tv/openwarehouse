@@ -15,7 +15,7 @@ const useStyles = makeStyles(styleSheet);
 const GridSelector = (props) => {
     const { pageNumbers, page, pagedData, searchText, onPageChange,
         onSearchTextChange, onChange, ButtonIconComponent, TileComponent,
-        EditingTileComponent, isMultipleSelection, defaultColumns, ratio } = props;
+        EditingTileComponent, isMultipleSelection, defaultColumns, ratio, spacing } = props;
     const [selectedData, setSelectedData] = useState([]);
     const [selectedUIDs, setSelectedUIDs] = useState([]);
     const popupState = usePopupState({ variant: 'popover', popupId: 'imagePopover' })
@@ -125,7 +125,7 @@ const GridSelector = (props) => {
                         className={classes.gridList}
                         cellHeight={width / defaultColumns / ratio}
                         cols={defaultColumns}
-                        spacing={1}
+                        spacing={spacing}
                     >
                         {pagedData.map((data, index) => (
                             <GridListTile
@@ -230,12 +230,14 @@ GridSelector.propTypes = {
     isMultipleSelection: PropTypes.bool,
     defaultColumns: PropTypes.number,
     ratio: PropTypes.number,
+    spacing: PropTypes.number,
 };
 
 GridSelector.defaultProps = {
     isMultipleSelection: false,
     defaultColumns: 4,
     ratio: 2,
+    spacing: 1,
 }
 
 export default GridSelector;
