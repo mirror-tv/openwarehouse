@@ -89,6 +89,11 @@ module.exports = {
                 update: false,
             }
         },
+        duration:{
+            label: '影片長度（秒）',
+            type: Number
+        }
+
     },
     plugins: [
         atTracking(),
@@ -108,6 +113,8 @@ module.exports = {
             if (resolvedData.file) {
                 resolvedData.meta = resolvedData.file._meta
                 resolvedData.url = resolvedData.file._meta.url
+                resolvedData.duration = resolvedData.file._meta.duration
+
             }
             return resolvedData
         },

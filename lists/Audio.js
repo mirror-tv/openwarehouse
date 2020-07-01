@@ -31,6 +31,14 @@ module.exports = {
             label: '中繼資料',
             type: Text
         },
+        url:{
+            label: '檔案網址',
+            type: Text
+        },
+        duration:{
+            label: '音檔長度（秒）',
+            type: Number
+        }
     },
     plugins: [
         atTracking(),
@@ -49,6 +57,8 @@ module.exports = {
         resolveInput: ({ operation, existingItem, resolvedData, originalInput }) => {
             if (resolvedData.file) {
                 resolvedData.meta = resolvedData.file._meta
+                resolvedData.url = resolvedData.file._meta.url
+                resolvedData.duration = resolvedData.file._meta.duration
             }
             return resolvedData
         },
