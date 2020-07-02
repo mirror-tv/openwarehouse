@@ -19,5 +19,4 @@ module.exports = {
     WatchBrand: require('./WatchBrand'),
     WatchStore: require('./WatchStore'),
     WatchFunction: require('./WatchFunction'),
-    Test: require('./Test'),
 }

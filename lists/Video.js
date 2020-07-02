@@ -79,7 +79,11 @@ module.exports = {
         },
         meta: {
             label: '中繼資料',
-            type: Text
+            type: Text,
+            access: {
+                create: false,
+                update: false,
+            }
         },
         url: {
             label: '檔案網址',
