@@ -122,7 +122,7 @@ const MiniEditor = (props) => {
                 <DialogTitle id="responsive-dialog-title">{title.text}</DialogTitle>
                 <DialogContent
                     dividers={false}
-            >
+                >
                     <TextField
                         autoComplete="off"
                         autoFocus
