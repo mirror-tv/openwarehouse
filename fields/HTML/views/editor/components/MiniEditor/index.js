@@ -143,7 +143,6 @@ const MiniEditor = (props) => {
                         wrapperClassName="wrapper-class"
                         editorClassName="editor-class"
                         toolbarClassName="toolbar-class"
-                        // FIXME use its own
                         toolbar={builtInButtons}
                         onEditorStateChange={onEditorStateChange}
                     />
