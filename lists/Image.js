@@ -1,10 +1,8 @@
-const { Text, Select, Relationship, File, Url, Checkbox } = require('@keystonejs/fields');
+const { Text, Select, Relationship, File, Url } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
 const { ImageAdapter } = require('../lib/ImageAdapter');
 const access = require('../helpers/access');
-// const gcsDir = 'assets/images/'
-const gcsDir = 'test_dir/'
-
+const gcsDir = 'assets/images/'
 
 module.exports = {
     fields: {
@@ -18,10 +16,6 @@ module.exports = {
             type: File,
             adapter: new ImageAdapter(gcsDir),
             isRequired: true,
-        },
-        iswatermarked:{
-            label: '是否需要浮水印',
-            type: Checkbox
         },
         copyright: {
             label: '版權',
@@ -43,6 +37,10 @@ module.exports = {
         },
         keywords: {
             label: '關鍵字',
+            type: Text
+        },
+        meta: {
+            label: '中繼資料',
             type: Text
         },
         urlOriginal: {
@@ -97,11 +95,8 @@ module.exports = {
     hooks: {
         // Hooks for create and update operations
         resolveInput: ({ operation, existingItem, resolvedData, originalInput }) => {
-            console.log("RESOLVE DATA:", resolvedData)
-            if (resolvedData.iswatermarked){
-                resolvedData.file.filename = 'watermark_' + resolvedData.file.filename
-            }
             if (resolvedData.file) {
+                resolvedData.meta = resolvedData.file._meta
                 resolvedData.urlOriginal = resolvedData.file._meta.url.urlOriginal
                 resolvedData.urlDesktopSized = resolvedData.file._meta.url.urlDesktopSized
                 resolvedData.urlMobileSized = resolvedData.file._meta.url.urlMobileSized
