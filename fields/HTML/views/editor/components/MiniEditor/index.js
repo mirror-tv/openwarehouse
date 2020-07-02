@@ -3,14 +3,37 @@ import { Editor } from 'react-draft-wysiwyg';
 import { Dialog, DialogContent, DialogContentText, DialogTitle, DialogActions, TextField, Button } from '@material-ui/core';
 import { EditorState, convertToRaw } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
-// FIXME customize mini editor
-import { builtInButtons } from '../../../customToolbar';
 import classNames from 'classnames';
 import Option from '../Option';
 
 // TODO Improve css
 import './styles.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+
+const builtInButtons = {
+    options: [
+        "blockType",
+        "inline",
+        "list",
+        "link",
+    ],
+    inline: {
+        options: [
+            "bold",
+            "italic",
+            "underline",
+        ],
+    },
+    blockType: {
+        inDropdown: false,
+        options: [
+            "H2",
+        ],
+    },
+    list: {
+        options: ["unordered", "ordered"],
+    },
+};
 
 const MiniEditor = (props) => {
 
