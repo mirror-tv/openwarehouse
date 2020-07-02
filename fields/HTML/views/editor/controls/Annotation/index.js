@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { EditorState, Modifier } from 'draft-js';
 import { getSelectedBlock, getSelectionEntity, getEntityRange } from "draftjs-utils";
-
 
 import MiniEditor from '../../components/MiniEditor';
 import '../../css/main.css';
