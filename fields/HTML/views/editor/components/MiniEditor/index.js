@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Editor } from 'react-draft-wysiwyg';
 import { Dialog, DialogContent, DialogContentText, DialogTitle, DialogActions, TextField, Button, useMediaQuery } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
+import { ContentState, EditorState, convertToRaw } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import classNames from 'classnames';
 import Option from '../Option';
