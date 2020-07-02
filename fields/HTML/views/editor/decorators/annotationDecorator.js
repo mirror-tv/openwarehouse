@@ -13,7 +13,7 @@ function strategy(contentBlock, callback, contentState) {
 }
 
 const component = (props) => {
-    const { text, annotation } = props.contentState.getEntity(props.entityKey).getData();
+    const { text, body } = props.contentState.getEntity(props.entityKey).getData();
     const [expanded, setExpanded] = useState(false);
     return (
         <abbr
@@ -30,7 +30,7 @@ const component = (props) => {
             </span>
             <span
                 className="annotation-html"
-                dangerouslySetInnerHTML={{ __html: annotation }}
+                dangerouslySetInnerHTML={{ __html: body }}
                 style={{
                     display: expanded ? 'block' : 'none',
                     backgroundColor: '#F7F7FF',

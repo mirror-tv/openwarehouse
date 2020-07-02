@@ -49,8 +49,7 @@ export default (props) => {
         contentState = Modifier.splitBlock(contentState, selection);
         contentState = contentState.createEntity(AnnotationType, 'IMMUTABLE', {
             text: text,
-            annotation: html,
-
+            body: html,
         });
         const entityKey = contentState.getLastCreatedEntityKey();
 
