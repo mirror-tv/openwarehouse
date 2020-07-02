@@ -12,9 +12,15 @@ import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 const HtmlField = ({ onChange, autoFocus, field, value, errors }) => {
     const editorState = value ? value : EditorState.createEmpty();
+    console.log(field);
 
     return (
-        <FieldContainer >
+        <FieldContainer
+            style={{
+                border: '1px solid #D84315',
+                borderRadius: 3,
+            }}
+        >
             <Editor
                 editorState={editorState}
                 onEditorStateChange={onChange}
