@@ -81,7 +81,7 @@ export default (props) => {
 const prepareLayoutConfig = () => ({
     style: {
         icon: undefined,
-        className: 'fa fa-code',
+        className: 'fa fa-pen-square',
         title: "Annotation"
     },
     title: {
