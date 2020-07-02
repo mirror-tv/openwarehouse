@@ -87,8 +87,4 @@ const prepareLayoutConfig = () => ({
     title: {
         text: "Annotation",
     },
-    isRequired: {
-        first: true,
-        last: true
-    }
 });
