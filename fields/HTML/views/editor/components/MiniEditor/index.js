@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Editor } from 'react-draft-wysiwyg';
-import { Dialog, DialogContent, DialogContentText, DialogTitle, DialogActions, TextField, Button } from '@material-ui/core';
-import { EditorState, convertToRaw } from 'draft-js';
+import { Dialog, DialogContent, DialogContentText, DialogTitle, DialogActions, TextField, Button, useMediaQuery } from '@material-ui/core';
+import { useTheme } from '@material-ui/core/styles';
 import draftToHtml from 'draftjs-to-html';
 import classNames from 'classnames';
 import Option from '../Option';
@@ -93,6 +93,10 @@ const MiniEditor = (props) => {
         }
     }, [expanded])
 
+    // Responsive dialog properties
+    const theme = useTheme();
+    const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
     return (
         <div
             className={classNames('rdw-link-wrapper', className)}
@@ -109,15 +113,19 @@ const MiniEditor = (props) => {
                 <img src={style.icon} alt="" />
             </Option>
             <Dialog
+                fullScreen={fullScreen}
                 open={expanded}
                 onClose={doCollapse}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
+                aria-labelledby="responsive-dialog-title"
             >
-                <DialogTitle id="alert-dialog-title">{title.text}</DialogTitle>
-                <DialogContent>
+                <DialogTitle id="responsive-dialog-title">{title.text}</DialogTitle>
+                <DialogContent
+                    dividers={false}
+            >
                     <TextField
-                        required={true}
+                        autoComplete="off"
+                        autoFocus
+                        required
                         margin="dense"
                         id="title"
                         label="Text"
@@ -128,6 +136,9 @@ const MiniEditor = (props) => {
                         value={text} />
                     <Editor
                         editorState={editorState}
+                        editorStyle={{
+                            "border-bottom": "solid #E3E5E9",
+                        }}
                         wrapperClassName="wrapper-class"
                         editorClassName="editor-class"
                         toolbarClassName="toolbar-class"
