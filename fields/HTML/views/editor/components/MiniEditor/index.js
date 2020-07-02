@@ -97,7 +97,6 @@ const MiniEditor = (props) => {
         <div
             className={classNames('rdw-link-wrapper', className)}
             aria-label="rdw-link-control"
-            onClick={(e) => e.stopPropagation()}
         >
             <Option
                 value="unordered-list-item"
