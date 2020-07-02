@@ -62,8 +62,25 @@ const Audio = (props) => {
             entityKey
         );
 
-        const newEditorState = EditorState.push(
+        let newEditorState = EditorState.push(
             editorState,
+            contentState,
+            'insert-characters'
+        );
+
+        // add an whitespacce block after content
+        contentState = newEditorState.getCurrentContent();
+        contentState = Modifier.splitBlock(contentState, selection);
+        contentState = Modifier.replaceText(
+            contentState,
+            selection,
+            ' ',
+            undefined,
+            undefined
+        );
+
+        newEditorState = EditorState.push(
+            newEditorState,
             contentState,
             'insert-characters'
         );
