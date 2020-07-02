@@ -9,7 +9,7 @@ import { setPages, setData } from '../../utils/fetchData';
 
 const dataConfig = {
     list: 'Image',
-    columns: ['title', 'urlDesktopSized'],
+    columns: ['title', 'urlDesktopSized', 'urlMobileSized', 'urlTabletSized'],
     maxItemsPerPage: 12,
 }
 

@@ -10,7 +10,7 @@ import { getUrlExtension } from '../../utils/common';
 
 const dataConfig = {
     list: 'Audio',
-    columns: ['title', 'url', 'duration'],
+    columns: ['title', 'url'],
     maxItemsPerPage: 12,
 }
 

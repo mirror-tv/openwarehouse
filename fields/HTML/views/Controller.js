@@ -8,11 +8,11 @@ class HtmlController extends FieldController {
     }
 
     serialize = data => {
-        return data[this.path] ? JSON.stringify(serialiseEditorStateToRaw(data[this.path])) : undefined;
+        return data[this.path] ? JSON.stringify(fetchData(data[this.path])) : undefined;
     };
 
     deserialize = data => {
-        return createEditorStateFromRaw(data[this.path] ? JSON.parse(data[this.path]) : undefined);
+        return convertToEditorState(data[this.path] ? JSON.parse(data[this.path]) : undefined);
     };
 
     getFilterTypes = () => [];
