@@ -1,6 +1,7 @@
 const { Slug, Text, Checkbox, Select, Relationship, DateTime } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
 const access = require('../helpers/access');
+const HTML = require('../fields/HTML');
 
 module.exports = {
     fields: {
@@ -29,7 +30,7 @@ module.exports = {
         publishTime: {
             label: '發佈時間',
             type: DateTime,
-            format: 'MM/DD/YYYY hh:mm A',
+            format: 'MM/dd/yyyy HH:mm',
             defaultValue: new Date().toISOString(),
             /*dependsOn: {
                 '$or': {
@@ -123,8 +124,14 @@ module.exports = {
             options: 'article, wide, projects, photography, script, campaign, readr',
             defaultValue: 'article'
         },
-        //brief: { label: '前言', type: Types.Html, wysiwyg: true, height: 150 },
-        //content: { label: '內文', type: Types.Html, wysiwyg: true, height: 400 },
+        brief: {
+            label: '前言',
+            type: HTML,
+        },
+        content: {
+            label: '內文',
+            type: HTML,
+        },
         topic: {
             label: '專題',
             type: Relationship,

@@ -1,4 +1,4 @@
-const { Text, Checkbox, Select, Relationship, File, DateTime } = require('@keystonejs/fields');
+const { Text, Checkbox, Select, Relationship, File, DateTime, Url } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
 const { GCSAdapter } = require('../lib/GCSAdapter');
 const access = require('../helpers/access');
@@ -7,15 +7,16 @@ const gcsDir = 'assets/videos/'
 
 module.exports = {
     fields: {
-        file: {
-            type: File,
-            adapter: new GCSAdapter(gcsDir),
-            isRequired: true,
-        },
         title: {
             label: '標題',
             type: Text,
             isRequired: true
+        },
+        file: {
+            label: '檔案',
+            type: File,
+            adapter: new GCSAdapter(gcsDir),
+            isRequired: true,
         },
         sections: {
             label: '分區',
@@ -54,7 +55,7 @@ module.exports = {
         publishTime: {
             label: '發佈時間',
             type: DateTime,
-            format: 'MM/DD/YYYY hh:mm A',
+            format: 'MM/dd/yyyy HH:mm',
             defaultValue: new Date().toISOString(),
             /*dependsOn: {
                 '$or': {
@@ -76,6 +77,30 @@ module.exports = {
             type: Checkbox,
             defaultValue: true
         },
+        meta: {
+            label: '中繼資料',
+            type: Text,
+            access: {
+                create: false,
+                update: false,
+            }
+        },
+        url: {
+            label: '檔案網址',
+            type: Url,
+            access: {
+                create: false,
+                update: false,
+            }
+        },
+        duration: {
+            label: '影片長度（秒）',
+            type: Number,
+            access: {
+                create: false,
+                update: false,
+            }
+        }
     },
     plugins: [
         atTracking(),
@@ -89,6 +114,16 @@ module.exports = {
     adminConfig: {
         defaultColumns: 'title, video, tags, state, publishTime, createdAt',
         defaultSort: '-createdAt',
+    },
+    hooks: {
+        resolveInput: ({ operation, existingItem, resolvedData, originalInput }) => {
+            if (resolvedData.file) {
+                resolvedData.meta = resolvedData.file._meta
+                resolvedData.url = resolvedData.file._meta.url
+                resolvedData.duration = resolvedData.file._meta.duration
+            }
+            return resolvedData
+        },
     },
     labelField: 'title'
 }

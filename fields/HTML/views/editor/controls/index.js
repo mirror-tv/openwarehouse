@@ -3,6 +3,9 @@ import EmbedCode from './EmbedCode';
 import BlockQuote from './BlockQuote';
 import Image from './Image';
 import Annotation from './Annotation'
+import Slideshow from './Slideshow';
+import Video from './Video';
+import Audio from './Audio';
 
 export {
     YouTube,
@@ -10,4 +13,7 @@ export {
     BlockQuote,
     Image,
     Annotation,
+    Slideshow,
+    Video,
+    Audio,
 };

@@ -7,11 +7,12 @@ const gcsDir = 'assets/images/'
 module.exports = {
     fields: {
         title: {
-            label : '標題',
+            label: '標題',
             type: Text,
             isRequired: true
         },
         file: {
+            label: '檔案',
             type: File,
             adapter: new ImageAdapter(gcsDir),
             isRequired: true,
@@ -38,11 +39,41 @@ module.exports = {
             label: '關鍵字',
             type: Text
         },
-        urlOriginal: { type: Url, access: { read: false, create: true } },
-        urlDesktopSized: { type: Url, access: { read: false, create: true } },
-        urlMobileSized: { type: Url, access: { read: false, create: true } },
-        urlTabletSized: { type: Url, access: { read: false, create: true } },
-        urlTinySized: { type: Url, access: { read: false, create: true } },
+        urlOriginal: {
+            type: Url,
+            access: {
+                create: false,
+                update: false,
+            }
+        },
+        urlDesktopSized: {
+            type: Url,
+            access: {
+                create: false,
+                update: false,
+            }
+        },
+        urlMobileSized: {
+            type: Url,
+            access: {
+                create: false,
+                update: false,
+            }
+        },
+        urlTabletSized: {
+            type: Url,
+            access: {
+                create: false,
+                update: false,
+            }
+        },
+        urlTinySized: {
+            type: Url,
+            access: {
+                create: false,
+                update: false,
+            }
+        },
     },
     plugins: [
         atTracking(),
