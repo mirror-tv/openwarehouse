@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import { YouTube, EmbedCode, BlockQuote, Image, Slideshow, Video, Audio, Annotation } from './editor/controls';
+import { Annotation, Audio, BlockQuote, EmbedCode, Image, Infobox, Slideshow, Video, YouTube } from './editor/controls';
 
 export const customButtons = [
     <YouTube />,
