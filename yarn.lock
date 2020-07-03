@@ -4931,11 +4931,6 @@ draftjs-conductor@^1.0.1:
   resolved "https://registry.yarnpkg.com/draftjs-conductor/-/draftjs-conductor-1.0.1.tgz#4f7e65f5a7cbf4e24bb047de2f596fe9bbadff33"
   integrity sha512-j+DcuLkuaVgSoLxFPwQZhDRC5gU4+AhRTo8N32UXVlm76uOuihXtjBgGOv8WvIJdEPaRZSR+4UpYZRid+36Kzw==
 
-draftjs-to-html@^0.9.1:
-  version "0.9.1"
-  resolved "https://registry.yarnpkg.com/draftjs-to-html/-/draftjs-to-html-0.9.1.tgz#1c870fbb588d2390204cb4d0ee7e04ad0c709969"
-  integrity sha512-fFstE6+IayaVFBEvaFt/wN8vdj8FsTRzij7dy7LI9QIwf5LgfHFi9zSpvCg+feJ2tbYVqHxUkjcibwpsTpgFVQ==
-
 draftjs-utils@^0.10.2:
   version "0.10.2"
   resolved "https://registry.yarnpkg.com/draftjs-utils/-/draftjs-utils-0.10.2.tgz#a7f16d2c1c174ac38ba3bbf700c256f176b2699c"

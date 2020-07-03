@@ -1,19 +1,21 @@
-import youtubeDecorator from './youtubeDecorator';
-import embedCodeDecorator from './embedCodeDecorator';
-import blockQuoteDecorator from './blockQuoteDecorator';
 import annotationDecorator from './annotationDecorator';
+import audioDecorator from './audioDecorator';
+import blockQuoteDecorator from './blockQuoteDecorator';
+import embedCodeDecorator from './embedCodeDecorator';
+import infoboxDecorator from './infoboxDecorator';
 import imageDecorator from './imageDecorator';
 import slideshowDecorator from './slideshowDecorator';
 import videoDecorator from './videoDecorator';
-import audioDecorator from './audioDecorator';
+import youtubeDecorator from './youtubeDecorator';
 
 export default [
     annotationDecorator,
-    youtubeDecorator,
-    embedCodeDecorator,
+    audioDecorator,
     blockQuoteDecorator,
+    embedCodeDecorator,
+    infoboxDecorator,
     imageDecorator,
     slideshowDecorator,
     videoDecorator,
-    audioDecorator
+    youtubeDecorator,
 ];

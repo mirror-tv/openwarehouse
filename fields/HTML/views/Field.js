@@ -32,7 +32,6 @@ const HtmlField = ({ onChange, autoFocus, field, value, errors }) => {
                     customDecorators={decorators}
                 />
             </FieldInput>
-
         </FieldContainer>
     );
 };
