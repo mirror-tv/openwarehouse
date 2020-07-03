@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import { FieldContainer, FieldLabel, FieldDescription, FieldInput } from '@arch-ui/fields';
+import { FieldContainer } from '@arch-ui/fields';
 import { EditorState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import { handleDraftEditorPastedText } from "draftjs-conductor";
@@ -14,25 +14,15 @@ const HtmlField = ({ onChange, autoFocus, field, value, errors }) => {
     const editorState = value ? value : EditorState.createEmpty();
 
     return (
-        <FieldContainer>
-            <FieldLabel field={field} errors={errors} />
-            <FieldDescription text={field.adminDoc} />
-            <FieldInput
-                style={{
-                    border: '1px solid #D84315',
-                    borderRadius: 3,
-                }}
-            >
-                <Editor
-                    editorState={editorState}
-                    onEditorStateChange={onChange}
-                    handlePastedText={handlePastedText}
-                    toolbar={builtInButtons}
-                    toolbarCustomButtons={customButtons}
-                    customDecorators={decorators}
-                />
-            </FieldInput>
-
+        <FieldContainer >
+            <Editor
+                editorState={editorState}
+                onEditorStateChange={onChange}
+                handlePastedText={handlePastedText}
+                toolbar={builtInButtons}
+                toolbarCustomButtons={customButtons}
+                customDecorators={decorators}
+            />
         </FieldContainer>
     );
 };

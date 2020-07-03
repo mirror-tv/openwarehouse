@@ -3,15 +3,15 @@ import { jsx } from '@emotion/core';
 import { Annotation, Audio, BlockQuote, EmbedCode, Image, Infobox, Slideshow, Video, YouTube } from './editor/controls';
 
 export const customButtons = [
-    <Annotation />,
-    <Audio />,
-    <BlockQuote />,
+    <YouTube />,
     <EmbedCode />,
+    <BlockQuote />,
     <Image />,
+    <Annotation />,
     <Infobox />,
     <Slideshow />,
     <Video />,
-    <YouTube />,
+    <Audio />,
 ];
 
 export const builtInButtons = {
