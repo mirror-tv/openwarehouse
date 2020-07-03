@@ -96,7 +96,6 @@ module.exports = {
         // Hooks for create and update operations
         resolveInput: ({ operation, existingItem, resolvedData, originalInput }) => {
             if (resolvedData.file) {
-                resolvedData.meta = resolvedData.file._meta
                 resolvedData.urlOriginal = resolvedData.file._meta.url.urlOriginal
                 resolvedData.urlDesktopSized = resolvedData.file._meta.url.urlDesktopSized
                 resolvedData.urlMobileSized = resolvedData.file._meta.url.urlMobileSized
