@@ -44,6 +44,7 @@ const MiniEditor = (props) => {
             style,
             className,
             title,
+            children,
         },
         getPreSelectedText, // () => string
         onSave, // (text, html) => {...}
@@ -110,6 +111,7 @@ const MiniEditor = (props) => {
                 aria-haspopup="true"
                 aria-expanded={expanded}
                 title={style.title}
+                children={children}
             >
                 <img src={style.icon} alt="" />
             </Option>

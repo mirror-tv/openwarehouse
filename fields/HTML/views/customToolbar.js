@@ -8,6 +8,7 @@ export const customButtons = [
     <BlockQuote />,
     <Image />,
     <Annotation />,
+    <Infobox />,
     <Slideshow />,
     <Video />,
     <Audio />,
