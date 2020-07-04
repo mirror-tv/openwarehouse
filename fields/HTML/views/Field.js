@@ -17,10 +17,11 @@ const HtmlField = ({ onChange, autoFocus, field, value, errors }) => {
         <FieldContainer>
             <FieldLabel field={field} errors={errors} />
             <FieldDescription text={field.adminDoc} />
-            <FieldInput
+            <div
                 style={{
-                    border: '1px solid #D84315',
+                    border: '1px solid #C1C7D0',
                     borderRadius: 3,
+                    padding: '2px',
                 }}
             >
                 <Editor
@@ -31,8 +32,7 @@ const HtmlField = ({ onChange, autoFocus, field, value, errors }) => {
                     toolbarCustomButtons={customButtons}
                     customDecorators={decorators}
                 />
-            </FieldInput>
-
+            </div>
         </FieldContainer>
     );
 };
