@@ -1,19 +1,21 @@
-import YouTube from './YouTube';
-import EmbedCode from './EmbedCode';
-import BlockQuote from './BlockQuote';
-import Image from './Image';
 import Annotation from './Annotation'
+import Audio from './Audio';
+import BlockQuote from './BlockQuote';
+import EmbedCode from './EmbedCode';
+import Image from './Image';
+import Infobox from './Infobox'
 import Slideshow from './Slideshow';
 import Video from './Video';
-import Audio from './Audio';
+import YouTube from './YouTube';
 
 export {
-    YouTube,
-    EmbedCode,
-    BlockQuote,
-    Image,
     Annotation,
+    Audio,
+    BlockQuote,
+    EmbedCode,
+    Image,
+    Infobox,
     Slideshow,
     Video,
-    Audio,
+    YouTube,
 };
