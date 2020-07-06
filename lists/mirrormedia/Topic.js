@@ -2,6 +2,7 @@ const { Slug, Text, Integer, Checkbox, Select, Relationship } = require('@keysto
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
 const { uuid } = require('uuidv4');
 const { admin, moderator, allowRole } = require('../../helpers/access');
+const HTML = require('../../fields/HTML');
 
 module.exports = {
     fields: {
@@ -40,10 +41,10 @@ module.exports = {
             options: 'draft, published',
             defaultValue: 'draft'
         },
-        /*brief: {
+        brief: {
             label: '前言',
-            type: Wysiwyg
-        },*/
+            type: HTML
+        },
         leading: {
             label: '標頭樣式',
             type: Select,
