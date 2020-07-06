@@ -1,6 +1,6 @@
 const { Text, Checkbox, Password, Select, Relationship } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
-const { admin, moderator, owner, allowRole } = require('../../helpers/access');
+const { admin, moderator, owner, allowRoles } = require('../../helpers/access');
 
 module.exports = {
     fields: {
@@ -27,7 +27,7 @@ module.exports = {
             defaultValue: 'contributor',
             isRequired: true,
             access: {
-                update: allowRole(admin, moderator),
+                update: allowRoles(admin, moderator),
             }
         },
         company: {
@@ -39,14 +39,14 @@ module.exports = {
             label: '管理者',
             type: Checkbox,
             access: {
-                update: allowRole(admin),
+                update: allowRoles(admin),
             }
         },
         isProtected: {
             label: '受保護',
             type: Checkbox,
             access: {
-                update: allowRole(admin),
+                update: allowRoles(admin),
             }
         }
     },
@@ -55,10 +55,10 @@ module.exports = {
         byTracking(),
     ],
     access: {
-        read: allowRole(admin, moderator, owner),
-        update: allowRole(admin, moderator, owner),
-        create: allowRole(admin, moderator),
-        delete: allowRole(admin),
+        read: allowRoles(admin, moderator, owner),
+        update: allowRoles(admin, moderator, owner),
+        create: allowRoles(admin, moderator),
+        delete: allowRoles(admin),
         auth: true,
     },
     hooks: {

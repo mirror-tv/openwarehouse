@@ -12,17 +12,17 @@ const owner = ({ authentication: { item: user }, listKey }) => {
     return { createdBy: { id: user.id } };
 };
 
-const allowRole = (...args) => {
+const allowRoles = (...args) => {
     return auth => {
         return args.reduce((result, check) => result || check(auth), false);
     }
 }
 
 module.exports = {
-    admin: admin,
-    moderator: moderator,
-    editor: editor,
-    contributor: contributor,
-    owner: owner,
-    allowRole: allowRole,
+    admin,
+    moderator,
+    editor,
+    contributor,
+    owner,
+    allowRoles,
 }

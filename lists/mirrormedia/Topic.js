@@ -1,7 +1,7 @@
 const { Slug, Text, Integer, Checkbox, Select, Relationship } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
 const { uuid } = require('uuidv4');
-const { admin, moderator, allowRole } = require('../../helpers/access');
+const { admin, moderator, allowRoles } = require('../../helpers/access');
 const HTML = require('../../fields/HTML');
 
 module.exports = {
@@ -159,9 +159,9 @@ module.exports = {
         byTracking(),
     ],
     access: {
-        update: allowRole(admin, moderator),
-        create: allowRole(admin, moderator),
-        delete: allowRole(admin),
+        update: allowRoles(admin, moderator),
+        create: allowRoles(admin, moderator),
+        delete: allowRoles(admin),
     },
     adminConfig: {
         defaultColumns: 'slug, title, state, tags, isFeatured, createdAt',

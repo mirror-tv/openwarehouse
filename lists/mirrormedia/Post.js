@@ -1,6 +1,6 @@
 const { Slug, Text, Checkbox, Select, Relationship, DateTime } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
-const { admin, moderator, editor, contributor, owner, allowRole } = require('../../helpers/access');
+const { admin, moderator, editor, contributor, owner, allowRoles } = require('../../helpers/access');
 const publishStateExaminer = require('../../hooks/publishStateExaminer');
 const HTML = require('../../fields/HTML');
 
@@ -204,9 +204,9 @@ module.exports = {
         byTracking(),
     ],
     access: {
-        update: allowRole(admin, moderator, editor, owner),
-        create: allowRole(admin, moderator, editor, contributor),
-        delete: allowRole(admin),
+        update: allowRoles(admin, moderator, editor, owner),
+        create: allowRoles(admin, moderator, editor, contributor),
+        delete: allowRoles(admin),
     },
     hooks: {
         resolveInput: publishStateExaminer,

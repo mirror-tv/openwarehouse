@@ -1,6 +1,6 @@
 const { Integer, Select, Relationship } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
-const { admin, moderator, allowRole } = require('../../helpers/access');
+const { admin, moderator, allowRoles } = require('../../helpers/access');
 
 module.exports = {
     fields: {
@@ -26,9 +26,9 @@ module.exports = {
         byTracking(),
     ],
     access: {
-        update: allowRole(admin, moderator),
-        create: allowRole(admin, moderator),
-        delete: allowRole(admin),
+        update: allowRoles(admin, moderator),
+        create: allowRoles(admin, moderator),
+        delete: allowRoles(admin),
     },
     adminConfig: {
         defaultColumns: 'choice, state, createdAt',
