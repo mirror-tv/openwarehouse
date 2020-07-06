@@ -4,16 +4,16 @@ const { AdminUIApp } = require('@keystonejs/app-admin-ui');
 const { KnexAdapter: Adapter } = require('@keystonejs/adapter-knex');
 const { PasswordAuthStrategy } = require('@keystonejs/auth-password');
 
-const { main, database, session, redis: redisConf } = require('./configs/config.js')
+const { app, database, session, redis: redisConf } = require('./configs/config.js')
 const createDefaultAdmin = require('./helpers/createDefaultAdmin')
-const lists = require('./lists');
+const lists = require(`./lists/${app.project}`);
 
 const redis = require('redis');
 const expressSession = require('express-session');
 const RedisStore = require('connect-redis')(expressSession);
 
 const adapterConfig = {
-  dropDatabase: main.dropDatabase,
+  dropDatabase: app.dropDatabase,
   knexOptions: {
     client: 'postgres',
     connection: `postgresql://${database.acc}:${database.pass}@${database.host}/${database.db}`,
@@ -21,7 +21,7 @@ const adapterConfig = {
 };
 
 const keystone = new Keystone({
-  name: main.applicationName,
+  name: app.applicationName,
   adapter: new Adapter(adapterConfig),
   cookieSecret: session.cookieSecret,
   onConnect: createDefaultAdmin,
@@ -44,7 +44,7 @@ for (var name in lists) {
 
 const authStrategy = keystone.createAuthStrategy({
   type: PasswordAuthStrategy,
-  list: main.authList,
+  list: app.authList,
 });
 
 module.exports = {

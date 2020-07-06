@@ -1,7 +1,7 @@
 const { Text, Select, Relationship, File, Url } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
-const { ImageAdapter } = require('../lib/ImageAdapter');
-const access = require('../helpers/access');
+const { ImageAdapter } = require('../../lib/ImageAdapter');
+const access = require('../../helpers/access');
 const gcsDir = 'assets/images/'
 
 module.exports = {

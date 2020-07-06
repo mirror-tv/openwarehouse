@@ -1,7 +1,7 @@
 const { Text, Relationship, File } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
-const { GCSAdapter } = require('../lib/GCSAdapter');
-const access = require('../helpers/access');
+const { GCSAdapter } = require('../../lib/GCSAdapter');
+const access = require('../../helpers/access');
 const gcsDir = 'assets/audios/'
 
 module.exports = {
