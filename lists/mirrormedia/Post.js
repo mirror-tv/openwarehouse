@@ -1,7 +1,7 @@
 const { Slug, Text, Checkbox, Select, Relationship, DateTime } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
-const access = require('../helpers/access');
-const HTML = require('../fields/HTML');
+const access = require('../../helpers/access');
+const HTML = require('../../fields/HTML');
 
 module.exports = {
     fields: {

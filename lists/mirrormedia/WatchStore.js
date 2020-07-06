@@ -1,7 +1,7 @@
-const { Slug, Text, Relationship } = require('@keystonejs/fields');
+const { Slug, Text, Relationship, Url, Integer } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
 const { uuid } = require('uuidv4');
-const access = require('../helpers/access');
+const access = require('../../helpers/access');
 
 module.exports = {
     fields: {
@@ -18,23 +18,32 @@ module.exports = {
             }
         },
         name: {
-            label: '名稱',
+            label: '店名',
             type: Text,
-            isRequired: true,
-            isUnique: true
+            isRequired: true
         },
-        ogTitle: {
-            label: 'FB 分享標題',
+        address: {
+            label: '地址',
             type: Text
         },
-        ogDescription: {
-            label: 'FB 分享說明',
+        phone: {
+            label: '電話',
             type: Text
         },
-        ogImage: {
-            label: 'FB 分享縮圖',
+        mapUrl: {
+            label: '地圖網址',
+            type: Url
+        },
+        watches: {
+            label: '手錶',
             type: Relationship,
-            ref: 'Image'
+            ref: 'Watch.stores',
+            many: true
+        },
+        sortOrder: {
+            label: '排序順位',
+            type: Integer,
+            isUnique: true
         },
     },
     plugins: [
@@ -47,7 +56,7 @@ module.exports = {
         delete: access.userIsAboveAuthorOrOwner,
     },
     adminConfig: {
-        defaultColumns: 'slug, name, createdAt',
+        defaultColumns: 'slug, name, address, phone, watches, sortOrder, createdAt',
         defaultSort: '-createdAt',
     },
 }
