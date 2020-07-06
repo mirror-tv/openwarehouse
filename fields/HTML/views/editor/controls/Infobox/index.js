@@ -12,6 +12,7 @@ export default (props) => {
     const getPreSelectedText = () => getSelectedBlock(editorState).getText();;
 
     const onSave = (title, html) => {
+        const currentEntity = editorState ? getSelectionEntity(editorState) : undefined;
         let selection = editorState.getSelection();
 
         if (currentEntity) {

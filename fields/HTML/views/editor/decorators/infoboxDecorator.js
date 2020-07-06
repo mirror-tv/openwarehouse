@@ -14,6 +14,7 @@ function strategy(contentBlock, callback, contentState) {
 
 const component = (props) => {
 
+    const { title, body } = props.contentState.getEntity(props.entityKey).getData();
     return (
         <div
             className='info-box-container center'
