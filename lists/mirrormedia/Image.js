@@ -1,7 +1,7 @@
 const { Text, Select, Relationship, File, Url } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
 const { ImageAdapter } = require('../../lib/ImageAdapter');
-const access = require('../../helpers/access');
+const { admin, moderator, editor, allowRole } = require('../../helpers/access');
 const gcsDir = 'assets/images/'
 
 module.exports = {
@@ -80,9 +80,9 @@ module.exports = {
         byTracking(),
     ],
     access: {
-        update: access.userIsAboveAuthorOrOwner,
-        create: access.userIsNotContributor,
-        delete: access.userIsAboveAuthorOrOwner,
+        update: allowRole(admin, moderator, editor),
+        create: allowRole(admin, moderator, editor),
+        delete: allowRole(admin),
     },
     adminConfig: {
         defaultColumns: 'title, image, createdAt',

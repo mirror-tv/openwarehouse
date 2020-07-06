@@ -1,6 +1,6 @@
 const { Text, Url, Relationship } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
-const access = require('../../helpers/access');
+const { admin, moderator, editor, allowRole } = require('../../helpers/access');
 
 module.exports = {
     fields: {
@@ -33,10 +33,10 @@ module.exports = {
         byTracking(),
     ],
     access: {
-        read: access.userIsAdminOrModerator,
-        update: access.userIsAdminOrModerator,
-        create: access.userIsAdminOrModerator,
-        delete: access.userIsAdminOrModerator,
+        read: allowRole(admin, moderator, editor),
+        update: allowRole(admin, moderator),
+        create: allowRole(admin, moderator),
+        delete: allowRole(admin),
         auth: true,
     },
     adminConfig: {

@@ -1,7 +1,7 @@
 const { Text, Checkbox, Select, Relationship, File, DateTime, Url } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
 const { GCSAdapter } = require('../../lib/GCSAdapter');
-const access = require('../../helpers/access');
+const { admin, moderator, editor, allowRole } = require('../../helpers/access');
 const gcsDir = 'assets/videos/'
 
 
@@ -107,9 +107,9 @@ module.exports = {
         byTracking(),
     ],
     access: {
-        update: access.userIsAboveAuthorOrOwner,
-        create: access.userIsNotContributor,
-        delete: access.userIsAboveAuthorOrOwner,
+        update: allowRole(admin, moderator, editor),
+        create: allowRole(admin, moderator, editor),
+        delete: allowRole(admin),
     },
     adminConfig: {
         defaultColumns: 'title, video, tags, state, publishTime, createdAt',

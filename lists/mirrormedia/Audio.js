@@ -1,8 +1,8 @@
 const { Text, Relationship, File } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
 const { GCSAdapter } = require('../../lib/GCSAdapter');
-const access = require('../../helpers/access');
-const gcsDir = 'assets/audios/'
+const { admin, moderator, editor, allowRole } = require('../../helpers/access');
+const gcsDir = 'assets/audios/';
 
 module.exports = {
     fields: {
@@ -57,9 +57,9 @@ module.exports = {
         byTracking(),
     ],
     access: {
-        update: access.userIsAboveAuthorOrOwner,
-        create: access.userIsNotContributor,
-        delete: access.userIsAboveAuthorOrOwner,
+        update: allowRole(admin, moderator, editor),
+        create: allowRole(admin, moderator, editor),
+        delete: allowRole(admin),
     },
     adminConfig: {
         defaultColumns: 'title, audio, tags, createdAt',
