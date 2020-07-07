@@ -12,7 +12,7 @@ pipeline:
       Someone gave *{{build.branch}}* a little push.
     when:
       event: [push]
-      branch: [test/graphql]
+      branch: [dev, master, testgraphql]
 
   restoreCache:
     image: drillster/drone-volume-cache
@@ -24,7 +24,7 @@ pipeline:
       - /tmp/cache:/cache
     when:
       event: [push]
-      branch: [test/graphql]
+      branch: [dev, master, testgraphql]
 
   getDevConfig:
     image: gcr.io/mirrormedia-1470651750304/drone-cloud-sdk:latest
@@ -35,7 +35,7 @@ pipeline:
       - cp ../configs/openwarehouse/dev/gcskeyfile.json ./configs/gcskeyfile.json
     when:
       event: [push]
-      branch: [test/graphql]
+      branch: [dev, testgraphql]
 
   buildThenPublish:
     image: plugins/gcr
@@ -46,7 +46,7 @@ pipeline:
     secrets: [google_credentials]
     when:
       event: [push]
-      branch: [test/graphql]
+      branch: [dev, master, testgraphql]
 
   deployDev:
     image: nytimes/drone-gke
@@ -63,7 +63,7 @@ pipeline:
       tier: backend
     when:
       event: [push]
-      branch: [test/graphql]
+      branch: [dev, testgraphql]
 
   rebuildCache:
     image: drillster/drone-volume-cache
@@ -74,7 +74,7 @@ pipeline:
     volumes:
       - /tmp/cache:/cache
     when:
-      branch: [test/graphql]
+      branch: [dev, master, testgraphql]
 
   finishSlack:
     image: plugins/slack
@@ -85,7 +85,7 @@ pipeline:
     when:
       status: [success, failure]
       event: [push]
-      branch: [test/graphql]
+      branch: [dev, master, testgraphql]
     template: >
       {{#success build.status}}
         *success* ${DRONE_REPO_NAME}:${DRONE_BRANCH}_${DRONE_COMMIT_AUTHOR}_${DRONE_BUILD_NUMBER} was well served.
