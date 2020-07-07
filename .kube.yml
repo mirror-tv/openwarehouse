@@ -28,8 +28,8 @@ spec:
         tier: backend
     spec:
       containers:
-      - image: {{.image}}
-        # imagePullPolicy: IfNotPresent
+        - image: '{{.image}}'
+          # imagePullPolicy: IfNotPresent
           name: test_graphql
           ports:
             - containerPort: 3000
