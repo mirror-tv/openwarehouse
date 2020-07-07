@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: '${DRONE_REPO_NAME}'
+  name: testgraphql
 spec:
   selector:
     app: testgraphql
