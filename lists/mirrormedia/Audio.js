@@ -29,15 +29,27 @@ module.exports = {
         },
         meta: {
             label: '中繼資料',
-            type: Text
+            type: Text,
+            access: {
+                create: false,
+                update: false,
+            }
         },
-        url:{
+        url: {
             label: '檔案網址',
-            type: Text
+            type: Text,
+            access: {
+                create: false,
+                update: false,
+            }
         },
-        duration:{
+        duration: {
             label: '音檔長度（秒）',
-            type: Number
+            type: Number,
+            access: {
+                create: false,
+                update: false,
+            }
         }
     },
     plugins: [

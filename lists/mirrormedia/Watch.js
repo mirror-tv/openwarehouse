@@ -108,7 +108,10 @@ module.exports = {
             dataType: 'string',
             options: '無, 30米, 50米, 100米, 200米, 300米, 600米, 1000米, 2000米, 2000米, 4000米'
         },
-        //content: { label: '內文', type: Types.Html, wysiwyg: true, height: 400 },
+        content: {
+            label: '內文',
+            type: HTML,
+        },
         relatedPosts: {
             label: '相關文章',
             type: Relationship,

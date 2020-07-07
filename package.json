@@ -42,6 +42,7 @@
     "cross-env": "^7.0.0",
     "draft-js": "^0.11.6",
     "draftjs-conductor": "^1.0.1",
+    "draftjs-to-html": "^0.9.1",
     "execa": "^4.0.2",
     "express-session": "^1.17.1",
     "get-audio-duration": "^2.0.2",

@@ -53,3 +53,7 @@ export function filter(obj, keys) {
 export function stopPropagation(event) {
   event.stopPropagation();
 }
+
+export function getUrlExtension(url) {
+  return url.split(/[#?]/)[0].split('.').pop().trim();
+}

@@ -7,7 +7,7 @@ function strategy(contentBlock, callback, contentState) {
         const entityKey = character.getEntity();
         return (
             entityKey !== null &&
-            contentState.getEntity(entityKey).getType() === 'VIDEO'
+            contentState.getEntity(entityKey).getType() === 'AUDIO'
         );
     }, callback);
 }
@@ -19,18 +19,18 @@ const component = (props) => {
         <div style={{
             backgroundColor: "GhostWhite",
             width: '100%',
-            height: 'auto',
+            display: 'flex',
+            flexDirection: 'column',
         }}>
-            <video
+            <audio
                 style={{
-                    height: '60%',
                     width: '60%',
+                    margin: '8px 4px',
                 }}
                 controls>
-                <source src={url} type={`video/${ext}`} />
-            </video>
-            <p style={{ fontSize: '14px', fontWeight: 'bold', fontFamily: 'Noto Sans TC,sans-serif' }}>{title}</p>
-            <p style={{ fontSize: '10px', fontFamily: 'Noto Sans TC,sans-serif' }}>{description}</p>
+                <source src={url} type={`audio/${ext}`} />
+            </audio>
+            <p style={{ fontSize: '14px', fontWeight: 'bold', fontFamily: 'Noto Sans TC,sans-serif', marginLeft: '8px' }}>{title}</p>
         </div>
     );
 }

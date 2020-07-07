@@ -36,18 +36,18 @@ let inlineTagMap = {
 };
 
 let defaultEntityTagMap = {
-	/*[ENTITY.ANNOTATION.type]: ['<abbr title="<%= data.pureAnnotationText %>"><%= data.text %>', '</abbr>'],
-	[ENTITY.AUDIO.type]: ['<div class="audio-container <%= data.alignment %>"><div class="audio-title"><%= data.title %></div><div class="audio-desc"><%= data.description %></div><audio src="<%= data.url %>" />', '</div>'],
-	[ENTITY.BLOCKQUOTE.type]: ['<blockquote class="<%= data.alignment %>"><div><%= data.quote %></div><div><%= data.quoteBy %></div>', '<blockquote>'],
-	[ENTITY.EMBEDDEDCODE.type]: ['<div class="embedded <%= data.alignment %>" title="<%= data.caption %>"><%= data.embeddedCode%>', '</div>'],
-	[ENTITY.INFOBOX.type]: ['<div class="info-box-container <%= data.alignment %>"><div class="info-box-title"><%= data.title %></div><div class="info-box-body"><%= data.body %></div>', '</div>'],
-	[ENTITY.IMAGE.type]: ['<img alt="<%= data.description %>" src="<%= data.url %>" srcset="<%= data.mobile.url %> 800w,  <%= data.tablet.url %> 1280w, <%= data.desktop.url %> 2400w" class="<%= data.alignment %>">', '</img>'],
-	[ENTITY.IMAGEDIFF.type]: ['<!-- imageDiff component start --> <ol class="image-diff-container"> <% _.forEach(data, function(image, index) { if (index > 1) { return; } %><li class="image-diff-item"><img src="<%- image.url %>" /></li><% }); %>', '</ol><!-- imageDiff component end-->'],
-	[ENTITY.IMAGELINK.type]: ['<img alt="<%= data.description %>" src="<%= data.url %>" class="<%= data.alignment %>">', '</img>'],*/
-	[ENTITY.LINK.type]: ['<a target="_blank" href="<%= data.url %>">', '</a>'],
-	/*[ENTITY.SLIDESHOW.type]: ['<!-- slideshow component start --> <ol class="slideshow-container"> <%  _.forEach(data, function(image) { %><li class="slideshow-slide"><img alt="<%- image.description %>" src="<%- image.url %>" srcset="<%= image.mobile.url %> 800w,  <%= image.tablet.url %> 1280w, <%= image.desktop.url %> 2400w" /></li><% }); %>', '</ol><!-- slideshow component end -->'],
+	[ENTITY.ANNOTATION.type]: ['<abbr title="<%= data.body %>"><%= data.text %>', '</abbr>'],
+	[ENTITY.AUDIO.type]: ['<div class="audio-container center"><div class="audio-title"><%= data.title %></div><!-- <div class="audio-desc"><%= data.description %></div> --><audio src="<%= data.url %>" />', '</div>'],
+	[ENTITY.BLOCKQUOTE.type]: ['<blockquote class="center"><div><%= data.quote %></div><div><%= data.quotedBy %></div>', '<blockquote>'],
+	[ENTITY.EMBEDDEDCODE.type]: ['<div class="embedded <%= data.alignment %>" title="<%= data.caption %>"><%= data.code%>', '</div>'],
+	[ENTITY.INFOBOX.type]: ['<div class="info-box-container center"><div class="info-box-title"><%= data.title %></div><div class="info-box-body"><%= data.body %></div>', '</div>'],
+	[ENTITY.IMAGE.type]: ['<img alt="<%= data.title %>" src="<%= data.urlOriginal %>" srcset="<%= data.urlMobileSized %> 800w,  <%= data.urlTabletSized %> 1280w, <%= data.urlDesktopSized %> 2400w" class="center">', '</img>'],
+	/*[ENTITY.IMAGEDIFF.type]: ['<!-- imageDiff component start --> <ol class="image-diff-container"> <% _.forEach(data, function(image, index) { if (index > 1) { return; } %><li class="image-diff-item"><img src="<%- image.url %>" /></li><% }); %>', '</ol><!-- imageDiff component end-->'],
+	[ENTITY.IMAGELINK.type]: ['<img alt="<%= data.description %>" src="<%= data.url %>" class="<%= data.alignment %>">', '</img>'],
+	[ENTITY.LINK.type]: ['<a target="_blank" href="<%= data.url %>">', '</a>'],*/
+	[ENTITY.SLIDESHOW.type]: ['<!-- slideshow component start --> <ol class="slideshow-container"> <%  _.forEach(data, function(image) { %><li class="slideshow-slide"><img alt="<%- image.title %>" src="<%- image.urlOriginal %>" srcset="<%= image.urlMobileSized %> 800w,  <%= image.urlTabletSized %> 1280w, <%= image.urlDesktopSized %> 2400w" /></li><% }); %>', '</ol><!-- slideshow component end -->'],
 	[ENTITY.VIDEO.type]: ['<div controls class="video-container <%= data.alignment %>"><div class="video-title"><%= data.title %></div><div class="video-desc"><%= data.description %></div><video src="<%= data.url %>" />', '</div>'],
-	[ENTITY.YOUTUBE.type]: ['<iframe width="560" alt="<%= data.description %>" height="315" src="https://www.youtube.com/embed/<%= data.youtubeId %>" frameborder="0" allowfullscreen>', '</iframe>'],*/
+	[ENTITY.YOUTUBE.type]: ['<iframe width="560" alt="<%= data.description %>" height="315" src="https://www.youtube.com/embed/<%= data.id %>" frameborder="0" allowfullscreen>', '</iframe>'],
 };
 
 let nestedTagMap = {

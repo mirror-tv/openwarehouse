@@ -124,8 +124,14 @@ module.exports = {
             options: 'article, wide, projects, photography, script, campaign, readr',
             defaultValue: 'article'
         },
-        //brief: { label: '前言', type: Types.Html, wysiwyg: true, height: 150 },
-        //content: { label: '內文', type: Types.Html, wysiwyg: true, height: 400 },
+        brief: {
+            label: '前言',
+            type: HTML,
+        },
+        content: {
+            label: '內文',
+            type: HTML,
+        },
         topic: {
             label: '專題',
             type: Relationship,

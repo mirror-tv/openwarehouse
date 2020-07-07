@@ -2,19 +2,19 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { EditorState, Modifier } from 'draft-js';
 import { getEntityRange, getSelectionEntity } from 'draftjs-utils';
-import { Videocam } from '@material-ui/icons';
+import { GraphicEq } from '@material-ui/icons';
 
 import GridSelector from '../../components/GridSelector'
 import { setPages, setData } from '../../utils/fetchData';
 import { getUrlExtension } from '../../utils/common';
 
 const dataConfig = {
-    list: 'Video',
-    columns: ['title', 'description', 'url'],
-    maxItemsPerPage: 8,
+    list: 'Audio',
+    columns: ['title', 'url'],
+    maxItemsPerPage: 12,
 }
 
-const Video = (props) => {
+const Audio = (props) => {
     const { onChange, editorState } = props;
     const [pageNumbers, setPageNumbers] = useState(0);
     const [page, setPage] = useState(1);
@@ -51,7 +51,7 @@ const Video = (props) => {
 
         let contentState = editorState.getCurrentContent();
         contentState = Modifier.splitBlock(contentState, selection);
-        contentState = contentState.createEntity('VIDEO', 'IMMUTABLE', selectedData);
+        contentState = contentState.createEntity('AUDIO', 'IMMUTABLE', selectedData);
         const entityKey = contentState.getLastCreatedEntityKey();
 
         contentState = Modifier.replaceText(
@@ -62,8 +62,25 @@ const Video = (props) => {
             entityKey
         );
 
-        const newEditorState = EditorState.push(
+        let newEditorState = EditorState.push(
             editorState,
+            contentState,
+            'insert-characters'
+        );
+
+        // add an whitespacce block after content
+        contentState = newEditorState.getCurrentContent();
+        contentState = Modifier.splitBlock(contentState, selection);
+        contentState = Modifier.replaceText(
+            contentState,
+            selection,
+            ' ',
+            undefined,
+            undefined
+        );
+
+        newEditorState = EditorState.push(
+            newEditorState,
             contentState,
             'insert-characters'
         );
@@ -71,7 +88,7 @@ const Video = (props) => {
         onChange(newEditorState);
     }
 
-    const VideoTile = props => {
+    const AudioTile = props => {
         const { id, data, eventHandler } = props;
         const onClick = event => eventHandler(id);
 
@@ -87,31 +104,9 @@ const Video = (props) => {
             >
                 <div
                     style={{
-                        position: 'relative',
-                        paddingTop: '56%',
-                        overflow: 'hidden',
-                        margin: '1px',
-                    }}
-                >
-                    <video
-                        style={{
-                            top: 0,
-                            left: 0,
-                            height: '100%',
-                            width: '100%',
-                            position: 'absolute',
-                            objectFit: 'cover',
-                            objectPosition: 'center',
-                        }}
-                        controls>
-                        <source src={data.url} type={`video/${getUrlExtension(data.url)}`} />
-                    </video>
-                </div>
-                <div
-                    style={{
                         width: '100%',
-                        minHeight: '44%',
-                        maxHeight: '44%',
+                        minHeight: '50%',
+                        maxHeight: '50%',
                         paddingTop: '4px',
                         paddingBottom: '4px',
                         wordWrap: 'break-word',
@@ -125,22 +120,32 @@ const Video = (props) => {
                             fontSize: '14px',
                             fontWeight: 'bold',
                             fontFamily: 'Noto Sans TC,sans-serif',
-                            margin: '8px 8px'
-                        }}
-                    >
-                        {data.title}
-                    </p>
-                    <p
-                        style={{
-                            fontSize: '10px',
-                            fontFamily: 'Noto Sans TC,sans-serif',
-                            margin: '0px 8px',
+                            margin: '8px 10px 4px',
                             overflow: 'hidden',
                             flex: 1
                         }}
                     >
-                        {data.description}
+                        {data.title}
                     </p>
+                </div>
+                <div
+                    style={{
+                        height: '50%',
+                        position: 'relative',
+                        overflow: 'hidden',
+                        margin: '1px',
+                    }}
+                >
+                    <audio
+                        style={{
+                            marginBottom: '6px',
+                            marginLeft: '6px',
+                            height: '90%',
+                            width: '90%',
+                        }}
+                        controls>
+                        <source src={data.url} type={`audio/${getUrlExtension(data.url)}`} />
+                    </audio>
                 </div>
             </div >
         );
@@ -155,9 +160,9 @@ const Video = (props) => {
             onPageChange={setPage}
             onSearchTextChange={setSearchText}
             onChange={saveData}
-            ButtonIconComponent={Videocam}
-            TileComponent={VideoTile}
-            ratio={1.6}
+            ButtonIconComponent={GraphicEq}
+            TileComponent={AudioTile}
+            ratio={4}
             spacing={4}
         />
     );
@@ -168,4 +173,4 @@ Image.propTypes = {
     editorState: PropTypes.object,
 }
 
-export default Video;
+export default Audio;
