@@ -94,7 +94,9 @@ module.exports = {
     },
     hooks: {
         // Hooks for create and update operations
-        resolveInput: ({ operation, existingItem, resolvedData, originalInput }) => {
+        resolveInput: ({ operation, existingItem, resolvedData, context }) => {
+            console.log(context)
+            
             if (resolvedData.file) {
                 resolvedData.urlOriginal = resolvedData.file._meta.url.urlOriginal
                 resolvedData.urlDesktopSized = resolvedData.file._meta.url.urlDesktopSized

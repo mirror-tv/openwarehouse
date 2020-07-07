@@ -4,7 +4,7 @@ const { AdminUIApp } = require('@keystonejs/app-admin-ui');
 const { KnexAdapter: Adapter } = require('@keystonejs/adapter-knex');
 const { PasswordAuthStrategy } = require('@keystonejs/auth-password');
 
-const { app, database, session, redis: redisConf } = require('./configs/config.js')
+const { app, database, session, redis: redisConf, main } = require('./configs/config.js')
 const createDefaultAdmin = require('./helpers/createDefaultAdmin')
 const lists = require(`./lists/${app.project}`);
 
@@ -44,7 +44,7 @@ for (var name in lists) {
 
 const authStrategy = keystone.createAuthStrategy({
   type: PasswordAuthStrategy,
-  list: app.authList,
+  list: main.authList, //main.authList
 });
 
 module.exports = {
