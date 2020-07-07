@@ -1,6 +1,6 @@
 const { Text, Checkbox, Password, Select, Relationship } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
-const { admin, moderator, owner, allowRoles } = require('../../helpers/access');
+const { admin, moderator, editor, owner, allowRoles } = require('../../helpers/access');
 
 module.exports = {
     fields: {
@@ -55,7 +55,7 @@ module.exports = {
         byTracking(),
     ],
     access: {
-        read: allowRoles(admin, moderator, owner),
+        read: allowRoles(admin, moderator, editor, owner),
         update: allowRoles(admin, moderator, owner),
         create: allowRoles(admin, moderator),
         delete: allowRoles(admin),
