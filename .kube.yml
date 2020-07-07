@@ -1,39 +1,39 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{.app}}
+  name: test_graphql
 spec:
   selector:
-    app: {{.app}}
-    tier: {{.tier}}
+    app: test_graphql
+    tier: backend
   ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 3000
+    - port: 80
+      protocol: TCP
+      targetPort: 3000
   type: LoadBalancer
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   labels:
-    app: {{.app}}
-    tier: {{.tier}}
-  name: {{.app}}
+    app: test_graphql
+    tier: backend
+  name: test_graphql
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: {{.app}}
-        tier: {{.tier}}
+        app: test_graphql
+        tier: backend
     spec:
       containers:
       - image: {{.image}}
         # imagePullPolicy: IfNotPresent
-        name: {{.app}}
-        ports:
-        - containerPort: 3000
-          protocol: TCP
+          name: test_graphql
+          ports:
+            - containerPort: 3000
+              protocol: TCP
       terminationGracePeriodSeconds: 30
   minReadySeconds: 20
   strategy:

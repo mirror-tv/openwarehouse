@@ -4,7 +4,7 @@ const { AdminUIApp } = require('@keystonejs/app-admin-ui');
 const { KnexAdapter: Adapter } = require('@keystonejs/adapter-knex');
 const { PasswordAuthStrategy } = require('@keystonejs/auth-password');
 
-const { app, database, session, redis: redisConf } = require('./configs/config.js')
+const { app, database, session, redis: redisConf } = require('./configs/config.test.js')
 const lists = require(`./lists/${app.project}`);
 const createDefaultAdmin = require('./helpers/createDefaultAdmin')
 
@@ -54,10 +54,10 @@ module.exports = {
       enableDefaultRoute: true,
       authStrategy,
     }),
-    new AdminUIApp({
-      enableDefaultRoute: true,
-      hooks: require.resolve('./hooks/app'),
-      authStrategy,
-    }),
+    // new AdminUIApp({
+    //   enableDefaultRoute: true,
+    //   hooks: require.resolve('./hooks/app'),
+    //   authStrategy,
+    // }),
   ],
 };
