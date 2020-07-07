@@ -56,7 +56,7 @@ module.exports = {
     }),
     new AdminUIApp({
       enableDefaultRoute: true,
-      hooks: require.resolve('./hooks/app'),
+      hooks: require.resolve(`./hooks/${app.project}`),
       authStrategy,
     }),
   ],
