@@ -1,6 +1,6 @@
 const { Slug, Text, Relationship, Select, DateTime, Url } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
-const access = require('../../helpers/access');
+const { admin, moderator, editor, allowRoles } = require('../../helpers/access');
 
 
 module.exports = {
@@ -74,9 +74,9 @@ module.exports = {
         byTracking(),
     ],
     access: {
-        update: access.userIsAboveAuthorOrOwner,
-        create: access.userIsNotContributor,
-        delete: access.userIsAdmin,
+        update: allowRoles(admin, moderator, editor),
+        create: allowRoles(admin, moderator),
+        delete: allowRoles(admin),
     },
     adminConfig: {
         defaultColumns: 'title, slug, state, createdBy, publishTime',

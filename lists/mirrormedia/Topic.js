@@ -1,7 +1,8 @@
 const { Slug, Text, Integer, Checkbox, Select, Relationship } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
 const { uuid } = require('uuidv4');
-const access = require('../../helpers/access');
+const { admin, moderator, allowRoles } = require('../../helpers/access');
+const HTML = require('../../fields/HTML');
 
 module.exports = {
     fields: {
@@ -40,10 +41,10 @@ module.exports = {
             options: 'draft, published',
             defaultValue: 'draft'
         },
-        /*brief: {
+        brief: {
             label: '前言',
-            type: Wysiwyg
-        },*/
+            type: HTML
+        },
         leading: {
             label: '標頭樣式',
             type: Select,
@@ -158,9 +159,9 @@ module.exports = {
         byTracking(),
     ],
     access: {
-        update: access.userIsAdminOrModerator,
-        create: access.userIsAdminOrModerator,
-        delete: access.userIsAdminOrModerator,
+        update: allowRoles(admin, moderator),
+        create: allowRoles(admin, moderator),
+        delete: allowRoles(admin),
     },
     adminConfig: {
         defaultColumns: 'slug, title, state, tags, isFeatured, createdAt',
