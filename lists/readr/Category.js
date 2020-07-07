@@ -1,4 +1,4 @@
-const { Slug, Text, Checkbox, Relationship } = require('@keystonejs/fields');
+const { Slug, Text, Checkbox, Relationship, Select } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
 const { admin, moderator, allowRoles } = require('../../helpers/access');
 
@@ -14,6 +14,12 @@ module.exports = {
             label: "名稱",
             type: Text,
             isRequired: true
+        },
+        state: {
+            label: '狀態',
+            type: Select,
+            options: 'draft, published',
+            defaultValue: 'draft'
         },
         ogTitle: {
             label: 'FB 分享標題',
