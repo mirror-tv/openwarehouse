@@ -1,4 +1,4 @@
-const { Integer, Text, DateTime, Relationship, Url, Select } = require('@keystonejs/fields');
+const { Integer, Text, Select, Relationship, DateTime } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
 const { admin, moderator, allowRoles } = require('../../helpers/readrAccess');
 
@@ -14,47 +14,22 @@ module.exports = {
             type: Text,
             isRequired: true
         },
-        description: {
-            label: '描述',
-            type: Text
-        },
-        heroImage: {
-            label: '首圖',
+        writer: {
+            label: '作者',
             type: Relationship,
-            ref: 'Image'
+            ref: 'Author'
         },
-        startTime: {
-            label: '開始時間',
-            type: DateTime,
-            format: 'MM/dd/yyyy HH:mm',
-            defaultValue: new Date().toISOString(),
-            isRequired: true,
-            yearPickerType: 'select' // this option seems not work
-        },
-        endTime: {
-            label: '結束時間',
-            type: DateTime,
-            format: 'MM/dd/yyyy HH:mm',
-        },
-        progress: {
-            label: '完成進度',
-            type: Integer,
-        },
-        collabLink: {
-            label: '協作連結',
-            type: Url,
-        },
-        achvLink: {
-            label: '結案成果連結',
-            type: Url,
+        byline: {
+            label: '引自',
+            type: Text,
         },
         state: {
             label: '狀態',
             type: Select,
-            options: 'draft, published, scheduled, archived',
+            options: 'draft, published, scheduled, archived, invisible',
             defaultValue: 'draft'
         },
-        publishTime: {
+        publishedTime: {
             label: '發佈時間',
             type: DateTime,
             format: 'MM/dd/yyyy HH:mm',
@@ -79,7 +54,7 @@ module.exports = {
         delete: allowRoles(admin),
     },
     adminConfig: {
-        defaultColumns: 'title, description, progress, state, createdAt',
+        defaultColumns: 'title, writer, byline, state, publishedTime, createdAt',
         defaultSort: '-createdAt',
     },
 }

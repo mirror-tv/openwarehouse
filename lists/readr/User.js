@@ -1,6 +1,6 @@
 const { Text, Checkbox, Password, Select, Relationship } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
-const { admin, moderator, editor, owner, allowRoles } = require('../../helpers/mirrormediaAccess');
+const { admin, moderator, editor, owner, allowRoles } = require('../../helpers/readrAccess');
 
 module.exports = {
     fields: {
@@ -23,23 +23,11 @@ module.exports = {
             label: '角色權限',
             type: Select,
             dataType: 'string',
-            options: 'contributor, author, editor, moderator',
+            options: 'contributor, author, editor, moderator, admin',
             defaultValue: 'contributor',
             isRequired: true,
             access: {
                 update: allowRoles(admin, moderator),
-            }
-        },
-        company: {
-            label: '公司',
-            type: Relationship,
-            ref: 'Company.users',
-        },
-        isAdmin: {
-            label: '管理者',
-            type: Checkbox,
-            access: {
-                update: allowRoles(admin),
             }
         },
         isProtected: {
@@ -64,7 +52,7 @@ module.exports = {
     hooks: {
         resolveInput: async ({ operation, existingItem, resolvedData }) => {
             if (operation === 'update' && existingItem.isProtected) {
-                const protectedFields = ['name', 'email', 'isAdmin', 'role'];
+                const protectedFields = ['name', 'email', 'role'];
                 protectedFields.forEach(field => {
                     resolvedData[field] = existingItem[field];
                 })
@@ -73,7 +61,7 @@ module.exports = {
         }
     },
     adminConfig: {
-        defaultColumns: 'name, email, role, isAdmin, company, createdAt',
+        defaultColumns: 'name, email, role, isProtected, createdAt',
         defaultSort: '-createdAt'
     },
 }

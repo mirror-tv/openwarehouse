@@ -1,4 +1,4 @@
-const { Integer, Text, DateTime, Relationship, Url, Select } = require('@keystonejs/fields');
+const { Integer, Text, Select, Relationship, Url, DateTime } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
 const { admin, moderator, allowRoles } = require('../../helpers/readrAccess');
 
@@ -16,42 +16,28 @@ module.exports = {
         },
         description: {
             label: '描述',
-            type: Text
+            type: Text,
         },
-        heroImage: {
-            label: '首圖',
+        link: {
+            label: '連結',
+            type: Url,
+        },
+        /*relatedPosts: {
+            label: '相關文章',
             type: Relationship,
-            ref: 'Image'
-        },
-        startTime: {
-            label: '開始時間',
-            type: DateTime,
-            format: 'MM/dd/yyyy HH:mm',
-            defaultValue: new Date().toISOString(),
-            isRequired: true,
-            yearPickerType: 'select' // this option seems not work
-        },
-        endTime: {
-            label: '結束時間',
-            type: DateTime,
-            format: 'MM/dd/yyyy HH:mm',
-        },
-        progress: {
-            label: '完成進度',
-            type: Integer,
-        },
-        collabLink: {
-            label: '協作連結',
-            type: Url,
-        },
-        achvLink: {
-            label: '結案成果連結',
-            type: Url,
+            ref: 'Post',
+            many: true
+        },*/
+        relatedGallery: {
+            label: '相關作品',
+            type: Relationship,
+            ref: 'Gallery',
+            many: true
         },
         state: {
             label: '狀態',
             type: Select,
-            options: 'draft, published, scheduled, archived',
+            options: 'draft, published, scheduled, archived, invisible',
             defaultValue: 'draft'
         },
         publishTime: {
@@ -79,7 +65,8 @@ module.exports = {
         delete: allowRoles(admin),
     },
     adminConfig: {
-        defaultColumns: 'title, description, progress, state, createdAt',
+        defaultColumns: 'choice, state, createdAt',
         defaultSort: '-createdAt',
     },
+    plural: 'Datas',
 }

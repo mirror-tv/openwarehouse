@@ -24,7 +24,7 @@ const keystone = new Keystone({
   name: app.applicationName,
   adapter: new Adapter(adapterConfig),
   cookieSecret: session.cookieSecret,
-  onConnect: createDefaultAdmin,
+  onConnect: createDefaultAdmin(app.project),
   sessionStore: new RedisStore({
     client: redis.createClient({
       host: redisConf.host,

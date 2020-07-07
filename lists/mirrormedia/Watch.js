@@ -1,7 +1,7 @@
 const { Slug, Text, Relationship, Select, Integer, Checkbox, Url } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
 const { uuid } = require('uuidv4');
-const { admin, moderator, editor, allowRoles } = require('../../helpers/access');
+const { admin, moderator, editor, allowRoles } = require('../../helpers/mirrormediaAccess');
 const HTML = require('../../fields/HTML');
 
 module.exports = {

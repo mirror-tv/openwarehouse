@@ -1,19 +1,27 @@
-const { Slug, Text, Checkbox, Relationship, Select } = require('@keystonejs/fields');
+const { Slug, Text, Relationship, Select } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
-const { admin, moderator, allowRoles } = require('../../helpers/readrAccess');
+const { uuid } = require('uuidv4');
+const { admin, moderator, editor, allowRoles } = require('../../helpers/readrAccess');
 
 module.exports = {
     fields: {
         slug: {
-            label: "Slug",
+            label: 'Slug',
             type: Slug,
-            isRequired: true,
+            generate: uuid,
+            makeUnique: uuid,
             isUnique: true,
+            regenerateOnUpdate: false,
+            access: {
+                create: false,
+                update: false,
+            }
         },
         name: {
-            label: "名稱",
+            label: '名稱',
             type: Text,
-            isRequired: true
+            isRequired: true,
+            isUnique: true
         },
         state: {
             label: '狀態',
@@ -34,22 +42,18 @@ module.exports = {
             type: Relationship,
             ref: 'Image'
         },
-        isFeatured: {
-            label: '置頂',
-            type: Checkbox
-        },
     },
     plugins: [
         atTracking(),
         byTracking(),
     ],
     access: {
-        update: allowRoles(admin, moderator),
-        create: allowRoles(admin, moderator),
+        update: allowRoles(admin, moderator, editor),
+        create: allowRoles(admin, moderator, editor),
         delete: allowRoles(admin),
     },
     adminConfig: {
-        defaultColumns: 'slug, name, state, isFeatured, createdAt',
+        defaultColumns: 'slug, name, createdAt',
         defaultSort: '-createdAt',
     },
 }
