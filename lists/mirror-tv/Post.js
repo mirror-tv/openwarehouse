@@ -41,12 +41,6 @@ module.exports = {
                 }
             }*/
         },
-        Section: {
-            label: '分區',
-            type: Relationship,
-            ref: 'Section',
-            many: true
-        },
         Category: {
             label: '分類',
             type: Relationship,
@@ -89,7 +83,7 @@ module.exports = {
             ref: 'Contact',
             many: true
         },
-        byline: {
+        otherbyline: {
             label: '作者（其他）',
             type: Text
         },
@@ -189,18 +183,10 @@ module.exports = {
             label: '廣告文案',
             type: Checkbox
         },
-        isAudioSiteOnly: {
-            label: '僅用於語音網站',
-            type: Checkbox
-        },
         isAdBlocked: {
             label: 'Google 廣告違規',
             type: Checkbox
         },
-        albums: {
-            label: '專輯',
-            type: Relationship
-        }
     },
     plugins: [
         atTracking(),

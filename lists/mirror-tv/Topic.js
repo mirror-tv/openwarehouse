@@ -49,10 +49,10 @@ module.exports = {
             type: Select,
             options: 'video, slideshow, image'
         },
-        sections: {
-            label: '分區',
+        categories: {
+            label: '分類',
             type: Relationship,
-            ref: 'Section',
+            ref: 'Category',
             many: true
         },
         heroVideo: {

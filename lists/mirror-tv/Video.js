@@ -18,12 +18,6 @@ module.exports = {
             adapter: new GCSAdapter(gcsDir),
             isRequired: true,
         },
-        sections: {
-            label: '分區',
-            type: Relationship,
-            ref: 'Section',
-            many: true
-        },
         categories: {
             label: '分類',
             type: Relationship,
