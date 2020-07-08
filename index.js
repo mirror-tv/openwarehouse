@@ -55,9 +55,9 @@ module.exports = {
       apollo: {
         cache: new RedisCache({
           host: redisConf.host,
-          // port: redisConf.port,
+          port: redisConf.port,
           password: redisConf.authPass,
-        })
+        }),
       },
       enableDefaultRoute: true,
       authStrategy,
