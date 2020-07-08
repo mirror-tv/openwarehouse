@@ -39,7 +39,22 @@ const keystone = new Keystone({
 });
 
 for (var name in lists) {
-  keystone.createList(name, lists[name]);
+  keystone.createList(name, {
+    ...lists[name],
+    cacheHint: ({ meta }) => {
+      if (meta) {
+        return {
+          scope: 'PUBLIC',
+          maxAge: 3600,
+        };
+      } else {
+        return {
+          scope: 'PRIVATE',
+          maxAge: 60,
+        };
+      }
+    },
+  });
 }
 
 const authStrategy = keystone.createAuthStrategy({
@@ -51,6 +66,12 @@ module.exports = {
   keystone,
   apps: [
     new GraphQLApp({
+      apollo: {
+        tracing: true,
+        cacheControl: {
+          defaultMaxAge: 3600,
+        },
+      },
       enableDefaultRoute: true,
       authStrategy,
     }),
