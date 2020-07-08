@@ -41,19 +41,23 @@ const keystone = new Keystone({
 for (var name in lists) {
   keystone.createList(name, {
     ...lists[name],
-    cacheHint: ({ meta }) => {
-      if (meta) {
-        return {
-          scope: 'PUBLIC',
-          maxAge: 3600,
-        };
-      } else {
-        return {
-          scope: 'PRIVATE',
-          maxAge: 60,
-        };
-      }
+    cacheHint: {
+      scope: 'PUBLIC',
+      maxAge: 3600,
     },
+    // cacheHint: ({ meta }) => {
+    //   if (meta) {
+    //     return {
+    //       scope: 'PUBLIC',
+    //       maxAge: 3600,
+    //     };
+    //   } else {
+    //     return {
+    //       scope: 'PRIVATE',
+    //       maxAge: 60,
+    //     };
+    //   }
+    // },
   });
 }
 
