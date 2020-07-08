@@ -8,7 +8,7 @@ module.exports = {
         project: "mirrormedia",
     },
     database: {
-        host: "104.199.157.26",
+        host: "10.124.48.3",
         db: "sorcerers_stone",
         acc: "keystone_agent",
         pass: "keystone_agent11",
