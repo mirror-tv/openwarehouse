@@ -4,11 +4,11 @@ module.exports = {
     app: {
         applicationName: "Sorcerer's Stone",
         authList: "User",
-        dropDatabase: true,
+        // dropDatabase: true,
         project: "mirrormedia",
     },
     database: {
-        host: "10.124.48.3",
+        host: "104.199.157.26",
         db: "sorcerers_stone",
         acc: "keystone_agent",
         pass: "keystone_agent11",
