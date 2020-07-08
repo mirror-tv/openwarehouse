@@ -54,10 +54,8 @@ module.exports = {
     new GraphQLApp({
       apollo: {
         cache: new RedisCache({
-          sentinels: [{
-            host: redisConf.host,
-            port: redisConf.port,
-          }],
+          host: redisConf.host,
+          port: redisConf.port,
           password: redisConf.authPass,
         })
       },
