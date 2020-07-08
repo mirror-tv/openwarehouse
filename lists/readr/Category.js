@@ -1,6 +1,6 @@
-const { Slug, Text, Checkbox, Relationship } = require('@keystonejs/fields');
+const { Slug, Text, Checkbox, Relationship, Select } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
-const { admin, moderator, allowRoles } = require('../../helpers/mirrormediaAccess');
+const { admin, moderator, allowRoles } = require('../../helpers/readrAccess');
 
 module.exports = {
     fields: {
@@ -14,6 +14,12 @@ module.exports = {
             label: "名稱",
             type: Text,
             isRequired: true
+        },
+        state: {
+            label: '狀態',
+            type: Select,
+            options: 'inactive, active, archived',
+            defaultValue: 'inactive'
         },
         ogTitle: {
             label: 'FB 分享標題',
@@ -43,7 +49,7 @@ module.exports = {
         delete: allowRoles(admin),
     },
     adminConfig: {
-        defaultColumns: 'slug, name, isFeatured, createdAt',
+        defaultColumns: 'slug, name, state, isFeatured, createdAt',
         defaultSort: '-createdAt',
     },
 }

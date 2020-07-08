@@ -1,7 +1,7 @@
 const { Text, Checkbox, Select, Relationship, File, DateTime, Url } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
 const { GCSAdapter } = require('../../lib/GCSAdapter');
-const { admin, moderator, editor, allowRoles } = require('../../helpers/mirrormediaAccess');
+const { admin, moderator, editor, allowRoles } = require('../../helpers/readrAccess');
 const gcsDir = 'assets/videos/'
 
 
@@ -17,12 +17,6 @@ module.exports = {
             type: File,
             adapter: new GCSAdapter(gcsDir),
             isRequired: true,
-        },
-        sections: {
-            label: '分區',
-            type: Relationship,
-            ref: 'Section',
-            many: true
         },
         categories: {
             label: '分類',

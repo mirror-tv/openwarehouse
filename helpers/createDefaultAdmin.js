@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 const randomString = () => crypto.randomBytes(6).hexSlice();
 
-module.exports = async keystone => {
+module.exports = project => async keystone => {
     // Count existing users
     const {
         data: {
@@ -15,13 +15,15 @@ module.exports = async keystone => {
         }`
     );
 
+    const projectAdminRole = project === 'readr' ? 'role: "admin"' : 'role: "moderator", isAdmin: true';
+
     if (count === 0) {
         const password = (process.env.NODE_ENV === 'development') ? 'mirrormedia' : randomString();
         const email = 'admin@mirrormedia.mg';
 
         await keystone.executeQuery(
             `mutation initialUser($password: String, $email: String) {
-                createUser(data: {name: "admin", email: $email, password: $password, role: "moderator", isAdmin: true}) {
+                createUser(data: {name: "admin", email: $email, password: $password, ${projectAdminRole}}) {
                 id
                 }
             }`,
