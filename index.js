@@ -11,6 +11,7 @@ const createDefaultAdmin = require('./helpers/createDefaultAdmin')
 const redis = require('redis');
 const expressSession = require('express-session');
 const RedisStore = require('connect-redis')(expressSession);
+const { RedisCache } = require('apollo-server-cache-redis');
 
 const adapterConfig = {
   dropDatabase: app.dropDatabase,
@@ -39,26 +40,7 @@ const keystone = new Keystone({
 });
 
 for (var name in lists) {
-  keystone.createList(name, {
-    ...lists[name],
-    cacheHint: {
-      scope: 'PUBLIC',
-      maxAge: 3600,
-    },
-    // cacheHint: ({ meta }) => {
-    //   if (meta) {
-    //     return {
-    //       scope: 'PUBLIC',
-    //       maxAge: 3600,
-    //     };
-    //   } else {
-    //     return {
-    //       scope: 'PRIVATE',
-    //       maxAge: 60,
-    //     };
-    //   }
-    // },
-  });
+  keystone.createList(name, lists[name]);
 }
 
 const authStrategy = keystone.createAuthStrategy({
@@ -71,10 +53,13 @@ module.exports = {
   apps: [
     new GraphQLApp({
       apollo: {
-        tracing: true,
-        cacheControl: {
-          defaultMaxAge: 3600,
-        },
+        cache: new RedisCache({
+          sentinels: [{
+            host: redisConf.host,
+            port: redisConf.port,
+          }],
+          password: redisConf.authPass,
+        })
       },
       enableDefaultRoute: true,
       authStrategy,
