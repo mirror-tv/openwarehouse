@@ -70,7 +70,7 @@ module.exports = {
             host: redisConf.host,
             port: redisConf.port,
             password: redisConf.authPass,
-            namespace: 'stresstest-apollo-cache:',
+            namespace: 'stresstest-apollo-cache.',
           }),
           introspection: true,
           // debug: true,
