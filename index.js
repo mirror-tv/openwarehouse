@@ -66,6 +66,7 @@ module.exports = {
       {
         apollo: {
           cache: new RedisCache({
+            ttl: 3600,
             host: redisConf.host,
             port: redisConf.port,
             password: redisConf.authPass,
