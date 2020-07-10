@@ -19,7 +19,7 @@ module.exports = {
         prefix: "ks-sess"
     },
     redis: {
-        host: "10.140.0.28",
+        host: "10.140.0.83",
         port: "6379",
         authPass: "testla"
     }
