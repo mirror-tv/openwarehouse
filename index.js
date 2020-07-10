@@ -1,6 +1,6 @@
 const { Keystone } = require('@keystonejs/keystone');
 const { GraphQLApp } = require('@keystonejs/app-graphql');
-const { AdminUIApp } = require('@keystonejs/app-admin-ui');
+// const { AdminUIApp } = require('@keystonejs/app-admin-ui');
 const { KnexAdapter: Adapter } = require('@keystonejs/adapter-knex');
 const { PasswordAuthStrategy } = require('@keystonejs/auth-password');
 
@@ -12,6 +12,7 @@ const redis = require('redis');
 const expressSession = require('express-session');
 const RedisStore = require('connect-redis')(expressSession);
 const { RedisCache } = require('apollo-server-cache-redis');
+const responseCachePlugin = require('apollo-server-plugin-response-cache');
 
 const adapterConfig = {
   dropDatabase: app.dropDatabase,
@@ -39,8 +40,18 @@ const keystone = new Keystone({
   })
 });
 
+// for (var name in lists) {
+//   keystone.createList(name, lists[name]);
+// }
+
 for (var name in lists) {
-  keystone.createList(name, lists[name]);
+  keystone.createList(name, {
+    ...lists[name],
+    cacheHint: {
+      scope: 'PUBLIC',
+      maxAge: 1800,
+    }
+  });
 }
 
 const authStrategy = keystone.createAuthStrategy({
@@ -51,17 +62,26 @@ const authStrategy = keystone.createAuthStrategy({
 module.exports = {
   keystone,
   apps: [
-    new GraphQLApp({
-      apollo: {
-        cache: new RedisCache({
-          host: redisConf.host,
-          port: redisConf.port,
-          password: redisConf.authPass,
-        }),
-      },
-      enableDefaultRoute: true,
-      authStrategy,
-    }),
+    new GraphQLApp(
+      {
+        apollo: {
+          cache: new RedisCache({
+            host: redisConf.host,
+            port: redisConf.port,
+            password: redisConf.authPass,
+            namespace: 'stresstest-apollo-cache:',
+          }),
+          introspection: true,
+          // debug: true,
+          tracing: true,
+          cacheControl: {
+            defaultMaxAge: 7200,
+          },
+          ttl: 3600,
+          plugins: [responseCachePlugin()],
+        },
+      }
+    ),
     // new AdminUIApp({
     //   enableDefaultRoute: true,
     //   hooks: require.resolve('./hooks/app'),

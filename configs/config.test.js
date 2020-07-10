@@ -8,7 +8,7 @@ module.exports = {
         project: "mirrormedia",
     },
     database: {
-        host: "104.199.157.26",
+        host: "10.124.48.3",
         db: "sorcerers_stone",
         acc: "keystone_agent",
         pass: "keystone_agent11",
@@ -19,8 +19,8 @@ module.exports = {
         prefix: "ks-sess"
     },
     redis: {
-        host: "35.229.222.166",
+        host: "10.140.0.28",
         port: "6379",
-        authPass: "ZgbRu7SP"
+        authPass: "testla"
     }
 }
