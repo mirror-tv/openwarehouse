@@ -1,6 +1,7 @@
 const { Keystone } = require('@keystonejs/keystone');
 const { GraphQLApp } = require('@keystonejs/app-graphql');
 const { AdminUIApp } = require('@keystonejs/app-admin-ui');
+const { StaticApp } = require('@keystonejs/app-static');
 const { KnexAdapter: Adapter } = require('@keystonejs/adapter-knex');
 const { PasswordAuthStrategy } = require('@keystonejs/auth-password');
 
@@ -59,5 +60,10 @@ module.exports = {
       hooks: require.resolve('./hook'),
       authStrategy,
     }),
+    new StaticApp({
+      path: '/',
+      src: 'tmp_pic',
+      // fallback: 'index.html',
+    })
   ],
 };
