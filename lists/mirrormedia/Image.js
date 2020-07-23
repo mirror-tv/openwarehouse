@@ -2,7 +2,7 @@ const { Text, Select, Relationship, File, Url, Checkbox } = require('@keystonejs
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
 const { ImageAdapter } = require('../../lib/ImageAdapter');
 const access = require('../../helpers/access');
-const gcsDir = 'assets/images/'
+const gcsDir = 'test_dir/'
 const { LocalFileAdapter } = require('@keystonejs/file-adapters');
 const { addWatermark } = require('../../lib/watermark.js')
 const fs = require('fs')
@@ -103,33 +103,38 @@ module.exports = {
         defaultSort: '-createdAt',
     },
     hooks: {
-        // Hooks for create and update operations
-        // resolveInput: ({ operation, existingItem, resolvedData, context }) => {
-        //     console.log("RESOLVE INPUT")
-        //
-        //     return resolvedData
-        // },
-        beforeChange: async ({operation, existingItem, originalInput, resolvedData, context}) => {
+        beforeChange: async ({ existingItem, resolvedData}) => {
             console.log("BEFORE CHANGE")
             console.log("EXISTING ITEM", existingItem)
             console.log("RESOLVED DATA", resolvedData)
 
-            let stream = fs.createReadStream(`./images/${resolvedData.file.id}-${resolvedData.file.originalFilename}`)
 
-            if (resolvedData.needWatermark) {
-                stream = await addWatermark(stream, resolvedData.file.id)
+            if (typeof resolvedData.file != 'undefined'){
+                var stream = fs.createReadStream(`./images/${resolvedData.file.id}-${resolvedData.file.originalFilename}`)
+                var id = resolvedData.file.id
+                if (resolvedData.needWatermark) {
+                    stream = await addWatermark(stream, resolvedData.file.id)
+                }
+
+            } else if (typeof existingItem.file != 'undefined'){
+
+                var stream = fs.createReadStream(`./images/${existingItem.file.id}-${existingItem.file.originalFilename}`)
+                var id = existingItem.file.id
+                if (existingItem.needWatermark) {
+                    stream = await addWatermark(stream, existingItem.file.id)
+                }
             }
+
             const image_adapter = new ImageAdapter(gcsDir)
 
-            // {id, filename, _meta} = await image_adapter.save({stream, filename, mimetype, encoding, id})
-            let _meta = image_adapter.sync_save(stream, resolvedData.file.id)
+            let _meta = image_adapter.sync_save(stream, id)
             if (resolvedData.file) {
                 resolvedData.urlOriginal = _meta.url.urlOriginal
                 resolvedData.urlDesktopSized = _meta.url.urlDesktopSized
                 resolvedData.urlMobileSized = _meta.url.urlMobileSized
                 resolvedData.urlTabletSized = _meta.url.urlTabletSized
                 resolvedData.urlTinySized = _meta.url.urlTinySized
-            }
+            } 
 
             return {existingItem, resolvedData}
         }
