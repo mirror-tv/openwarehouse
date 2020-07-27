@@ -45,7 +45,7 @@ for (var name in lists) {
 
 const authStrategy = keystone.createAuthStrategy({
   type: PasswordAuthStrategy,
-  list: main.authList, //main.authList
+  list: app.authList, //main.authList
 });
 
 module.exports = {
