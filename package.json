@@ -24,6 +24,7 @@
     "@keystonejs/adapter-knex": "^10.0.0",
     "@keystonejs/app-admin-ui": "^7.0.1",
     "@keystonejs/app-graphql": "^5.1.7",
+    "@keystonejs/app-static": "^5.1.2",
     "@keystonejs/auth-password": "^5.1.7",
     "@keystonejs/fields": "^13.0.1",
     "@keystonejs/fields-authed-relationship": "^1.0.7",

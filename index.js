@@ -1,12 +1,13 @@
 const { Keystone } = require('@keystonejs/keystone');
 const { GraphQLApp } = require('@keystonejs/app-graphql');
 const { AdminUIApp } = require('@keystonejs/app-admin-ui');
+const { StaticApp } = require('@keystonejs/app-static');
 const { KnexAdapter: Adapter } = require('@keystonejs/adapter-knex');
 const { PasswordAuthStrategy } = require('@keystonejs/auth-password');
 
-const { app, database, session, redis: redisConf } = require('./configs/config.js')
-const lists = require(`./lists/${app.project}`);
+const { app, database, session, redis: redisConf, main } = require('./configs/config.js')
 const createDefaultAdmin = require('./helpers/createDefaultAdmin')
+const lists = require(`./lists/${app.project}`);
 
 const redis = require('redis');
 const expressSession = require('express-session');
@@ -44,7 +45,7 @@ for (var name in lists) {
 
 const authStrategy = keystone.createAuthStrategy({
   type: PasswordAuthStrategy,
-  list: app.authList,
+  list: main.authList, //main.authList
 });
 
 module.exports = {
@@ -59,5 +60,10 @@ module.exports = {
       hooks: require.resolve(`./hooks/${app.project}`),
       authStrategy,
     }),
+    new StaticApp({
+      path: '/',
+      src: 'tmp_pic',
+      // fallback: 'index.html',
+    })
   ],
 };
