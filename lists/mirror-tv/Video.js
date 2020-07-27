@@ -1,7 +1,7 @@
 const { Text, Checkbox, Select, Relationship, File, DateTime, Url } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
 const { GCSAdapter } = require('../../lib/GCSAdapter');
-const { admin, moderator, editor, allowRoles } = require('../../helpers/mirrormediaAccess');
+const access = require('../../helpers/access');
 const gcsDir = 'assets/videos/'
 
 
@@ -17,12 +17,6 @@ module.exports = {
             type: File,
             adapter: new GCSAdapter(gcsDir),
             isRequired: true,
-        },
-        sections: {
-            label: '分區',
-            type: Relationship,
-            ref: 'Section',
-            many: true
         },
         categories: {
             label: '分類',
@@ -107,9 +101,9 @@ module.exports = {
         byTracking(),
     ],
     access: {
-        update: allowRoles(admin, moderator, editor),
-        create: allowRoles(admin, moderator, editor),
-        delete: allowRoles(admin),
+        update: access.userIsAboveAuthorOrOwner,
+        create: access.userIsNotContributor,
+        delete: access.userIsAboveAuthorOrOwner,
     },
     adminConfig: {
         defaultColumns: 'title, video, tags, state, publishTime, createdAt',

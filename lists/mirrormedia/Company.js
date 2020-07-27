@@ -1,6 +1,6 @@
 const { Text, Url, Relationship } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
-const access = require('../../helpers/access');
+const { admin, moderator, editor, allowRoles } = require('../../helpers/mirrormediaAccess');
 
 module.exports = {
     fields: {
@@ -33,10 +33,10 @@ module.exports = {
         byTracking(),
     ],
     access: {
-        read: access.userIsAdminOrModerator,
-        update: access.userIsAdminOrModerator,
-        create: access.userIsAdminOrModerator,
-        delete: access.userIsAdminOrModerator,
+        read: allowRoles(admin, moderator, editor),
+        update: allowRoles(admin, moderator),
+        create: allowRoles(admin, moderator),
+        delete: allowRoles(admin),
         auth: true,
     },
     adminConfig: {

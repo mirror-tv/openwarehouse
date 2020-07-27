@@ -1,6 +1,6 @@
 const { Slug, Text, Checkbox, Relationship } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
-const { admin, moderator, allowRoles } = require('../../helpers/mirrormediaAccess');
+const access = require('../../helpers/access');
 
 module.exports = {
     fields: {
@@ -10,7 +10,7 @@ module.exports = {
             isRequired: true,
             isUnique: true,
         },
-        name: {
+        title: {
             label: "名稱",
             type: Text,
             isRequired: true
@@ -38,12 +38,12 @@ module.exports = {
         byTracking(),
     ],
     access: {
-        update: allowRoles(admin, moderator),
-        create: allowRoles(admin, moderator),
-        delete: allowRoles(admin),
+        update: access.userIsAdminOrModerator,
+        create: access.userIsAdminOrModerator,
+        delete: access.userIsAdminOrModerator,
     },
     adminConfig: {
-        defaultColumns: 'slug, name, isFeatured, createdAt',
+        defaultColumns: 'slug, title, isFeatured, createdAt',
         defaultSort: '-createdAt',
     },
 }

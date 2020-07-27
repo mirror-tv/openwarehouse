@@ -1,6 +1,6 @@
 const { Text } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
-const access = require('../../helpers/access');
+const { admin, moderator, editor, allowRoles } = require('../../helpers/mirrormediaAccess');
 
 module.exports = {
     fields: {
@@ -14,9 +14,9 @@ module.exports = {
         byTracking(),
     ],
     access: {
-        update: access.userIsAboveAuthorOrOwner,
-        create: access.userIsNotContributor,
-        delete: access.userIsAboveAuthorOrOwner,
+        update: allowRoles(admin, moderator, editor),
+        create: allowRoles(admin, moderator, editor),
+        delete: allowRoles(admin),
     },
     adminConfig: {
         defaultColumns: 'function, createdAt',

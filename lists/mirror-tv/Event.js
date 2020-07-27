@@ -1,6 +1,6 @@
 const { Slug, Text, DateTime, Select, Relationship, Url, Checkbox } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
-const { admin, moderator, allowRoles } = require('../../helpers/mirrormediaAccess');
+const access = require('../../helpers/access');
 
 module.exports = {
     fields: {
@@ -29,10 +29,10 @@ module.exports = {
                 }
             }*/
         },
-        sections: {
-            label: '分區',
+        categories: {
+            label: '分類',
             type: Relationship,
-            ref: 'Section',
+            ref: 'Category',
             many: true
         },
         eventType: {
@@ -100,9 +100,9 @@ module.exports = {
         byTracking(),
     ],
     access: {
-        update: allowRoles(admin, moderator),
-        create: allowRoles(admin, moderator),
-        delete: allowRoles(admin),
+        update: access.userIsAdminOrModeratorOrOwner,
+        create: access.userIsAboveAuthor,
+        delete: access.userIsAdminOrModeratorOrOwner,
     },
     adminConfig: {
         defaultColumns: 'name, eventType, state, startTime, endTime',

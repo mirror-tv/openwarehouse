@@ -1,19 +1,27 @@
-const { Slug, Text, Checkbox, Relationship } = require('@keystonejs/fields');
+const { Slug, Text, Relationship } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
-const { admin, moderator, allowRoles } = require('../../helpers/mirrormediaAccess');
+const { uuid } = require('uuidv4');
+const access = require('../../helpers/access');
 
 module.exports = {
     fields: {
         slug: {
-            label: "Slug",
+            label: 'Slug',
             type: Slug,
-            isRequired: true,
+            generate: uuid,
+            makeUnique: uuid,
             isUnique: true,
+            regenerateOnUpdate: false,
+            access: {
+                create: false,
+                update: false,
+            }
         },
         name: {
-            label: "名稱",
+            label: '名稱',
             type: Text,
-            isRequired: true
+            isRequired: true,
+            isUnique: true
         },
         ogTitle: {
             label: 'FB 分享標題',
@@ -28,22 +36,18 @@ module.exports = {
             type: Relationship,
             ref: 'Image'
         },
-        isFeatured: {
-            label: '置頂',
-            type: Checkbox
-        },
     },
     plugins: [
         atTracking(),
         byTracking(),
     ],
     access: {
-        update: allowRoles(admin, moderator),
-        create: allowRoles(admin, moderator),
-        delete: allowRoles(admin),
+        update: access.userIsAboveAuthorOrOwner,
+        create: access.userIsNotContributor,
+        delete: access.userIsAboveAuthorOrOwner,
     },
     adminConfig: {
-        defaultColumns: 'slug, name, isFeatured, createdAt',
+        defaultColumns: 'slug, name, createdAt',
         defaultSort: '-createdAt',
     },
 }

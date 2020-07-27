@@ -1,7 +1,6 @@
 const { Slug, Text, Checkbox, Select, Relationship, DateTime } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
-const { admin, moderator, editor, contributor, owner, allowRoles } = require('../../helpers/mirrormediaAccess');
-const publishStateExaminer = require('../../hooks/publishStateExaminer');
+const access = require('../../helpers/access');
 const HTML = require('../../fields/HTML');
 
 module.exports = {
@@ -42,13 +41,7 @@ module.exports = {
                 }
             }*/
         },
-        sections: {
-            label: '分區',
-            type: Relationship,
-            ref: 'Section',
-            many: true
-        },
-        categories: {
+        Category: {
             label: '分類',
             type: Relationship,
             ref: 'Category',
@@ -90,7 +83,7 @@ module.exports = {
             ref: 'Contact',
             many: true
         },
-        otherByline: {
+        otherbyline: {
             label: '作者（其他）',
             type: Text
         },
@@ -123,7 +116,7 @@ module.exports = {
             label: '樣式',
             type: Select,
             options: 'article, wide, projects, photography, script, campaign, readr',
-            defaultValue: 'article'
+            // defaultValue: 'article'
         },
         brief: {
             label: '前言',
@@ -133,12 +126,12 @@ module.exports = {
             label: '內文',
             type: HTML,
         },
-        topic: {
+        topics: {
             label: '專題',
             type: Relationship,
             ref: 'Topic',
         },
-        tags: {
+        Tag: {
             label: '標籤',
             type: Relationship,
             ref: 'Tag',
@@ -190,10 +183,6 @@ module.exports = {
             label: '廣告文案',
             type: Checkbox
         },
-        isAudioSiteOnly: {
-            label: '僅用於語音網站',
-            type: Checkbox
-        },
         isAdBlocked: {
             label: 'Google 廣告違規',
             type: Checkbox
@@ -204,12 +193,9 @@ module.exports = {
         byTracking(),
     ],
     access: {
-        update: allowRoles(admin, moderator, editor, owner),
-        create: allowRoles(admin, moderator, editor, contributor),
-        delete: allowRoles(admin),
-    },
-    hooks: {
-        resolveInput: publishStateExaminer,
+        update: access.userIsAboveAuthorOrOwner,
+        create: access.userIsNotContributor,
+        delete: access.userIsAboveAuthorOrOwner,
     },
     adminConfig: {
         defaultColumns: 'slug, title, state, categories, createdBy, publishTime, updatedAt',

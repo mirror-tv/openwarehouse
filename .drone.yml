@@ -12,8 +12,8 @@ pipeline:
       Someone gave *{{build.branch}}* a little push.
     when:
       event: [push]
-      branch: [dev, master]
-  
+      branch: [dev, master, testgraphql]
+
   restoreCache:
     image: drillster/drone-volume-cache
     restore: true
@@ -24,19 +24,19 @@ pipeline:
       - /tmp/cache:/cache
     when:
       event: [push]
-      branch: [dev, master]
-  
+      branch: [dev, master, testgraphql]
+
   getDevConfig:
     image: gcr.io/mirrormedia-1470651750304/drone-cloud-sdk:latest
     secrets: [google_credentials]
     commands:
-    - gcloud source repos clone configs ../configs
-    - cp ../configs/mirror-media/openwarehouse/dev/mirrormedia/config.js ./configs/config.js
-    - cp ../configs/mirror-media/openwarehouse/dev/mirrormedia/gcskeyfile.json ./configs/gcskeyfile.json
+      - gcloud source repos clone configs ../configs
+      - cp ../configs/openwarehouse/dev/mirrormedia/config.js ./configs/config.js
+      - cp ../configs/openwarehouse/dev/gcskeyfile.json ./configs/gcskeyfile.json
     when:
       event: [push]
-      branch: [dev]
-  
+      branch: [dev, testgraphql]
+
   buildThenPublish:
     image: plugins/gcr
     repo: mirrormedia-1470651750304/${DRONE_REPO_NAME}
@@ -46,8 +46,8 @@ pipeline:
     secrets: [google_credentials]
     when:
       event: [push]
-      branch: [dev, master]
-  
+      branch: [dev, master, testgraphql]
+
   deployDev:
     image: nytimes/drone-gke
     zone: asia-east1-a
@@ -63,7 +63,7 @@ pipeline:
       tier: backend
     when:
       event: [push]
-      branch: [dev]
+      branch: [dev, testgraphql]
 
   rebuildCache:
     image: drillster/drone-volume-cache
@@ -74,8 +74,8 @@ pipeline:
     volumes:
       - /tmp/cache:/cache
     when:
-      branch: [dev, master]
-  
+      branch: [dev, master, testgraphql]
+
   finishSlack:
     image: plugins/slack
     channel: jenkins
@@ -85,7 +85,7 @@ pipeline:
     when:
       status: [success, failure]
       event: [push]
-      branch: [dev, master]
+      branch: [dev, master, testgraphql]
     template: >
       {{#success build.status}}
         *success* ${DRONE_REPO_NAME}:${DRONE_BRANCH}_${DRONE_COMMIT_AUTHOR}_${DRONE_BUILD_NUMBER} was well served.
@@ -93,4 +93,3 @@ pipeline:
       {{else}}
         Houston, we have a problem. Build <${DRONE_BUILD_LINK}|#{{build.number}}> failed.
       {{/success}}
-  

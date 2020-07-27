@@ -1,8 +1,8 @@
-const { Text, Relationship, File } = require('@keystonejs/fields');
+const { Text, Relationship, File, } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
 const { GCSAdapter } = require('../../lib/GCSAdapter');
-const { admin, moderator, editor, allowRoles } = require('../../helpers/mirrormediaAccess');
-const gcsDir = 'assets/audios/';
+const access = require('../../helpers/access');
+const gcsDir = 'assets/audios/'
 
 module.exports = {
     fields: {
@@ -37,7 +37,7 @@ module.exports = {
         },
         url: {
             label: '檔案網址',
-            type: Text,
+            type: Url,
             access: {
                 create: false,
                 update: false,
@@ -57,9 +57,9 @@ module.exports = {
         byTracking(),
     ],
     access: {
-        update: allowRoles(admin, moderator, editor),
-        create: allowRoles(admin, moderator, editor),
-        delete: allowRoles(admin),
+        update: access.userIsAboveAuthorOrOwner,
+        create: access.userIsNotContributor,
+        delete: access.userIsAboveAuthorOrOwner,
     },
     adminConfig: {
         defaultColumns: 'title, audio, tags, createdAt',

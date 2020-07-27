@@ -1,8 +1,7 @@
-const { Slug, Text, Integer, Checkbox, Select, Relationship } = require('@keystonejs/fields');
+const { Slug, Text, Integer, Checkbox, Select, Relationship, HTML } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
 const { uuid } = require('uuidv4');
-const { admin, moderator, allowRoles } = require('../../helpers/mirrormediaAccess');
-const HTML = require('../../fields/HTML');
+const access = require('../../helpers/access');
 
 module.exports = {
     fields: {
@@ -50,10 +49,10 @@ module.exports = {
             type: Select,
             options: 'video, slideshow, image'
         },
-        sections: {
-            label: '分區',
+        categories: {
+            label: '分類',
             type: Relationship,
-            ref: 'Section',
+            ref: 'Category',
             many: true
         },
         heroVideo: {
@@ -159,9 +158,9 @@ module.exports = {
         byTracking(),
     ],
     access: {
-        update: allowRoles(admin, moderator),
-        create: allowRoles(admin, moderator),
-        delete: allowRoles(admin),
+        update: access.userIsAdminOrModerator,
+        create: access.userIsAdminOrModerator,
+        delete: access.userIsAdminOrModerator,
     },
     adminConfig: {
         defaultColumns: 'slug, title, state, tags, isFeatured, createdAt',
