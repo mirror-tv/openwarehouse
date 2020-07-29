@@ -21,7 +21,7 @@ RUN yarn migrate
 FROM node:${NODE_VERSION}-alpine
 RUN apk add imagemagick graphicsmagick ffmpeg
 WORKDIR /app
-
+COPY ./public /build/public
 COPY --from=build /build /app
 
 EXPOSE 3000

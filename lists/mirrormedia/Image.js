@@ -114,7 +114,7 @@ module.exports = {
                 var stream = fs.createReadStream(`./images/${resolvedData.file.id}-${resolvedData.file.originalFilename}`)
                 var id = resolvedData.file.id
                 if (resolvedData.needWatermark) {
-                    stream = await addWatermark(stream, resolvedData.file.id)
+                    stream = await addWatermark(stream, resolvedData.file.id, resolvedData.file.originalFilename)
                 }
 
             } else if (typeof existingItem.file != 'undefined'){
@@ -122,7 +122,7 @@ module.exports = {
                 var stream = fs.createReadStream(`./images/${existingItem.file.id}-${existingItem.file.originalFilename}`)
                 var id = existingItem.file.id
                 if (existingItem.needWatermark) {
-                    stream = await addWatermark(stream, existingItem.file.id)
+                    stream = await addWatermark(stream, existingItem.file.id, existingItem.file.originalFilename)
                 }
             }
 
