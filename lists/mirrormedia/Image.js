@@ -2,7 +2,6 @@ const { Text, Select, Relationship, File, Url, Checkbox } = require('@keystonejs
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
 const { ImageAdapter } = require('../../lib/ImageAdapter');
 // const access = require('../../helpers/access');
-const { LocalFileAdapter } = require('@keystonejs/file-adapters');
 const { addWatermark } = require('../../helpers/watermark.js')
 const fs = require('fs')
 const { admin, moderator, editor, allowRoles } = require('../../helpers/mirrormediaAccess');
@@ -19,8 +18,7 @@ module.exports = {
             label: '檔案',
             type: File,
             // adapter: new ImageAdapter(gcsDir),
-            adapter: new LocalFileAdapter({src:'./images',path:'/images', //function({id, }){}
-            }),
+            adapter: new ImageAdapter(gcsDir),
             isRequired: true,
 
         },
@@ -109,10 +107,11 @@ module.exports = {
             console.log("EXISTING ITEM", existingItem)
             console.log("RESOLVED DATA", resolvedData)
 
-
+			var origFilename = ''
             if (typeof resolvedData.file != 'undefined'){
                 var stream = fs.createReadStream(`./images/${resolvedData.file.id}-${resolvedData.file.originalFilename}`)
                 var id = resolvedData.file.id
+				origFilename = resolvedData.file.originalFilename
                 if (resolvedData.needWatermark) {
                     stream = await addWatermark(stream, resolvedData.file.id, resolvedData.file.originalFilename)
                 }
@@ -121,6 +120,7 @@ module.exports = {
 
                 var stream = fs.createReadStream(`./images/${existingItem.file.id}-${existingItem.file.originalFilename}`)
                 var id = existingItem.file.id
+				origFilename = existingItem.file.originalFilename
                 if (existingItem.needWatermark) {
                     stream = await addWatermark(stream, existingItem.file.id, existingItem.file.originalFilename)
                 }
