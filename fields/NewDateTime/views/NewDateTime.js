@@ -8,25 +8,26 @@ function NewDateTime({ value, onChange }) {
   const [inputField, setInputField] = useState('')
 
   // react-datetime accept integer unix timestamp
-  // this part is for future adjustment
-  console.log(typeof value)
-  const newValue = parseInt(value)
+  // transform ISO 8601 to unix timestamp
+  const newValue = Date.parse(value)
 
   // get selected unix timestamp by moment from callback
   const changeHandler = (moment) => {
     const selectUnixTimestamp = parseInt(moment.format('x'))
+    const selectISO8601 = new Date(nowUnixTimestamp).toISOString()
 
     setInputField(selectUnixTimestamp)
-    onChange(selectUnixTimestamp.toString())
+    onChange(selectISO8601)
   }
 
   // get current unix timestamp
   const nowHandler = (e) => {
     e.preventDefault()
     const nowUnixTimestamp = Date.now()
+    const nowISO8601 = new Date(nowUnixTimestamp).toISOString()
 
     setInputField(nowUnixTimestamp)
-    onChange(nowUnixTimestamp.toString())
+    onChange(nowISO8601)
   }
 
   return (
@@ -35,9 +36,8 @@ function NewDateTime({ value, onChange }) {
         value={inputField}
         initialValue={newValue ? newValue : ''}
         onChange={(moment) => changeHandler(moment)}
-
-        // dateFormat="YYYY-MM-DD"
-        // timeFormat="HH:mm:ss"
+        dateFormat="YYYY-MM-DD"
+        timeFormat="HH:mm:ss"
       />
       <button className="nowButton" onClick={(e) => nowHandler(e)}>
         Now
