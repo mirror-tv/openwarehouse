@@ -1,7 +1,12 @@
-const { Slug, Text, Relationship, Select, DateTime, Url } = require('@keystonejs/fields');
-const { atTracking, byTracking } = require('@keystonejs/list-plugins');
-const { admin, moderator, editor, allowRoles } = require('../../helpers/mirrormediaAccess');
-
+const { Slug, Text, Relationship, Select, Url } = require('@keystonejs/fields')
+const { atTracking, byTracking } = require('@keystonejs/list-plugins')
+const {
+    admin,
+    moderator,
+    editor,
+    allowRoles,
+} = require('../../helpers/mirrormediaAccess')
+const NewDateTime = require('../../fields/NewDateTime/index.js')
 
 module.exports = {
     fields: {
@@ -14,65 +19,52 @@ module.exports = {
         partner: {
             label: '合作單位',
             type: Relationship,
-            ref: 'Partner'
+            ref: 'Partner',
         },
         title: {
             label: '標題',
             type: Text,
             isRequired: true,
-            defaultValue: 'untitled'
+            defaultValue: 'untitled',
         },
         subtitle: {
             label: '副標',
-            type: Text
+            type: Text,
         },
         state: {
             label: '狀態',
             type: Select,
             options: 'draft, published, scheduled, archived, invisible',
-            defaultValue: 'draft'
+            defaultValue: 'draft',
         },
         publishTime: {
             label: '發佈時間',
-            type: DateTime,
-            format: 'MM/dd/yyyy HH:mm',
-            defaultValue: new Date().toISOString(),
-            /*dependsOn: {
-                '$or': {
-                    state: [
-                        'published',
-                        'scheduled'
-                    ]
-                }
-            }*/
+            type: NewDateTime,
         },
         byline: {
             label: '作者',
-            type: Text
+            type: Text,
         },
         thumbnail: {
             label: '縮圖',
-            type: Url
+            type: Url,
         },
         brief: {
             label: '前言',
             type: Text,
-            isMultiline: true
+            isMultiline: true,
         },
         content: {
             label: '內文',
             type: Text,
-            isMultiline: true
+            isMultiline: true,
         },
         source: {
             label: '原文網址',
-            type: Url
+            type: Url,
         },
     },
-    plugins: [
-        atTracking(),
-        byTracking(),
-    ],
+    plugins: [atTracking(), byTracking()],
     access: {
         update: allowRoles(admin, moderator, editor),
         create: allowRoles(admin, moderator),

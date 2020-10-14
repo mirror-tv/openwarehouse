@@ -1,7 +1,14 @@
-const { Slug, Text, Checkbox, Select, Relationship, DateTime } = require('@keystonejs/fields');
-const { atTracking, byTracking } = require('@keystonejs/list-plugins');
-const access = require('../../helpers/access');
-const HTML = require('../../fields/HTML');
+const {
+    Slug,
+    Text,
+    Checkbox,
+    Select,
+    Relationship,
+} = require('@keystonejs/fields')
+const { atTracking, byTracking } = require('@keystonejs/list-plugins')
+const access = require('../../helpers/access')
+const HTML = require('../../fields/HTML')
+const NewDateTime = require('../../fields/NewDateTime/index.js')
 
 module.exports = {
     fields: {
@@ -9,13 +16,13 @@ module.exports = {
             label: 'Slug',
             type: Slug,
             isRequired: true,
-            isUnique: true
+            isUnique: true,
         },
         title: {
             label: '標題',
             type: Text,
             isRequired: true,
-            defaultValue: 'untitled'
+            defaultValue: 'untitled',
         },
         subtitle: {
             label: '副標',
@@ -25,81 +32,71 @@ module.exports = {
             label: '狀態',
             type: Select,
             options: 'draft, published, scheduled, archived, invisible',
-            defaultValue: 'draft'
+            defaultValue: 'draft',
         },
         publishTime: {
             label: '發佈時間',
-            type: DateTime,
-            format: 'MM/dd/yyyy HH:mm',
-            defaultValue: new Date().toISOString(),
-            /*dependsOn: {
-                '$or': {
-                    state: [
-                        'published',
-                        'scheduled'
-                    ]
-                }
-            }*/
+            type: NewDateTime,
         },
         Category: {
             label: '分類',
             type: Relationship,
             ref: 'Category',
-            many: true
+            many: true,
         },
         writers: {
             label: '作者',
             type: Relationship,
             ref: 'Contact',
-            many: true
+            many: true,
         },
         photographers: {
             label: '攝影',
             type: Relationship,
             ref: 'Contact',
-            many: true
+            many: true,
         },
         cameraOperators: {
             label: '影音',
             type: Relationship,
             ref: 'Contact',
-            many: true
+            many: true,
         },
         designers: {
             label: '設計',
             type: Relationship,
             ref: 'Contact',
-            many: true
+            many: true,
         },
         engineers: {
             label: '工程',
             type: Relationship,
             ref: 'Contact',
-            many: true
+            many: true,
         },
         vocals: {
             label: '主播',
             type: Relationship,
             ref: 'Contact',
-            many: true
+            many: true,
         },
         otherbyline: {
             label: '作者（其他）',
-            type: Text
+            type: Text,
         },
         heroVideo: {
             label: '影片',
             type: Relationship,
-            ref: 'Video'
+            ref: 'Video',
         },
         heroImage: {
             label: '首圖',
             type: Relationship,
-            ref: 'Image'
+            ref: 'Image',
         },
         heroCaption: {
             label: '首圖圖說',
-            type: Text
+            type: Text,
         },
         heroImageSize: {
             label: '首圖尺寸',
@@ -115,7 +112,8 @@ module.exports = {
         style: {
             label: '樣式',
             type: Select,
-            options: 'article, wide, projects, photography, script, campaign, readr',
+            options:
+                'article, wide, projects, photography, script, campaign, readr',
             // defaultValue: 'article'
         },
         brief: {
@@ -135,18 +133,18 @@ module.exports = {
             label: '標籤',
             type: Relationship,
             ref: 'Tag',
-            many: true
+            many: true,
         },
         audio: {
             label: '音檔',
             type: Relationship,
-            ref: 'Audio'
+            ref: 'Audio',
         },
         relatedPosts: {
             label: '相關文章',
             type: Relationship,
             ref: 'Post',
-            many: true
+            many: true,
         },
         relatedTopic: {
             label: '相關專題',
@@ -155,51 +153,49 @@ module.exports = {
         },
         ogTitle: {
             label: 'FB 分享標題',
-            type: Text
+            type: Text,
         },
         ogDescription: {
             label: 'FB 分享說明',
-            type: Text
+            type: Text,
         },
         ogImage: {
             label: 'FB 分享縮圖',
             type: Relationship,
-            ref: 'Image'
+            ref: 'Image',
         },
         adTraceCode: {
             label: '追蹤代碼',
             type: Text,
-            isMultiline: true
+            isMultiline: true,
         },
         isFeatured: {
             label: '置頂',
-            type: Checkbox
+            type: Checkbox,
         },
         isAdult: {
             label: '18禁',
-            type: Checkbox
+            type: Checkbox,
         },
         isAdvertised: {
             label: '廣告文案',
-            type: Checkbox
+            type: Checkbox,
         },
         isAdBlocked: {
             label: 'Google 廣告違規',
-            type: Checkbox
+            type: Checkbox,
         },
     },
-    plugins: [
-        atTracking(),
-        byTracking(),
-    ],
+    plugins: [atTracking(), byTracking()],
     access: {
         update: access.userIsAboveAuthorOrOwner,
         create: access.userIsNotContributor,
         delete: access.userIsAboveAuthorOrOwner,
     },
     adminConfig: {
-        defaultColumns: 'slug, title, state, categories, createdBy, publishTime, updatedAt',
+        defaultColumns:
+            'slug, title, state, categories, createdBy, publishTime, updatedAt',
         defaultSort: '-publishTime',
     },
-    labelField: 'title'
+    labelField: 'title',
 }

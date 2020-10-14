@@ -1,6 +1,18 @@
-const { Slug, Text, DateTime, Select, Relationship, Url, Checkbox } = require('@keystonejs/fields');
-const { atTracking, byTracking } = require('@keystonejs/list-plugins');
-const { admin, moderator, allowRoles } = require('../../helpers/mirrormediaAccess');
+const {
+    Slug,
+    Text,
+    Select,
+    Relationship,
+    Url,
+    Checkbox,
+} = require('@keystonejs/fields')
+const { atTracking, byTracking } = require('@keystonejs/list-plugins')
+const {
+    admin,
+    moderator,
+    allowRoles,
+} = require('../../helpers/mirrormediaAccess')
+const NewDateTime = require('../../fields/NewDateTime/index.js')
 
 module.exports = {
     fields: {
@@ -13,11 +25,11 @@ module.exports = {
             label: '狀態',
             type: Select,
             options: 'draft, scheduled, published',
-            defaultValue: 'draft'
+            defaultValue: 'draft',
         },
         publishTime: {
             label: '發佈時間',
-            type: DateTime,
+            type: NewDateTime,
             format: 'MM/dd/yyyy HH:mm',
             defaultValue: new Date().toISOString(),
             /*dependsOn: {
@@ -33,24 +45,24 @@ module.exports = {
             label: '分區',
             type: Relationship,
             ref: 'Section',
-            many: true
+            many: true,
         },
         eventType: {
             label: '活動類型',
             type: Select,
-            options: 'embedded, video, image, logo, mod'
+            options: 'embedded, video, image, logo, mod',
         },
         startTime: {
             label: '開始時間',
-            type: DateTime,
+            type: NewDateTime,
             format: 'MM/dd/yyyy HH:mm',
             defaultValue: new Date().toISOString(),
             isRequired: true,
-            yearPickerType: 'select' // this option seems not work
+            yearPickerType: 'select', // this option seems not work
         },
         endTime: {
             label: '結束時間',
-            type: DateTime,
+            type: NewDateTime,
             format: 'MM/dd/yyyy HH:mm',
         },
         video: {
@@ -92,13 +104,10 @@ module.exports = {
         },
         isFeatured: {
             label: '置頂',
-            type: Checkbox
+            type: Checkbox,
         },
     },
-    plugins: [
-        atTracking(),
-        byTracking(),
-    ],
+    plugins: [atTracking(), byTracking()],
     access: {
         update: allowRoles(admin, moderator),
         create: allowRoles(admin, moderator),

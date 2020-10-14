@@ -1,40 +1,42 @@
-const { Integer, Text, DateTime, Relationship, Url, Select } = require('@keystonejs/fields');
-const { atTracking, byTracking } = require('@keystonejs/list-plugins');
-const { admin, moderator, allowRoles } = require('../../helpers/readrAccess');
+const {
+    Integer,
+    Text,
+    Relationship,
+    Url,
+    Select,
+} = require('@keystonejs/fields')
+const { atTracking, byTracking } = require('@keystonejs/list-plugins')
+const { admin, moderator, allowRoles } = require('../../helpers/readrAccess')
+const NewDateTime = require('../../fields/NewDateTime/index.js')
 
 module.exports = {
     fields: {
         sortOrder: {
             label: '排序順位',
             type: Integer,
-            isUnique: true
+            isUnique: true,
         },
         title: {
             label: '標題',
             type: Text,
-            isRequired: true
+            isRequired: true,
         },
         description: {
             label: '描述',
-            type: Text
+            type: Text,
         },
         heroImage: {
             label: '首圖',
             type: Relationship,
-            ref: 'Image'
+            ref: 'Image',
         },
         startTime: {
             label: '開始時間',
-            type: DateTime,
-            format: 'MM/dd/yyyy HH:mm',
-            defaultValue: new Date().toISOString(),
-            isRequired: true,
-            yearPickerType: 'select' // this option seems not work
+            type: NewDateTime,
         },
         endTime: {
             label: '結束時間',
-            type: DateTime,
-            format: 'MM/dd/yyyy HH:mm',
+            type: NewDateTime,
         },
         progress: {
             label: '完成進度',
@@ -52,27 +54,14 @@ module.exports = {
             label: '狀態',
             type: Select,
             options: 'draft, published, scheduled, archived',
-            defaultValue: 'draft'
+            defaultValue: 'draft',
         },
         publishTime: {
             label: '發佈時間',
-            type: DateTime,
-            format: 'MM/dd/yyyy HH:mm',
-            defaultValue: new Date().toISOString(),
-            /*dependsOn: {
-                '$or': {
-                    state: [
-                        'published',
-                        'scheduled'
-                    ]
-                }
-            }*/
+            type: NewDateTime,
         },
     },
-    plugins: [
-        atTracking(),
-        byTracking(),
-    ],
+    plugins: [atTracking(), byTracking()],
     access: {
         update: allowRoles(admin, moderator),
         create: allowRoles(admin, moderator),

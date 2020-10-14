@@ -1,23 +1,24 @@
-const { Integer, Text, Select, Relationship, DateTime } = require('@keystonejs/fields');
-const { atTracking, byTracking } = require('@keystonejs/list-plugins');
-const { admin, moderator, allowRoles } = require('../../helpers/readrAccess');
+const { Integer, Text, Select, Relationship } = require('@keystonejs/fields')
+const { atTracking, byTracking } = require('@keystonejs/list-plugins')
+const { admin, moderator, allowRoles } = require('../../helpers/readrAccess')
+const NewDateTime = require('../../fields/NewDateTime/index.js')
 
 module.exports = {
     fields: {
         sortOrder: {
             label: '排序順位',
             type: Integer,
-            isUnique: true
+            isUnique: true,
         },
         title: {
             label: '標題',
             type: Text,
-            isRequired: true
+            isRequired: true,
         },
         writer: {
             label: '作者',
             type: Relationship,
-            ref: 'Author'
+            ref: 'Author',
         },
         byline: {
             label: '引自',
@@ -27,34 +28,22 @@ module.exports = {
             label: '狀態',
             type: Select,
             options: 'draft, published, scheduled, archived, invisible',
-            defaultValue: 'draft'
+            defaultValue: 'draft',
         },
         publishedTime: {
             label: '發佈時間',
-            type: DateTime,
-            format: 'MM/dd/yyyy HH:mm',
-            defaultValue: new Date().toISOString(),
-            /*dependsOn: {
-                '$or': {
-                    state: [
-                        'published',
-                        'scheduled'
-                    ]
-                }
-            }*/
+            type: NewDateTime,
         },
     },
-    plugins: [
-        atTracking(),
-        byTracking(),
-    ],
+    plugins: [atTracking(), byTracking()],
     access: {
         update: allowRoles(admin, moderator),
         create: allowRoles(admin, moderator),
         delete: allowRoles(admin),
     },
     adminConfig: {
-        defaultColumns: 'title, writer, byline, state, publishedTime, createdAt',
+        defaultColumns:
+            'title, writer, byline, state, publishedTime, createdAt',
         defaultSort: '-createdAt',
     },
 }
