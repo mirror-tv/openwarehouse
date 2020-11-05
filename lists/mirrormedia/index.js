@@ -8,7 +8,6 @@ module.exports = {
     Topic: require('./Topic'),
     Section: require('./Section'),
     Category: require('./Category'),
-    GCSFile: require('./GCSFile'),
     Tag: require('./Tag'),
     Contact: require('./Contact'),
     User: require('./User'),

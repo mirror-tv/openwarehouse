@@ -203,6 +203,20 @@ module.exports = {
             label: 'Google 廣告違規',
             type: Checkbox,
         },
+        contentHtml: {
+            type: String,
+            label: 'Content HTML',
+            adminConfig: {
+              isReadOnly: true,
+            }
+          },
+          contentApiData:{
+            type: Text,
+            label: 'Content API Data',
+            adminConfig: {
+              isReadOnly: true,
+            }
+          }
     },
     plugins: [atTracking(), byTracking()],
     access: {
@@ -212,6 +226,24 @@ module.exports = {
     },
     hooks: {
         resolveInput: publishStateExaminer,
+        beforeChange: async ({ existingItem, resolvedData }) => {
+            try {
+                content = JSON.parse(resolvedData.content || existingItem.content)
+                resolvedData.contentHtml = JSON.parse(resolvedData.content).html
+                resolvedData.contentApiData = JSON.stringify(JSON.parse(resolvedData.content).apiData)
+                console.log(typeof content.apiData)
+                delete content["html"]
+                delete content["apiData"]
+                resolvedData.content = content
+                return { existingItem, resolvedData }
+            }
+            catch (err) { console.log(err)
+                console.log("EXISTING ITEM") 
+                console.log(existingItem)
+                console.log("RESOLVED DATA")
+                console.log(resolvedData)
+            }
+        }
     },
     adminConfig: {
         defaultColumns:
