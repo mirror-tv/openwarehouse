@@ -1,11 +1,13 @@
 const { Text, Select, Relationship, File, Url, Checkbox } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
 const { ImageAdapter } = require('../../lib/ImageAdapter');
-// const access = require('../../helpers/access');
-const { addWatermark } = require('../../helpers/watermark.js')
+const { LocalFileAdapter } = require('@keystonejs/file-adapters');
 const fs = require('fs')
 const { admin, moderator, editor, allowRoles } = require('../../helpers/mirrormediaAccess');
+const { addWatermark } = require('../../helpers/watermark.js')
+const cacheHint = require('../../helpers/cacheHint');
 const gcsDir = 'assets/images/'
+
 
 module.exports = {
     fields: {
@@ -17,8 +19,9 @@ module.exports = {
         file: {
             label: '檔案',
             type: File,
-            // adapter: new ImageAdapter(gcsDir),
-            adapter: new ImageAdapter(gcsDir),
+            adapter: new LocalFileAdapter({
+			  src: './images', path: '/images', //function({id, }){}
+			}),
             isRequired: true,
 
         },
