@@ -32,6 +32,10 @@ module.exports = {
             label: '置頂',
             type: Checkbox
         },
+        isMemberOnly: {
+            label: '會員專區',
+            type: Checkbox
+        },
     },
     plugins: [
         atTracking(),
