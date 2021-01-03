@@ -5,7 +5,7 @@ const {
     Select,
     Relationship,
 } = require('@keystonejs/fields')
-const { atTracking, byTracking } = require('@keystonejs/list-plugins')
+const {atTracking, byTracking} = require('@keystonejs/list-plugins')
 const {
     admin,
     moderator,
@@ -204,19 +204,19 @@ module.exports = {
             type: Checkbox,
         },
         contentHtml: {
-            type: String,
+            type: Text,
             label: 'Content HTML',
             adminConfig: {
-              isReadOnly: true,
-            }
-          },
-          contentApiData:{
+                isReadOnly: true,
+            },
+        },
+        contentApiData: {
             type: Text,
             label: 'Content API Data',
             adminConfig: {
-              isReadOnly: true,
-            }
-          }
+                isReadOnly: true,
+            },
+        },
     },
     plugins: [atTracking(), byTracking()],
     access: {
@@ -226,24 +226,28 @@ module.exports = {
     },
     hooks: {
         resolveInput: publishStateExaminer,
-        beforeChange: async ({ existingItem, resolvedData }) => {
+        beforeChange: async ({existingItem, resolvedData}) => {
             try {
-                content = JSON.parse(resolvedData.content || existingItem.content)
+                content = JSON.parse(
+                    resolvedData.content || existingItem.content
+                )
                 resolvedData.contentHtml = JSON.parse(resolvedData.content).html
-                resolvedData.contentApiData = JSON.stringify(JSON.parse(resolvedData.content).apiData)
+                resolvedData.contentApiData = JSON.stringify(
+                    JSON.parse(resolvedData.content).apiData
+                )
                 console.log(typeof content.apiData)
-                delete content["html"]
-                delete content["apiData"]
+                delete content['html']
+                delete content['apiData']
                 resolvedData.content = content
-                return { existingItem, resolvedData }
-            }
-            catch (err) { console.log(err)
-                console.log("EXISTING ITEM") 
+                return {existingItem, resolvedData}
+            } catch (err) {
+                console.log(err)
+                console.log('EXISTING ITEM')
                 console.log(existingItem)
-                console.log("RESOLVED DATA")
+                console.log('RESOLVED DATA')
                 console.log(resolvedData)
             }
-        }
+        },
     },
     adminConfig: {
         defaultColumns:

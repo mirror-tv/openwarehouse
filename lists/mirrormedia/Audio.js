@@ -1,15 +1,20 @@
-const { Text, Relationship, File } = require('@keystonejs/fields');
-const { atTracking, byTracking } = require('@keystonejs/list-plugins');
-const { GCSAdapter } = require('../../lib/GCSAdapter');
-const { admin, moderator, editor, allowRoles } = require('../../helpers/mirrormediaAccess');
-const gcsDir = 'assets/audios/';
+const {Text, Relationship, File} = require('@keystonejs/fields')
+const {atTracking, byTracking} = require('@keystonejs/list-plugins')
+const {GCSAdapter} = require('../../lib/GCSAdapter')
+const {
+    admin,
+    moderator,
+    editor,
+    allowRoles,
+} = require('../../helpers/mirrormediaAccess')
+const gcsDir = 'assets/audios/'
 
 module.exports = {
     fields: {
         title: {
             label: '標題',
             type: Text,
-            isRequired: true
+            isRequired: true,
         },
         file: {
             type: File,
@@ -19,13 +24,13 @@ module.exports = {
         coverPhoto: {
             label: '封面照片',
             type: Relationship,
-            ref: 'Image'
+            ref: 'Image',
         },
         tags: {
             label: '標籤',
             type: Relationship,
             ref: 'Tag',
-            many: true
+            many: true,
         },
         meta: {
             label: '中繼資料',
@@ -33,7 +38,7 @@ module.exports = {
             access: {
                 create: false,
                 update: false,
-            }
+            },
         },
         url: {
             label: '檔案網址',
@@ -41,21 +46,18 @@ module.exports = {
             access: {
                 create: false,
                 update: false,
-            }
+            },
         },
-        duration: {
-            label: '音檔長度（秒）',
-            type: Number,
-            access: {
-                create: false,
-                update: false,
-            }
-        }
+        // duration: {
+        //     label: '音檔長度（秒）',
+        //     type: Number,
+        //     access: {
+        //         create: false,
+        //         update: false,
+        //     }
+        // }
     },
-    plugins: [
-        atTracking(),
-        byTracking(),
-    ],
+    plugins: [atTracking(), byTracking()],
     access: {
         update: allowRoles(admin, moderator, editor),
         create: allowRoles(admin, moderator, editor),
@@ -66,7 +68,12 @@ module.exports = {
         defaultSort: '-createdAt',
     },
     hooks: {
-        resolveInput: ({ operation, existingItem, resolvedData, originalInput }) => {
+        resolveInput: ({
+            operation,
+            existingItem,
+            resolvedData,
+            originalInput,
+        }) => {
             if (resolvedData.file) {
                 resolvedData.meta = resolvedData.file._meta
                 resolvedData.url = resolvedData.file._meta.url
@@ -76,5 +83,5 @@ module.exports = {
         },
     },
     plural: 'Audios',
-    labelField: 'title'
+    labelField: 'title',
 }

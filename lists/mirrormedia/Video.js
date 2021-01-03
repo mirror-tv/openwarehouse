@@ -6,8 +6,8 @@ const {
     File,
     Url,
 } = require('@keystonejs/fields')
-const { atTracking, byTracking } = require('@keystonejs/list-plugins')
-const { GCSAdapter } = require('../../lib/GCSAdapter')
+const {atTracking, byTracking} = require('@keystonejs/list-plugins')
+const {GCSAdapter} = require('../../lib/GCSAdapter')
 const {
     admin,
     moderator,
@@ -95,14 +95,14 @@ module.exports = {
                 update: false,
             },
         },
-        duration: {
-            label: '影片長度（秒）',
-            type: Number,
-            access: {
-                create: false,
-                update: false,
-            },
-        },
+        // duration: {
+        //     label: '影片長度（秒）',
+        //     type: Number,
+        //     access: {
+        //         create: false,
+        //         update: false,
+        //     },
+        // },
     },
     plugins: [atTracking(), byTracking()],
     access: {
