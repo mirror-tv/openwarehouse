@@ -6,8 +6,8 @@ const {
     File,
     Url,
 } = require('@keystonejs/fields')
-const {atTracking, byTracking} = require('@keystonejs/list-plugins')
-const {GCSAdapter} = require('../../lib/GCSAdapter')
+const { atTracking, byTracking } = require('@keystonejs/list-plugins')
+const { GCSAdapter } = require('../../lib/GCSAdapter')
 const {
     admin,
     moderator,
@@ -16,6 +16,8 @@ const {
 } = require('../../helpers/mirrormediaAccess')
 const gcsDir = 'assets/videos/'
 const NewDateTime = require('../../fields/NewDateTime/index.js')
+
+const fileAdapter = new GCSAdapter(gcsDir)
 
 module.exports = {
     fields: {
@@ -27,7 +29,7 @@ module.exports = {
         file: {
             label: '檔案',
             type: File,
-            adapter: new GCSAdapter(gcsDir),
+            adapter: fileAdapter,
             isRequired: true,
         },
         sections: {
@@ -95,14 +97,14 @@ module.exports = {
                 update: false,
             },
         },
-        // duration: {
-        //     label: '影片長度（秒）',
-        //     type: Number,
-        //     access: {
-        //         create: false,
-        //         update: false,
-        //     },
-        // },
+        duration: {
+            label: '影片長度（秒）',
+            type: Text,
+            access: {
+                create: false,
+                update: false,
+            },
+        },
     },
     plugins: [atTracking(), byTracking()],
     access: {
@@ -127,6 +129,14 @@ module.exports = {
                 resolvedData.duration = resolvedData.file._meta.duration
             }
             return resolvedData
+        },
+        afterDelete: async ({ existingItem }) => {
+            if (existingItem.file) {
+                await fileAdapter.delete(
+                    existingItem.file.id,
+                    existingItem.file.originalFilename
+                )
+            }
         },
     },
     labelField: 'title',

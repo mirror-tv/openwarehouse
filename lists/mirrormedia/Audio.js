@@ -1,6 +1,6 @@
-const {Text, Relationship, File} = require('@keystonejs/fields')
-const {atTracking, byTracking} = require('@keystonejs/list-plugins')
-const {GCSAdapter} = require('../../lib/GCSAdapter')
+const { Text, Relationship, File } = require('@keystonejs/fields')
+const { atTracking, byTracking } = require('@keystonejs/list-plugins')
+const { GCSAdapter } = require('../../lib/GCSAdapter')
 const {
     admin,
     moderator,
@@ -8,6 +8,8 @@ const {
     allowRoles,
 } = require('../../helpers/mirrormediaAccess')
 const gcsDir = 'assets/audios/'
+
+const fileAdapter = new GCSAdapter(gcsDir)
 
 module.exports = {
     fields: {
@@ -18,7 +20,7 @@ module.exports = {
         },
         file: {
             type: File,
-            adapter: new GCSAdapter(gcsDir),
+            adapter: fileAdapter,
             isRequired: true,
         },
         coverPhoto: {
@@ -80,6 +82,15 @@ module.exports = {
                 resolvedData.duration = resolvedData.file._meta.duration
             }
             return resolvedData
+        },
+
+        afterDelete: async ({ existingItem }) => {
+            if (existingItem.file) {
+                await fileAdapter.delete(
+                    existingItem.file.id,
+                    existingItem.file.originalFilename
+                )
+            }
         },
     },
     plural: 'Audios',
