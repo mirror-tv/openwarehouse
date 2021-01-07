@@ -21,7 +21,7 @@ module.exports = {
             type: Relationship,
             ref: 'Partner',
         },
-        title: {
+        name: {
             label: '標題',
             type: Text,
             isRequired: true,
@@ -71,8 +71,8 @@ module.exports = {
         delete: allowRoles(admin),
     },
     adminConfig: {
-        defaultColumns: 'title, slug, state, createdBy, publishTime',
+        defaultColumns: 'name, slug, state, createdBy, publishTime',
         defaultSort: '-publishTime',
     },
-    labelField: 'title',
+    labelField: 'name',
 }

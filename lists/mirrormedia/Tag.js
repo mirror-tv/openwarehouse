@@ -1,7 +1,12 @@
-const { Slug, Text, Relationship } = require('@keystonejs/fields');
-const { atTracking, byTracking } = require('@keystonejs/list-plugins');
-const { uuid } = require('uuidv4');
-const { admin, moderator, editor, allowRoles } = require('../../helpers/mirrormediaAccess');
+const { Slug, Text, Relationship } = require('@keystonejs/fields')
+const { atTracking, byTracking } = require('@keystonejs/list-plugins')
+const { uuid } = require('uuidv4')
+const {
+    admin,
+    moderator,
+    editor,
+    allowRoles,
+} = require('../../helpers/mirrormediaAccess')
 
 module.exports = {
     fields: {
@@ -15,32 +20,29 @@ module.exports = {
             access: {
                 create: false,
                 update: false,
-            }
+            },
         },
         name: {
             label: '名稱',
             type: Text,
             isRequired: true,
-            isUnique: true
+            isUnique: true,
         },
         ogTitle: {
             label: 'FB 分享標題',
-            type: Text
+            type: Text,
         },
         ogDescription: {
             label: 'FB 分享說明',
-            type: Text
+            type: Text,
         },
         ogImage: {
             label: 'FB 分享縮圖',
             type: Relationship,
-            ref: 'Image'
+            ref: 'Image',
         },
     },
-    plugins: [
-        atTracking(),
-        byTracking(),
-    ],
+    plugins: [atTracking(), byTracking()],
     access: {
         update: allowRoles(admin, moderator, editor),
         create: allowRoles(admin, moderator, editor),
@@ -50,4 +52,5 @@ module.exports = {
         defaultColumns: 'slug, name, createdAt',
         defaultSort: '-createdAt',
     },
+    labelField: 'name',
 }

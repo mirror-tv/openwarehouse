@@ -13,7 +13,7 @@ const fileAdapter = new GCSAdapter(gcsDir)
 
 module.exports = {
     fields: {
-        title: {
+        name: {
             label: '標題',
             type: Text,
             isRequired: true,
@@ -94,5 +94,5 @@ module.exports = {
         },
     },
     plural: 'Audios',
-    labelField: 'title',
+    labelField: 'name',
 }

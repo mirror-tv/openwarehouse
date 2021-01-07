@@ -1,37 +1,39 @@
-const { Text, Url, Relationship } = require('@keystonejs/fields');
-const { atTracking, byTracking } = require('@keystonejs/list-plugins');
-const { admin, moderator, editor, allowRoles } = require('../../helpers/mirrormediaAccess');
+const { Text, Url, Relationship } = require('@keystonejs/fields')
+const { atTracking, byTracking } = require('@keystonejs/list-plugins')
+const {
+    admin,
+    moderator,
+    editor,
+    allowRoles,
+} = require('../../helpers/mirrormediaAccess')
 
 module.exports = {
     fields: {
         name: {
             label: '公司',
             type: Text,
-            isRequired: true
+            isRequired: true,
         },
         website: {
             label: 'Ｗebsite',
-            type: Url
+            type: Url,
         },
         github: {
             label: 'GitHub',
-            type: Text
+            type: Text,
         },
         twitter: {
             label: 'Twitter',
-            type: Text
+            type: Text,
         },
         users: {
             label: '員工',
             type: Relationship,
             ref: 'User.company',
-            many: true
+            many: true,
         },
     },
-    plugins: [
-        atTracking(),
-        byTracking(),
-    ],
+    plugins: [atTracking(), byTracking()],
     access: {
         read: allowRoles(admin, moderator, editor),
         update: allowRoles(admin, moderator),
@@ -41,6 +43,7 @@ module.exports = {
     },
     adminConfig: {
         defaultColumns: 'name, website, github, twitter, createdAt',
-        defaultSort: '-createdAt'
+        defaultSort: '-createdAt',
     },
+    labelField: 'name',
 }

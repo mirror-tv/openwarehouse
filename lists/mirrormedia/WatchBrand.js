@@ -1,7 +1,12 @@
-const { Slug, Text, Relationship } = require('@keystonejs/fields');
-const { atTracking, byTracking } = require('@keystonejs/list-plugins');
-const { uuid } = require('uuidv4');
-const { admin, moderator, editor, allowRoles } = require('../../helpers/mirrormediaAccess');
+const { Slug, Text, Relationship } = require('@keystonejs/fields')
+const { atTracking, byTracking } = require('@keystonejs/list-plugins')
+const { uuid } = require('uuidv4')
+const {
+    admin,
+    moderator,
+    editor,
+    allowRoles,
+} = require('../../helpers/mirrormediaAccess')
 
 module.exports = {
     fields: {
@@ -15,23 +20,20 @@ module.exports = {
             access: {
                 create: false,
                 update: false,
-            }
+            },
         },
         name: {
             label: '品牌',
             type: Text,
-            isRequired: true
+            isRequired: true,
         },
         watches: {
             label: '手錶',
             type: Relationship,
-            ref: 'Watch.brand'
+            ref: 'Watch.brand',
         },
     },
-    plugins: [
-        atTracking(),
-        byTracking(),
-    ],
+    plugins: [atTracking(), byTracking()],
     access: {
         update: allowRoles(admin, moderator, editor),
         create: allowRoles(admin, moderator, editor),
@@ -41,4 +43,5 @@ module.exports = {
         defaultColumns: 'slug, name, watches, createdAt',
         defaultSort: '-createdAt',
     },
+    labelField: 'name',
 }

@@ -5,7 +5,7 @@ const {
     Select,
     Relationship,
 } = require('@keystonejs/fields')
-const {atTracking, byTracking} = require('@keystonejs/list-plugins')
+const { atTracking, byTracking } = require('@keystonejs/list-plugins')
 const {
     admin,
     moderator,
@@ -26,7 +26,7 @@ module.exports = {
             isRequired: true,
             isUnique: true,
         },
-        title: {
+        name: {
             label: '標題',
             type: Text,
             isRequired: true,
@@ -226,7 +226,7 @@ module.exports = {
     },
     hooks: {
         resolveInput: publishStateExaminer,
-        beforeChange: async ({existingItem, resolvedData}) => {
+        beforeChange: async ({ existingItem, resolvedData }) => {
             try {
                 content = JSON.parse(
                     resolvedData.content || existingItem.content
@@ -239,7 +239,7 @@ module.exports = {
                 delete content['html']
                 delete content['apiData']
                 resolvedData.content = content
-                return {existingItem, resolvedData}
+                return { existingItem, resolvedData }
             } catch (err) {
                 console.log(err)
                 console.log('EXISTING ITEM')
@@ -251,8 +251,8 @@ module.exports = {
     },
     adminConfig: {
         defaultColumns:
-            'slug, title, state, categories, createdBy, publishTime, updatedAt',
+            'slug, name, state, categories, createdBy, publishTime, updatedAt',
         defaultSort: '-publishTime',
     },
-    labelField: 'title',
+    labelField: 'name',
 }

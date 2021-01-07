@@ -1,8 +1,12 @@
-const { Slug, Text, Url, Relationship } = require('@keystonejs/fields');
-const { Markdown } = require('@keystonejs/fields-markdown');
-const { atTracking, byTracking } = require('@keystonejs/list-plugins');
-const { uuid } = require('uuidv4');
-const { admin, moderator, allowRoles } = require('../../helpers/mirrormediaAccess');
+const { Slug, Text, Url, Relationship } = require('@keystonejs/fields')
+const { Markdown } = require('@keystonejs/fields-markdown')
+const { atTracking, byTracking } = require('@keystonejs/list-plugins')
+const { uuid } = require('uuidv4')
+const {
+    admin,
+    moderator,
+    allowRoles,
+} = require('../../helpers/mirrormediaAccess')
 
 module.exports = {
     fields: {
@@ -16,47 +20,44 @@ module.exports = {
             access: {
                 create: false,
                 update: false,
-            }
+            },
         },
         name: {
             label: '姓名',
             type: Text,
-            isRequired: true
+            isRequired: true,
         },
         email: {
             label: 'Email',
-            type: Text
+            type: Text,
         },
         image: {
             label: '圖片',
             type: Relationship,
-            ref: 'Image'
+            ref: 'Image',
         },
         homepage: {
             label: '個人首頁',
-            type: Url
+            type: Url,
         },
         facebook: {
             label: 'Facebook',
-            type: Url
+            type: Url,
         },
         twitter: {
             label: 'Twitter',
-            type: Url
+            type: Url,
         },
         instatgram: {
             label: 'Instatgram',
-            type: Url
+            type: Url,
         },
         bio: {
             label: '個人簡介',
-            type: Markdown
+            type: Markdown,
         },
     },
-    plugins: [
-        atTracking(),
-        byTracking(),
-    ],
+    plugins: [atTracking(), byTracking()],
     access: {
         update: allowRoles(admin, moderator),
         create: allowRoles(admin, moderator),
@@ -66,4 +67,5 @@ module.exports = {
         defaultColumns: 'slug, name, email, homepage, createdAt',
         defaultSort: '-createdAt',
     },
+    labelField: 'name',
 }

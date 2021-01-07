@@ -117,4 +117,5 @@ module.exports = {
         defaultColumns: 'name, eventType, state, startTime, endTime',
         defaultSort: '-startTime',
     },
+    labelField: 'name',
 }

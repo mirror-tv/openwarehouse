@@ -1,46 +1,47 @@
-const { Slug, Text, Checkbox, Relationship } = require('@keystonejs/fields');
-const { atTracking, byTracking } = require('@keystonejs/list-plugins');
-const { admin, moderator, allowRoles } = require('../../helpers/mirrormediaAccess');
+const { Slug, Text, Checkbox, Relationship } = require('@keystonejs/fields')
+const { atTracking, byTracking } = require('@keystonejs/list-plugins')
+const {
+    admin,
+    moderator,
+    allowRoles,
+} = require('../../helpers/mirrormediaAccess')
 
 module.exports = {
     fields: {
         slug: {
-            label: "Slug",
+            label: 'Slug',
             type: Slug,
             isRequired: true,
             isUnique: true,
         },
         name: {
-            label: "名稱",
+            label: '名稱',
             type: Text,
-            isRequired: true
+            isRequired: true,
         },
         ogTitle: {
             label: 'FB 分享標題',
-            type: Text
+            type: Text,
         },
         ogDescription: {
             label: 'FB 分享說明',
-            type: Text
+            type: Text,
         },
         ogImage: {
             label: 'FB 分享縮圖',
             type: Relationship,
-            ref: 'Image'
+            ref: 'Image',
         },
         isFeatured: {
             label: '置頂',
-            type: Checkbox
+            type: Checkbox,
         },
         isMemberOnly: {
             label: '會員專區',
-            type: Checkbox
+            type: Checkbox,
         },
     },
-    plugins: [
-        atTracking(),
-        byTracking(),
-    ],
+    plugins: [atTracking(), byTracking()],
     access: {
         update: allowRoles(admin, moderator),
         create: allowRoles(admin, moderator),
@@ -50,4 +51,5 @@ module.exports = {
         defaultColumns: 'slug, name, isFeatured, createdAt',
         defaultSort: '-createdAt',
     },
+    labelField: 'name',
 }

@@ -1,6 +1,16 @@
-const { Slug, Text, Checkbox, Select, Relationship } = require('@keystonejs/fields');
-const { atTracking, byTracking } = require('@keystonejs/list-plugins');
-const { admin, moderator, allowRoles } = require('../../helpers/mirrormediaAccess');
+const {
+    Slug,
+    Text,
+    Checkbox,
+    Select,
+    Relationship,
+} = require('@keystonejs/fields')
+const { atTracking, byTracking } = require('@keystonejs/list-plugins')
+const {
+    admin,
+    moderator,
+    allowRoles,
+} = require('../../helpers/mirrormediaAccess')
 
 module.exports = {
     fields: {
@@ -13,58 +23,57 @@ module.exports = {
         name: {
             label: '名稱',
             type: Text,
-            isRequired: true
+            isRequired: true,
         },
         categories: {
             label: '分類',
             type: Relationship,
             ref: 'Category',
-            many: true
+            many: true,
         },
         otherCategories: {
             label: '其他分類',
             type: Relationship,
             ref: 'Category',
-            many: true
+            many: true,
         },
         style: {
             type: Select,
             options: 'feature, listing, tile, full, video, light',
-            defaultValue: 'feature'
+            defaultValue: 'feature',
         },
         ogTitle: {
             label: 'FB 分享標題',
-            type: Text
+            type: Text,
         },
         ogDescription: {
             label: 'FB 分享說明',
-            type: Text
+            type: Text,
         },
         ogImage: {
             label: 'FB 分享縮圖',
             type: Relationship,
-            ref: 'Image'
+            ref: 'Image',
         },
         isFeatured: {
             label: '置頂',
-            type: Checkbox
+            type: Checkbox,
         },
         isAudioSiteOnly: {
             label: '僅用於語音網站',
-            type: Checkbox
+            type: Checkbox,
         },
     },
-    plugins: [
-        atTracking(),
-        byTracking(),
-    ],
+    plugins: [atTracking(), byTracking()],
     access: {
         update: allowRoles(admin, moderator),
         create: allowRoles(admin, moderator),
         delete: allowRoles(admin),
     },
     adminConfig: {
-        defaultColumns: 'slug, name, categories, style, isFeatured, isAudioSiteOnly, createdAt',
+        defaultColumns:
+            'slug, name, categories, style, isFeatured, isAudioSiteOnly, createdAt',
         defaultSort: '-createdAt',
     },
+    labelField: 'name',
 }
