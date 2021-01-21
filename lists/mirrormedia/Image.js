@@ -112,7 +112,7 @@ module.exports = {
         delete: allowRoles(admin),
     },
     adminConfig: {
-        defaultColumns: 'title, image, createdAt',
+        defaultColumns: 'name, image, createdAt',
         defaultSort: '-createdAt',
     },
     hooks: {
