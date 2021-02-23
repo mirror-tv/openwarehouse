@@ -1,6 +1,7 @@
 const { Slug, Text, Checkbox, Relationship, Select } = require('@keystonejs/fields');
 const { atTracking, byTracking } = require('@keystonejs/list-plugins');
-const { admin, moderator, allowRoles } = require('../../helpers/readrAccess');
+const { admin, moderator, allowRoles } = require('../../helpers/access/readr');
+const cacheHint = require('../../helpers/cacheHint');
 
 module.exports = {
     fields: {
@@ -13,30 +14,30 @@ module.exports = {
         name: {
             label: "名稱",
             type: Text,
-            isRequired: true
+            isRequired: true,
         },
         state: {
             label: '狀態',
             type: Select,
             options: 'inactive, active, archived',
-            defaultValue: 'inactive'
+            defaultValue: 'inactive',
         },
         ogTitle: {
             label: 'FB 分享標題',
-            type: Text
+            type: Text,
         },
         ogDescription: {
             label: 'FB 分享說明',
-            type: Text
+            type: Text,
         },
         ogImage: {
             label: 'FB 分享縮圖',
             type: Relationship,
-            ref: 'Image'
+            ref: 'Image',
         },
         isFeatured: {
             label: '置頂',
-            type: Checkbox
+            type: Checkbox,
         },
     },
     plugins: [
@@ -52,4 +53,5 @@ module.exports = {
         defaultColumns: 'slug, name, state, isFeatured, createdAt',
         defaultSort: '-createdAt',
     },
+    cacheHint: cacheHint,
 }

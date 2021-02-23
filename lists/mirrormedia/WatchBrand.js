@@ -1,12 +1,7 @@
 const { Slug, Text, Relationship } = require('@keystonejs/fields')
 const { atTracking, byTracking } = require('@keystonejs/list-plugins')
 const { uuid } = require('uuidv4')
-const {
-    admin,
-    moderator,
-    editor,
-    allowRoles,
-} = require('../../helpers/mirrormediaAccess')
+const { admin, moderator, editor, allowRoles } = require('../../helpers/access/mirrormedia')
 
 module.exports = {
     fields: {

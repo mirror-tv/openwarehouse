@@ -4,7 +4,11 @@ const {
     admin,
     moderator,
     allowRoles,
-} = require('../../helpers/mirrormediaAccess')
+} = require('../../helpers/access/mirrormedia')
+
+const {
+    validateIfPostIsPublished,
+} = require('../../utils/validateIfPostIsPublished')
 
 module.exports = {
     fields: {
@@ -30,6 +34,19 @@ module.exports = {
         update: allowRoles(admin, moderator),
         create: allowRoles(admin, moderator),
         delete: allowRoles(admin),
+    },
+    hooks: {
+        validateInput: async ({
+            existingItem,
+            resolvedData,
+            addValidationError,
+        }) => {
+            await validateIfPostIsPublished(
+                resolvedData,
+                existingItem,
+                addValidationError
+            )
+        },
     },
     adminConfig: {
         defaultColumns: 'choice, state, createdAt',

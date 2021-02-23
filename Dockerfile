@@ -1,5 +1,5 @@
 # https://docs.docker.com/samples/library/node/
-ARG NODE_VERSION=12.10.0
+ARG NODE_VERSION=12.18.2
 # https://github.com/Yelp/dumb-init/releases
 ARG DUMB_INIT_VERSION=1.2.2
 
@@ -25,4 +25,4 @@ COPY ./public /build/public
 COPY --from=build /build /app
 
 EXPOSE 3000
-CMD ["./dumb-init", "yarn", "dev"]
+CMD ["./dumb-init", "yarn", "start"]

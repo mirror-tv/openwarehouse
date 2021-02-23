@@ -2,6 +2,7 @@ import _ from 'lodash'
 // import sizeOf from 'image-size';
 import ApiDataInstance from './api-data-instance'
 import ENTITY from './entities'
+// import htmlparser2 from 'htmlparser2'
 const htmlparser2 = require('htmlparser2')
 
 const processor = {

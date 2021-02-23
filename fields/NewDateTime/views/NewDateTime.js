@@ -3,21 +3,33 @@ import './NewDateTime.style.css'
 import Datetime from 'react-datetime'
 import 'react-datetime/css/react-datetime.css'
 import './DateFormat'
+import moment from 'moment'
 
 function NewDateTime({ value, onChange }) {
-    const [inputField, setInputField] = useState('')
+    const [inputField, setInputField] = useState(value)
 
     // react-datetime accept integer unix timestamp
     // transform ISO 8601 to unix timestamp
     const newValue = Date.parse(value)
 
     // get selected unix timestamp by moment from callback
-    const changeHandler = (moment) => {
-        const selectUnixTimestamp = parseInt(moment.format('x'))
-        const selectISO8601 = new Date(selectUnixTimestamp).toISOString()
+    const changeHandler = (momentObj) => {
+        let edittedMomentObj = momentObj
 
-        setInputField(selectUnixTimestamp)
-        onChange(selectISO8601)
+        // when user edit field's content by keyboard
+        if (typeof momentObj !== 'object') {
+            // edittedMomentObj = moment()
+            setInputField(null)
+            onChange(null)
+        } else {
+            const selectUnixTimestamp = parseInt(edittedMomentObj.format('x'))
+            // const selectISO8601 = new Date(selectUnixTimestamp).toISOString()
+
+            const selectISO8601 = new Date(selectUnixTimestamp).toISOString()
+
+            setInputField(selectUnixTimestamp)
+            onChange(selectISO8601)
+        }
     }
 
     // get current unix timestamp
@@ -35,9 +47,10 @@ function NewDateTime({ value, onChange }) {
             <Datetime
                 value={inputField}
                 initialValue={newValue ? newValue : ''}
-                onChange={(moment) => changeHandler(moment)}
-                dateFormat="YYYY-MM-DD"
+                onChange={(momentObj) => changeHandler(momentObj)}
+                dateFormat="YYYY-MM-DD Z"
                 timeFormat="HH:mm:ss"
+                strictParsing={false}
             />
             <button className="nowButton" onClick={(e) => nowHandler(e)}>
                 Now

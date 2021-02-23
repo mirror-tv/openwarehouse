@@ -6,8 +6,13 @@ const {
     Url,
 } = require('@keystonejs/fields')
 const { atTracking, byTracking } = require('@keystonejs/list-plugins')
-const { admin, moderator, allowRoles } = require('../../helpers/readrAccess')
+const { admin, moderator, allowRoles } = require('../../helpers/access/readr')
+const cacheHint = require('../../helpers/cacheHint')
 const NewDateTime = require('../../fields/NewDateTime/index.js')
+
+const {
+    validateIfPostIsPublished,
+} = require('../../utils/validateIfPostIsPublished')
 
 module.exports = {
     fields: {
@@ -16,16 +21,16 @@ module.exports = {
             type: Integer,
             isUnique: true,
         },
-        title: {
+        name: {
             label: '標題',
             type: Text,
             isRequired: true,
         },
-        /*choice: {
+        choice: {
             label: '精選文章',
             type: Relationship,
-            ref: 'Post'
-        },*/
+            ref: 'Post',
+        },
         link: {
             label: '連結',
             type: Url,
@@ -49,6 +54,10 @@ module.exports = {
             label: '發佈時間',
             type: NewDateTime,
         },
+        test: {
+            label: 'test',
+            type: Text,
+        },
     },
     plugins: [atTracking(), byTracking()],
     access: {
@@ -56,8 +65,22 @@ module.exports = {
         create: allowRoles(admin, moderator),
         delete: allowRoles(admin),
     },
+    hooks: {
+        validateInput: async ({
+            existingItem,
+            resolvedData,
+            addValidationError,
+        }) => {
+            await validateIfPostIsPublished(
+                resolvedData,
+                existingItem,
+                addValidationError
+            )
+        },
+    },
     adminConfig: {
         defaultColumns: 'choice, state, createdAt',
         defaultSort: '-createdAt',
     },
+    cacheHint: cacheHint,
 }

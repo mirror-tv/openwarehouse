@@ -1,14 +1,22 @@
 const {
-    Slug,
     Text,
     Select,
     Relationship,
     Url,
     Checkbox,
 } = require('@keystonejs/fields')
-const { atTracking, byTracking } = require('@keystonejs/list-plugins')
-const access = require('../../helpers/access')
 const NewDateTime = require('../../fields/NewDateTime/index.js')
+
+const { atTracking, byTracking } = require('@keystonejs/list-plugins')
+const {
+    admin,
+    moderator,
+    editor,
+    contributor,
+    owner,
+    allowRoles,
+} = require('../../helpers/access/mirror-tv')
+const cacheHint = require('../../helpers/cacheHint')
 
 module.exports = {
     fields: {
@@ -58,6 +66,7 @@ module.exports = {
             label: '圖片',
             type: Relationship,
             ref: 'Image',
+            many: false,
             /*dependsOn: {
                 '$or': [
                     { 'eventType': 'image' },
@@ -90,12 +99,15 @@ module.exports = {
     },
     plugins: [atTracking(), byTracking()],
     access: {
-        update: access.userIsAdminOrModeratorOrOwner,
-        create: access.userIsAboveAuthor,
-        delete: access.userIsAdminOrModeratorOrOwner,
+        update: allowRoles(admin, moderator),
+        create: allowRoles(admin, moderator),
+        delete: allowRoles(admin),
     },
+    hooks: {},
     adminConfig: {
         defaultColumns: 'name, eventType, state, startTime, endTime',
         defaultSort: '-startTime',
     },
+    labelField: 'name',
+    cacheHint: cacheHint,
 }

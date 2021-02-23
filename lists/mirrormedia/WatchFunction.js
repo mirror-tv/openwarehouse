@@ -1,18 +1,14 @@
-const { Text } = require('@keystonejs/fields');
-const { atTracking, byTracking } = require('@keystonejs/list-plugins');
-const { admin, moderator, editor, allowRoles } = require('../../helpers/mirrormediaAccess');
-
+const { Text } = require('@keystonejs/fields')
+const { atTracking, byTracking } = require('@keystonejs/list-plugins')
+const { admin, moderator, editor, allowRoles } = require('../../helpers/access/mirrormedia')
 module.exports = {
     fields: {
         function: {
             type: Text,
-            isRequired: true
+            isRequired: true,
         },
     },
-    plugins: [
-        atTracking(),
-        byTracking(),
-    ],
+    plugins: [atTracking(), byTracking()],
     access: {
         update: allowRoles(admin, moderator, editor),
         create: allowRoles(admin, moderator, editor),
@@ -22,5 +18,5 @@ module.exports = {
         defaultColumns: 'function, createdAt',
         defaultSort: '-createdAt',
     },
-    labelField: 'function'
+    labelField: 'function',
 }

@@ -1,12 +1,4 @@
-const {
-    Text,
-    Checkbox,
-    Select,
-    Relationship,
-    File,
-    NewDateTime,
-    Url,
-} = require('@keystonejs/fields')
+const { Text, Relationship, File, Url } = require('@keystonejs/fields')
 const { atTracking, byTracking } = require('@keystonejs/list-plugins')
 const { GCSAdapter } = require('../../lib/GCSAdapter')
 const {
@@ -14,13 +6,15 @@ const {
     moderator,
     editor,
     allowRoles,
-} = require('../../helpers/readrAccess')
+} = require('../../helpers/access/readr')
+const cacheHint = require('../../helpers/cacheHint')
+
 const gcsDir = 'assets/videos/'
-const NewDateTime = require('../../fields/NewDateTime/index.js')
+const fileAdapter = new GCSAdapter(gcsDir)
 
 module.exports = {
     fields: {
-        title: {
+        name: {
             label: '標題',
             type: Text,
             isRequired: true,
@@ -28,14 +22,18 @@ module.exports = {
         file: {
             label: '檔案',
             type: File,
-            adapter: new GCSAdapter(gcsDir),
+            adapter: fileAdapter,
             isRequired: true,
-        },
-        categories: {
-            label: '分類',
-            type: Relationship,
-            ref: 'Category',
-            many: true,
+            hooks: {
+                beforeChange: async ({ existingItem }) => {
+                    if (existingItem && existingItem.file) {
+                        await fileAdapter.delete(
+                            existingItem.file.id,
+                            existingItem.file.originalFilename
+                        )
+                    }
+                },
+            },
         },
         coverPhoto: {
             label: '封面照片',
@@ -43,7 +41,7 @@ module.exports = {
             ref: 'Image',
         },
         description: {
-            label: '敘述',
+            label: '描述',
             type: Text,
             isMultiline: true,
         },
@@ -52,27 +50,6 @@ module.exports = {
             type: Relationship,
             ref: 'Tag',
             many: true,
-        },
-        state: {
-            label: '狀態',
-            type: Select,
-            options: 'draft, published, scheduled',
-            defaultValue: 'draft',
-        },
-        publishTime: {
-            label: '發佈時間',
-            type: NewDateTime,
-        },
-        relatedPosts: {
-            label: '相關文章',
-            type: Relationship,
-            ref: 'Post',
-            many: true,
-        },
-        isFeed: {
-            label: '供稿',
-            type: Checkbox,
-            defaultValue: true,
         },
         meta: {
             label: '中繼資料',
@@ -92,7 +69,7 @@ module.exports = {
         },
         duration: {
             label: '影片長度（秒）',
-            type: Number,
+            type: Text,
             access: {
                 create: false,
                 update: false,
@@ -106,7 +83,7 @@ module.exports = {
         delete: allowRoles(admin),
     },
     adminConfig: {
-        defaultColumns: 'title, video, tags, state, publishTime, createdAt',
+        defaultColumns: 'name, tags, state, publishTime, createdAt',
         defaultSort: '-createdAt',
     },
     hooks: {
@@ -123,6 +100,15 @@ module.exports = {
             }
             return resolvedData
         },
+        afterDelete: async ({ existingItem }) => {
+            if (existingItem.file) {
+                await fileAdapter.delete(
+                    existingItem.file.id,
+                    existingItem.file.originalFilename
+                )
+            }
+        },
     },
-    labelField: 'title',
+    labelField: 'name',
+    cacheHint: cacheHint,
 }

@@ -1,11 +1,6 @@
-const {
-    Slug,
-    Text,
-    Checkbox,
-    Select,
-    Relationship,
-} = require('@keystonejs/fields')
+const { Text, Checkbox, Select, Relationship } = require('@keystonejs/fields')
 const { atTracking, byTracking } = require('@keystonejs/list-plugins')
+const { logging } = require('@keystonejs/list-plugins')
 const {
     admin,
     moderator,
@@ -13,24 +8,30 @@ const {
     contributor,
     owner,
     allowRoles,
-} = require('../../helpers/mirrormediaAccess')
-const publishStateExaminer = require('../../hooks/publishStateExaminer')
+} = require('../../helpers/access/mirrormedia')
 const HTML = require('../../fields/HTML')
 const NewDateTime = require('../../fields/NewDateTime/index.js')
+
+const { parseResolvedData } = require('../../utils/parseResolvedData')
+const { emitEditLog } = require('../../utils/emitEditLog')
+const { controlCharacterFilter } = require('../../utils/controlCharacterFilter')
+const {
+    validateIfPostNeedPublishTime,
+} = require('../../utils/validateIfPostNeedPublishTime')
+const { publishStateExaminer } = require('../../utils/publishStateExaminer')
 
 module.exports = {
     fields: {
         slug: {
-            label: 'Slug',
-            type: Slug,
+            label: 'slug',
+            type: Text,
             isRequired: true,
-            isUnique: true,
         },
         name: {
             label: '標題',
             type: Text,
             isRequired: true,
-            defaultValue: 'untitled',
+            // defaultValue: 'untitled',
         },
         subtitle: {
             label: '副標',
@@ -203,6 +204,34 @@ module.exports = {
             label: 'Google 廣告違規',
             type: Checkbox,
         },
+        summaryHtml: {
+            type: Text,
+            label: 'Summary HTML',
+            adminConfig: {
+                isReadOnly: true,
+            },
+        },
+        summaryApiData: {
+            type: Text,
+            label: 'Summary API Data',
+            adminConfig: {
+                isReadOnly: true,
+            },
+        },
+        briefHtml: {
+            type: Text,
+            label: 'Brief HTML',
+            adminConfig: {
+                isReadOnly: true,
+            },
+        },
+        briefApiData: {
+            type: Text,
+            label: 'Brief API Data',
+            adminConfig: {
+                isReadOnly: true,
+            },
+        },
         contentHtml: {
             type: Text,
             label: 'Content HTML',
@@ -218,41 +247,52 @@ module.exports = {
             },
         },
     },
-    plugins: [atTracking(), byTracking()],
+    plugins: [atTracking(), byTracking(), logging((args) => emitEditLog(args))],
     access: {
         update: allowRoles(admin, moderator, editor, owner),
         create: allowRoles(admin, moderator, editor, contributor),
         delete: allowRoles(admin),
     },
-    hooks: {
-        resolveInput: publishStateExaminer,
-        beforeChange: async ({ existingItem, resolvedData }) => {
-            try {
-                content = JSON.parse(
-                    resolvedData.content || existingItem.content
-                )
-                resolvedData.contentHtml = JSON.parse(resolvedData.content).html
-                resolvedData.contentApiData = JSON.stringify(
-                    JSON.parse(resolvedData.content).apiData
-                )
-                console.log(typeof content.apiData)
-                delete content['html']
-                delete content['apiData']
-                resolvedData.content = content
-                return { existingItem, resolvedData }
-            } catch (err) {
-                console.log(err)
-                console.log('EXISTING ITEM')
-                console.log(existingItem)
-                console.log('RESOLVED DATA')
-                console.log(resolvedData)
-            }
-        },
-    },
     adminConfig: {
-        defaultColumns:
-            'slug, name, state, categories, createdBy, publishTime, updatedAt',
-        defaultSort: '-publishTime',
+        defaultColumns: 'sortOrder,name, state, publishTime, createdAt',
+        defaultSort: '-createdAt',
     },
+    hooks: {
+        resolveInput: async ({
+            existingItem,
+            originalInput,
+            resolvedData,
+            context,
+            operation,
+        }) => {
+            await controlCharacterFilter(
+                originalInput,
+                existingItem,
+                resolvedData
+            )
+            await parseResolvedData(existingItem, resolvedData)
+            await publishStateExaminer(
+                operation,
+                existingItem,
+                resolvedData,
+                context
+            )
+
+            return resolvedData
+        },
+        validateInput: async ({
+            existingItem,
+            resolvedData,
+            addValidationError,
+        }) => {
+            validateIfPostNeedPublishTime(
+                existingItem,
+                resolvedData,
+                addValidationError
+            )
+        },
+        beforeChange: async ({ existingItem, resolvedData }) => {},
+    },
+
     labelField: 'name',
 }

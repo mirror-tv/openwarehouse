@@ -1,6 +1,7 @@
-const { Text, Checkbox, Password, Select, Relationship } = require('@keystonejs/fields');
-const { atTracking, byTracking } = require('@keystonejs/list-plugins');
-const { admin, moderator, editor, owner, allowRoles } = require('../../helpers/readrAccess');
+const { Text, Checkbox, Password, Select } = require('@keystonejs/fields')
+const { atTracking, byTracking } = require('@keystonejs/list-plugins')
+const { admin, moderator, editor, owner, allowRoles } = require('../../helpers/access/readr')
+const cacheHint = require('../../helpers/cacheHint')
 
 module.exports = {
     fields: {
@@ -13,11 +14,11 @@ module.exports = {
             label: 'Email',
             type: Text,
             isRequired: true,
-            isUnique: true
+            isUnique: true,
         },
         password: {
             label: '密碼',
-            type: Password
+            type: Password,
         },
         role: {
             label: '角色權限',
@@ -28,40 +29,38 @@ module.exports = {
             isRequired: true,
             access: {
                 update: allowRoles(admin, moderator),
-            }
+            },
         },
         isProtected: {
             label: '受保護',
             type: Checkbox,
             access: {
                 update: allowRoles(admin),
-            }
-        }
+            },
+        },
     },
-    plugins: [
-        atTracking(),
-        byTracking(),
-    ],
-    access: {
-        read: allowRoles(admin, moderator, editor, owner),
-        update: allowRoles(admin, moderator, owner),
-        create: allowRoles(admin, moderator),
-        delete: allowRoles(admin),
-        auth: true,
-    },
+    plugins: [atTracking(), byTracking()],
+    // access: {
+    //     read: allowRoles(admin, moderator, editor, owner),
+    //     update: allowRoles(admin, moderator, owner),
+    //     create: allowRoles(admin, moderator),
+    //     delete: allowRoles(admin),
+    //     auth: true,
+    // },
     hooks: {
         resolveInput: async ({ operation, existingItem, resolvedData }) => {
             if (operation === 'update' && existingItem.isProtected) {
-                const protectedFields = ['name', 'email', 'role'];
-                protectedFields.forEach(field => {
-                    resolvedData[field] = existingItem[field];
+                const protectedFields = ['name', 'email', 'role']
+                protectedFields.forEach((field) => {
+                    resolvedData[field] = existingItem[field]
                 })
             }
-            return resolvedData;
-        }
+            return resolvedData
+        },
     },
     adminConfig: {
         defaultColumns: 'name, email, role, isProtected, createdAt',
-        defaultSort: '-createdAt'
+        defaultSort: '-createdAt',
     },
+    cacheHint: cacheHint,
 }

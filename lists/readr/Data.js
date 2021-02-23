@@ -6,7 +6,8 @@ const {
     Url,
 } = require('@keystonejs/fields')
 const { atTracking, byTracking } = require('@keystonejs/list-plugins')
-const { admin, moderator, allowRoles } = require('../../helpers/readrAccess')
+const { admin, moderator, allowRoles } = require('../../helpers/access/readr')
+const cacheHint = require('../../helpers/cacheHint')
 const NewDateTime = require('../../fields/NewDateTime/index.js')
 
 module.exports = {
@@ -16,7 +17,7 @@ module.exports = {
             type: Integer,
             isUnique: true,
         },
-        title: {
+        name: {
             label: '標題',
             type: Text,
             isRequired: true,
@@ -29,12 +30,12 @@ module.exports = {
             label: '連結',
             type: Url,
         },
-        /*relatedPosts: {
+        relatedPosts: {
             label: '相關文章',
             type: Relationship,
             ref: 'Post',
-            many: true
-        },*/
+            many: true,
+        },
         relatedGallery: {
             label: '相關作品',
             type: Relationship,
@@ -63,4 +64,5 @@ module.exports = {
         defaultSort: '-createdAt',
     },
     plural: 'Datas',
+    cacheHint: cacheHint,
 }

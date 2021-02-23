@@ -1,11 +1,6 @@
 const { Slug, Text, Relationship, Select, Url } = require('@keystonejs/fields')
 const { atTracking, byTracking } = require('@keystonejs/list-plugins')
-const {
-    admin,
-    moderator,
-    editor,
-    allowRoles,
-} = require('../../helpers/mirrormediaAccess')
+const { admin, moderator, editor, allowRoles } = require('../../helpers/access/mirrormedia')
 const NewDateTime = require('../../fields/NewDateTime/index.js')
 
 module.exports = {

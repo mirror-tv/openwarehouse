@@ -1,12 +1,7 @@
 const { Text, Relationship, File } = require('@keystonejs/fields')
 const { atTracking, byTracking } = require('@keystonejs/list-plugins')
 const { GCSAdapter } = require('../../lib/GCSAdapter')
-const {
-    admin,
-    moderator,
-    editor,
-    allowRoles,
-} = require('../../helpers/mirrormediaAccess')
+const { admin, moderator, editor, allowRoles } = require('../../helpers/access/mirrormedia')
 const gcsDir = 'assets/audios/'
 
 const fileAdapter = new GCSAdapter(gcsDir)
@@ -70,12 +65,7 @@ module.exports = {
         defaultSort: '-createdAt',
     },
     hooks: {
-        resolveInput: ({
-            operation,
-            existingItem,
-            resolvedData,
-            originalInput,
-        }) => {
+        resolveInput: ({ operation, existingItem, resolvedData, originalInput }) => {
             if (resolvedData.file) {
                 resolvedData.meta = resolvedData.file._meta
                 resolvedData.url = resolvedData.file._meta.url
@@ -86,10 +76,7 @@ module.exports = {
 
         afterDelete: async ({ existingItem }) => {
             if (existingItem.file) {
-                await fileAdapter.delete(
-                    existingItem.file.id,
-                    existingItem.file.originalFilename
-                )
+                await fileAdapter.delete(existingItem.file.id, existingItem.file.originalFilename)
             }
         },
     },

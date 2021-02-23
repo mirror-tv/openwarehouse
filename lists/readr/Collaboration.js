@@ -6,7 +6,8 @@ const {
     Select,
 } = require('@keystonejs/fields')
 const { atTracking, byTracking } = require('@keystonejs/list-plugins')
-const { admin, moderator, allowRoles } = require('../../helpers/readrAccess')
+const { admin, moderator, allowRoles } = require('../../helpers/access/readr')
+const cacheHint = require('../../helpers/cacheHint')
 const NewDateTime = require('../../fields/NewDateTime/index.js')
 
 module.exports = {
@@ -16,7 +17,7 @@ module.exports = {
             type: Integer,
             isUnique: true,
         },
-        title: {
+        name: {
             label: '標題',
             type: Text,
             isRequired: true,
@@ -24,6 +25,10 @@ module.exports = {
         description: {
             label: '描述',
             type: Text,
+        },
+        requireTime: {
+            label: '需要時間',
+            type: Integer,
         },
         heroImage: {
             label: '首圖',
@@ -68,7 +73,8 @@ module.exports = {
         delete: allowRoles(admin),
     },
     adminConfig: {
-        defaultColumns: 'title, description, progress, state, createdAt',
+        defaultColumns: 'name, description, progress, state, createdAt',
         defaultSort: '-createdAt',
     },
+    cacheHint: cacheHint,
 }

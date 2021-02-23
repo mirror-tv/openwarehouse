@@ -1,20 +1,7 @@
-const {
-    Slug,
-    Text,
-    Relationship,
-    Select,
-    Integer,
-    Checkbox,
-    Url,
-} = require('@keystonejs/fields')
+const { Slug, Text, Relationship, Select, Integer, Checkbox, Url } = require('@keystonejs/fields')
 const { atTracking, byTracking } = require('@keystonejs/list-plugins')
 const { uuid } = require('uuidv4')
-const {
-    admin,
-    moderator,
-    editor,
-    allowRoles,
-} = require('../../helpers/mirrormediaAccess')
+const { admin, moderator, editor, allowRoles } = require('../../helpers/access/mirrormedia')
 const HTML = require('../../fields/HTML')
 
 module.exports = {
@@ -85,8 +72,7 @@ module.exports = {
             label: '機芯',
             type: Select,
             dataType: 'string',
-            options:
-                '自動上鏈, 手動上鏈, 石英, 光動能, 人動電能, GPS, 電波, 智能錶',
+            options: '自動上鏈, 手動上鏈, 石英, 光動能, 人動電能, GPS, 電波, 智能錶',
         },
         power: {
             label: '動力',
@@ -114,15 +100,13 @@ module.exports = {
             label: '材質',
             type: Select,
             dataType: 'string',
-            options:
-                '不鏽鋼, 半金, 銅, 黃金, 玫瑰金, 白金, 鉑金, 鉑金, 鈦金屬, 特殊合金, 複合材質',
+            options: '不鏽鋼, 半金, 銅, 黃金, 玫瑰金, 白金, 鉑金, 鉑金, 鈦金屬, 特殊合金, 複合材質',
         },
         waterproof: {
             label: '防水',
             type: Select,
             dataType: 'string',
-            options:
-                '無, 30米, 50米, 100米, 200米, 300米, 600米, 1000米, 2000米, 2000米, 4000米',
+            options: '無, 30米, 50米, 100米, 200米, 300米, 600米, 1000米, 2000米, 2000米, 4000米',
         },
         content: {
             label: '內文',

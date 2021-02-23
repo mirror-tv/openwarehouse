@@ -6,9 +6,26 @@ const {
     Relationship,
 } = require('@keystonejs/fields')
 const { atTracking, byTracking } = require('@keystonejs/list-plugins')
-const access = require('../../helpers/access')
+const { logging } = require('@keystonejs/list-plugins')
+const {
+    admin,
+    moderator,
+    editor,
+    contributor,
+    owner,
+    allowRoles,
+} = require('../../helpers/access/mirror-tv')
 const HTML = require('../../fields/HTML')
 const NewDateTime = require('../../fields/NewDateTime/index.js')
+const cacheHint = require('../../helpers/cacheHint')
+
+const { parseResolvedData } = require('../../utils/parseResolvedData')
+const { emitEditLog } = require('../../utils/emitEditLog')
+const { controlCharacterFilter } = require('../../utils/controlCharacterFilter')
+const {
+    validateIfPostNeedPublishTime,
+} = require('../../utils/validateIfPostNeedPublishTime')
+const { publishStateExaminer } = require('../../utils/publishStateExaminer')
 
 module.exports = {
     fields: {
@@ -18,7 +35,7 @@ module.exports = {
             isRequired: true,
             isUnique: true,
         },
-        title: {
+        name: {
             label: '標題',
             type: Text,
             isRequired: true,
@@ -27,6 +44,7 @@ module.exports = {
         subtitle: {
             label: '副標',
             type: Text,
+            defaultValue: '',
         },
         state: {
             label: '狀態',
@@ -38,7 +56,7 @@ module.exports = {
             label: '發佈時間',
             type: NewDateTime,
         },
-        Category: {
+        categories: {
             label: '分類',
             type: Relationship,
             ref: 'Category',
@@ -83,6 +101,7 @@ module.exports = {
         otherbyline: {
             label: '作者（其他）',
             type: Text,
+            defaultValue: '',
         },
         heroVideo: {
             label: '影片',
@@ -97,6 +116,7 @@ module.exports = {
         heroCaption: {
             label: '首圖圖說',
             type: Text,
+            defaultValue: '',
         },
         heroImageSize: {
             label: '首圖尺寸',
@@ -113,8 +133,9 @@ module.exports = {
             label: '樣式',
             type: Select,
             options:
-                'article, wide, projects, photography, script, campaign, readr',
+                'article, videoNews, wide, projects, photography, script, campaign, readr',
             // defaultValue: 'article'
+            defaultValue: 'article',
         },
         brief: {
             label: '前言',
@@ -129,7 +150,7 @@ module.exports = {
             type: Relationship,
             ref: 'Topic',
         },
-        Tag: {
+        tags: {
             label: '標籤',
             type: Relationship,
             ref: 'Tag',
@@ -154,10 +175,12 @@ module.exports = {
         ogTitle: {
             label: 'FB 分享標題',
             type: Text,
+            defaultValue: '',
         },
         ogDescription: {
             label: 'FB 分享說明',
             type: Text,
+            defaultValue: '',
         },
         ogImage: {
             label: 'FB 分享縮圖',
@@ -168,6 +191,7 @@ module.exports = {
             label: '追蹤代碼',
             type: Text,
             isMultiline: true,
+            defaultValue: '',
         },
         isFeatured: {
             label: '置頂',
@@ -185,17 +209,95 @@ module.exports = {
             label: 'Google 廣告違規',
             type: Checkbox,
         },
+        lockTime: {
+            type: NewDateTime,
+            adminConfig: {
+                isReadOnly: true,
+            },
+        },
+        briefHtml: {
+            type: Text,
+            label: 'Brief HTML',
+            adminConfig: {
+                isReadOnly: true,
+            },
+        },
+        briefApiData: {
+            type: Text,
+            label: 'Brief API Data',
+            adminConfig: {
+                isReadOnly: true,
+            },
+        },
+        contentHtml: {
+            type: Text,
+            label: 'Content HTML',
+            adminConfig: {
+                isReadOnly: true,
+            },
+        },
+        contentApiData: {
+            type: Text,
+            label: 'Content API Data',
+            adminConfig: {
+                isReadOnly: true,
+            },
+        },
+        source: {
+            type: Text,
+            label: '來源',
+            adminConfig: {
+                isReadOnly: true,
+            },
+        },
     },
-    plugins: [atTracking(), byTracking()],
+    plugins: [logging((args) => emitEditLog(args)), atTracking(), byTracking()],
     access: {
-        update: access.userIsAboveAuthorOrOwner,
-        create: access.userIsNotContributor,
-        delete: access.userIsAboveAuthorOrOwner,
+        update: allowRoles(admin, moderator, editor, owner),
+        create: allowRoles(admin, moderator, editor, contributor),
+        delete: allowRoles(admin),
+    },
+    hooks: {
+        resolveInput: async ({
+            existingItem,
+            originalInput,
+            resolvedData,
+            context,
+            operation,
+        }) => {
+            await controlCharacterFilter(
+                originalInput,
+                existingItem,
+                resolvedData
+            )
+            await parseResolvedData(existingItem, resolvedData)
+            await publishStateExaminer(
+                operation,
+                existingItem,
+                resolvedData,
+                context
+            )
+
+            return resolvedData
+        },
+        validateInput: async ({
+            existingItem,
+            resolvedData,
+            addValidationError,
+        }) => {
+            validateIfPostNeedPublishTime(
+                existingItem,
+                resolvedData,
+                addValidationError
+            )
+        },
+        beforeChange: async ({ existingItem, resolvedData }) => {},
     },
     adminConfig: {
         defaultColumns:
-            'slug, title, state, categories, createdBy, publishTime, updatedAt',
+            'slug, name, state, categories, createdBy, publishTime, updatedAt',
         defaultSort: '-publishTime',
     },
-    labelField: 'title',
+    labelField: 'name',
+    cacheHint: cacheHint,
 }

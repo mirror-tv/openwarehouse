@@ -1,6 +1,7 @@
 const { Integer, Text, Select, Relationship } = require('@keystonejs/fields')
 const { atTracking, byTracking } = require('@keystonejs/list-plugins')
-const { admin, moderator, allowRoles } = require('../../helpers/readrAccess')
+const { admin, moderator, allowRoles } = require('../../helpers/access/readr')
+const cacheHint = require('../../helpers/cacheHint')
 const NewDateTime = require('../../fields/NewDateTime/index.js')
 
 module.exports = {
@@ -10,7 +11,7 @@ module.exports = {
             type: Integer,
             isUnique: true,
         },
-        title: {
+        name: {
             label: '標題',
             type: Text,
             isRequired: true,
@@ -30,7 +31,7 @@ module.exports = {
             options: 'draft, published, scheduled, archived, invisible',
             defaultValue: 'draft',
         },
-        publishedTime: {
+        publishTime: {
             label: '發佈時間',
             type: NewDateTime,
         },
@@ -42,8 +43,8 @@ module.exports = {
         delete: allowRoles(admin),
     },
     adminConfig: {
-        defaultColumns:
-            'title, writer, byline, state, publishedTime, createdAt',
+        defaultColumns: 'name, writer, byline, state, publishedTime, createdAt',
         defaultSort: '-createdAt',
     },
+    cacheHint: cacheHint,
 }

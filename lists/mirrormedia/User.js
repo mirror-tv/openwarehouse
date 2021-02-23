@@ -1,7 +1,6 @@
-const { Text, Checkbox, Password, Select, Relationship } = require('@keystonejs/fields');
-const { atTracking, byTracking } = require('@keystonejs/list-plugins');
-const { admin, moderator, editor, owner, allowRoles } = require('../../helpers/mirrormediaAccess');
-
+const { Text, Checkbox, Password, Select, Relationship } = require('@keystonejs/fields')
+const { atTracking, byTracking } = require('@keystonejs/list-plugins')
+const { admin, moderator, editor, owner, allowRoles } = require('../../helpers/access/mirrormedia')
 module.exports = {
     fields: {
         name: {
@@ -13,11 +12,11 @@ module.exports = {
             label: 'Email',
             type: Text,
             isRequired: true,
-            isUnique: true
+            isUnique: true,
         },
         password: {
             label: '密碼',
-            type: Password
+            type: Password,
         },
         role: {
             label: '角色權限',
@@ -28,7 +27,7 @@ module.exports = {
             isRequired: true,
             access: {
                 update: allowRoles(admin, moderator),
-            }
+            },
         },
         company: {
             label: '公司',
@@ -40,40 +39,37 @@ module.exports = {
             type: Checkbox,
             access: {
                 update: allowRoles(admin),
-            }
+            },
         },
         isProtected: {
             label: '受保護',
             type: Checkbox,
             access: {
                 update: allowRoles(admin),
-            }
-        }
+            },
+        },
     },
-    plugins: [
-        atTracking(),
-        byTracking(),
-    ],
-    access: {
-        read: allowRoles(admin, moderator, editor, owner),
-        update: allowRoles(admin, moderator, owner),
-        create: allowRoles(admin, moderator),
-        delete: allowRoles(admin),
-        auth: true,
-    },
+    plugins: [atTracking(), byTracking()],
+    // access: {
+    //     read: allowRoles(admin, moderator, editor, owner),
+    //     update: allowRoles(admin, moderator, owner),
+    //     create: allowRoles(admin, moderator),
+    //     delete: allowRoles(admin),
+    //     auth: true,
+    // },
     hooks: {
         resolveInput: async ({ operation, existingItem, resolvedData }) => {
             if (operation === 'update' && existingItem.isProtected) {
-                const protectedFields = ['name', 'email', 'isAdmin', 'role'];
-                protectedFields.forEach(field => {
-                    resolvedData[field] = existingItem[field];
+                const protectedFields = ['name', 'email', 'isAdmin', 'role']
+                protectedFields.forEach((field) => {
+                    resolvedData[field] = existingItem[field]
                 })
             }
-            return resolvedData;
-        }
+            return resolvedData
+        },
     },
     adminConfig: {
         defaultColumns: 'name, email, role, isAdmin, company, createdAt',
-        defaultSort: '-createdAt'
+        defaultSort: '-createdAt',
     },
 }

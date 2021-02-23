@@ -1,16 +1,6 @@
-const {
-    Slug,
-    Text,
-    Checkbox,
-    Select,
-    Relationship,
-} = require('@keystonejs/fields')
+const { Slug, Text, Checkbox, Select, Relationship } = require('@keystonejs/fields')
 const { atTracking, byTracking } = require('@keystonejs/list-plugins')
-const {
-    admin,
-    moderator,
-    allowRoles,
-} = require('../../helpers/mirrormediaAccess')
+const { admin, moderator, allowRoles } = require('../../helpers/access/mirrormedia')
 
 module.exports = {
     fields: {
@@ -71,8 +61,7 @@ module.exports = {
         delete: allowRoles(admin),
     },
     adminConfig: {
-        defaultColumns:
-            'slug, name, categories, style, isFeatured, isAudioSiteOnly, createdAt',
+        defaultColumns: 'slug, name, categories, style, isFeatured, isAudioSiteOnly, createdAt',
         defaultSort: '-createdAt',
     },
     labelField: 'name',
