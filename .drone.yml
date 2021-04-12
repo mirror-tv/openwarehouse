@@ -82,8 +82,8 @@ steps:
     settings:
       repo: mirror-tv-275709/${DRONE_REPO_NAME}
       tag: 
-        - ${DRONE_BRANCH}_${DRONE_COMMIT_AUTHOR}_${DRONE_BUILD_NUMBER}_cms
-        - ${DRONE_BRANCH}_${DRONE_COMMIT_AUTHOR}_${DRONE_BUILD_NUMBER}_graphql
+        - ${DRONE_BRANCH}_${DRONE_COMMIT_AUTHOR}_${DRONE_BUILD_NUMBER}_ocms
+        - ${DRONE_BRANCH}_${DRONE_COMMIT_AUTHOR}_${DRONE_BUILD_NUMBER}_ographql
     when:
       branch:
         - dev
