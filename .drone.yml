@@ -52,34 +52,139 @@ steps:
       event:
         - push
 
-#  - name: get_mirror-tv_cms_config
-#    image: gcr.io/mirror-tv-275709/drone-cloud-sdk:mirror-tv
+  # use mirror-tv cms dev configs as dummy configs
+  - name: getTVDummyConfig
+    image: gcr.io/mirror-tv-275709/drone-cloud-sdk:mirror-tv
+    pull: if-not-exists
+    commands:
+      - gcloud source repos clone helm ./dockerignore/helm
+      - cp ./dockerignore/helm/cms/configs/dev/config.js ./configs/config.js
+      - cp ./dockerignore/helm/cms/configs/dev/gcskeyfile.json ./configs/gcskeyfile.json
+    environment:
+      GOOGLE_CREDENTIALS:
+        from_secret: google_credentials-mirror-tv
+    when:
+      branch:
+        - dev
+        - stag
+        - master
+        - testgraphql
+      event:
+        - push
+
+  - name: buildTVImageThenPublish
+    image: plugins/gcr
+    pull: if-not-exists
+    environment:
+      DOCKER_LAUNCH_DEBUG: 'true'
+      GOOGLE_CREDENTIALS:
+        from_secret: google_credentials-mirror-tv
+    settings:
+      repo: mirror-tv-275709/${DRONE_REPO_NAME}
+      tag: 
+        - ${DRONE_BRANCH}_${DRONE_COMMIT_AUTHOR}_${DRONE_BUILD_NUMBER}_cms
+        - ${DRONE_BRANCH}_${DRONE_COMMIT_AUTHOR}_${DRONE_BUILD_NUMBER}_graphql
+    when:
+      branch:
+        - dev
+        - stag
+        - master
+        - testgraphql
+      event:
+        - push
+
+#  - name: deployTVCmsDev
 #    pull: if-not-exists
-#    commands:
-#      - gcloud source repos clone helm ./dockerignore/helm
-#      - cp ./dockerignore/helm/cms/configs/${DRONE_BRANCH}/config.js ./configs/config.js
-#      - cp ./dockerignore/helm/cms/configs/${DRONE_BRANCH}/gcskeyfile.json ./configs/gcskeyfile.json
+#    image: nytimes/drone-gke
+#    settings:
+#      cluster: tv-dev
+#      namespace: default
+#      vars:
+#        type: cms
+#        app: ${DRONE_REPO_NAME}-cms
+#        image: gcr.io/mirror-tv-275709/${DRONE_REPO_NAME}:${DRONE_BRANCH}_${DRONE_COMMIT_AUTHOR}_${DRONE_BUILD_NUMBER}_cms
+#        tier: backend
+#      verbose: true
+#      zone: asia-east1-c
 #    environment:
-#      GOOGLE_CREDENTIALS:
+#      TOKEN:
 #        from_secret: google_credentials-mirror-tv
 #    when:
 #      branch:
 #        - dev
-#        - stag
-#        - master
-#        - testgraphql
+#        # - master
 #      event:
 #        - push
 
-#  - name: build_mirror-tv_cms_then_publish
+#  - name: deployTVGraphQLDev
+#    pull: if-not-exists
+#    image: nytimes/drone-gke
+#    settings:
+#      cluster: tv-dev
+#      namespace: default
+#      vars:
+#        type: graphql
+#        app: ${DRONE_REPO_NAME}-graphql
+#        image: gcr.io/mirror-tv-275709/${DRONE_REPO_NAME}:${DRONE_BRANCH}_${DRONE_COMMIT_AUTHOR}_${DRONE_BUILD_NUMBER}_graphql
+#        tier: backend
+#      verbose: true
+#      zone: asia-east1-c
+#    environment:
+#      TOKEN:
+#        from_secret: google_credentials-mirror-tv
+#    when:
+#      branch:
+#        - dev
+#        # - master
+#      event:
+#        - push
+
+#  - name: sendTVWebhookKeel
+#    pull: if-not-exists
+#    image: curlimages/curl:7.75.0
+#    commands:
+#      - curl --request POST
+#        --data "{\"name\":\"gcr.io/mirror-tv-275709/${DRONE_REPO_NAME}\",\"tag\":\"${DRONE_BRANCH}_${DRONE_COMMIT_AUTHOR}_${DRONE_BUILD_NUMBER}_cms\"}"
+#        https://keel-${DRONE_BRANCH}.mnews.tw/v1/webhooks/native
+#      - curl --request POST
+#        --data "{\"name\":\"gcr.io/mirror-tv-275709/${DRONE_REPO_NAME}\",\"tag\":\"${DRONE_BRANCH}_${DRONE_COMMIT_AUTHOR}_${DRONE_BUILD_NUMBER}_graphql\"}"
+#        https://keel-${DRONE_BRANCH}.mnews.tw/v1/webhooks/native
+#    when:
+#      branch:
+#        - dev
+#        - stag
+#      event:
+#        - push
+
+
+
+
+#  - name: getDevConfig
+#    image: gcr.io/mirrormedia-1470651750304/drone-cloud-sdk:latest
+#    pull: if-not-exists
+#    commands:
+#      - gcloud source repos clone configs ./dockerignore/configs
+#      - cp ./dockerignore/configs/openwarehouse/dev/mirrormedia/config.js ./configs/config.js
+#      - cp ./dockerignore/configs/openwarehouse/dev/gcskeyfile.json ./configs/gcskeyfile.json
+#    environment:
+#      GOOGLE_CREDENTIALS:
+#        from_secret: google_credentials-mirrormedia
+#    when:
+#      branch:
+#        - dev
+#        - testgraphql
+#      event:
+#        - push
+#
+#  - name: buildThenPublish
 #    image: plugins/gcr
 #    pull: if-not-exists
 #    environment:
 #      DOCKER_LAUNCH_DEBUG: 'true'
 #      GOOGLE_CREDENTIALS:
-#        from_secret: google_credentials-mirror-tv
+#        from_secret: google_credentials-mirrormedia
 #    settings:
-#      repo: mirror-tv-275709/${DRONE_REPO_NAME}
+#      repo: mirrormedia-1470651750304/${DRONE_REPO_NAME}
 #      tag:
 #        - ${DRONE_BRANCH}_${DRONE_COMMIT_AUTHOR}_${DRONE_BUILD_NUMBER}
 #    when:
@@ -90,44 +195,7 @@ steps:
 #        - testgraphql
 #      event:
 #        - push
-
-  - name: getDevConfig
-    image: gcr.io/mirrormedia-1470651750304/drone-cloud-sdk:latest
-    pull: if-not-exists
-    commands:
-      - gcloud source repos clone configs ./dockerignore/configs
-      - cp ./dockerignore/configs/openwarehouse/dev/mirrormedia/config.js ./configs/config.js
-      - cp ./dockerignore/configs/openwarehouse/dev/gcskeyfile.json ./configs/gcskeyfile.json
-    environment:
-      GOOGLE_CREDENTIALS:
-        from_secret: google_credentials-mirrormedia
-    when:
-      branch:
-        - dev
-        - testgraphql
-      event:
-        - push
-
-  - name: buildThenPublish
-    image: plugins/gcr
-    pull: if-not-exists
-    environment:
-      DOCKER_LAUNCH_DEBUG: 'true'
-      GOOGLE_CREDENTIALS:
-        from_secret: google_credentials-mirrormedia
-    settings:
-      repo: mirrormedia-1470651750304/${DRONE_REPO_NAME}
-      tag:
-        - ${DRONE_BRANCH}_${DRONE_COMMIT_AUTHOR}_${DRONE_BUILD_NUMBER}
-    when:
-      branch:
-        - dev
-        - stag
-        - master
-        - testgraphql
-      event:
-        - push
-
+#
 #  - name: deployDev
 #    image: nytimes/drone-gke
 #    pull: if-not-exists
@@ -204,4 +272,4 @@ volumes:
       path: /tmp/cache
 
 image_pull_secrets:
-  - gcr_docker_config-mirrormedia
+  - gcr_docker_config-mirror-tv
