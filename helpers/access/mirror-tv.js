@@ -7,6 +7,9 @@ const editor = ({ authentication: { item: user } }) =>
 const contributor = ({ authentication: { item: user } }) =>
     Boolean(user && user.role == 'contributor')
 
+const bot = ({ authentication: { item: user } }) =>
+    Boolean(user && user.role == 'bot')
+
 const owner = ({ authentication: { item: user }, listKey }) => {
     if (!user) return false
 
@@ -26,6 +29,7 @@ module.exports = {
     moderator,
     editor,
     contributor,
+    bot,
     owner,
     allowRoles,
 }

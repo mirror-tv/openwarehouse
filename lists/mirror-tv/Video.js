@@ -12,6 +12,7 @@ const { atTracking, byTracking } = require('@keystonejs/list-plugins')
 const { GCSAdapter } = require('../../lib/GCSAdapter')
 const {
     admin,
+    bot,
     moderator,
     editor,
     contributor,
@@ -23,6 +24,17 @@ const cacheHint = require('../../helpers/cacheHint')
 const gcsDir = 'assets/videos/'
 const fileAdapter = new GCSAdapter(gcsDir)
 
+const {
+    getNewFilename,
+    getFileDetail,
+} = require('../../utils/fileDetailHandler')
+const {
+    deleteOldVideoFileInGCS,
+    feedNewVideoData,
+    validateWhichUrlShouldCMSChoose,
+    assignYoutubeUrl,
+} = require('../../utils/videoHandler')
+
 module.exports = {
     fields: {
         name: {
@@ -30,11 +42,14 @@ module.exports = {
             type: Text,
             isRequired: true,
         },
+        youtubeUrl: {
+            label: 'Youtube網址',
+            type: Text,
+        },
         file: {
             label: '檔案',
             type: File,
             adapter: fileAdapter,
-            isRequired: true,
         },
         categories: {
             label: '分類',
@@ -79,6 +94,10 @@ module.exports = {
             type: Checkbox,
             defaultValue: true,
         },
+        thumbnail: {
+            label: '縮圖網址',
+            type: Url,
+        },
         meta: {
             label: '中繼資料',
             type: Text,
@@ -107,7 +126,7 @@ module.exports = {
     plugins: [atTracking(), byTracking()],
     access: {
         update: allowRoles(admin, moderator, editor),
-        create: allowRoles(admin, moderator, editor),
+        create: allowRoles(admin, bot, moderator, editor),
         delete: allowRoles(admin),
     },
     hooks: {},
@@ -116,26 +135,43 @@ module.exports = {
         defaultSort: '-createdAt',
     },
     hooks: {
-        resolveInput: ({
+        resolveInput: async ({
             operation,
             existingItem,
             resolvedData,
             originalInput,
         }) => {
-            if (resolvedData.file) {
-                resolvedData.meta = resolvedData.file._meta
-                resolvedData.url = resolvedData.file._meta.url
-                resolvedData.duration = resolvedData.file._meta.duration
+            const { file } = resolvedData
+
+            if (typeof file === 'undefined') {
+                // no update file,means now video is youtube
+                // set url to youtubeUrl
+                resolvedData.url = assignYoutubeUrl(existingItem, resolvedData)
+            } else if (file === null) {
+                //  selected file is set to cleared
+                // need to remove file in gcs
+                deleteOldVideoFileInGCS(existingItem, fileAdapter)
+            } else {
+                // update new file
+                await feedNewVideoData(resolvedData)
+                deleteOldVideoFileInGCS(existingItem, fileAdapter)
             }
+
             return resolvedData
         },
+        validateInput: async ({
+            existingItem,
+            resolvedData,
+            addValidationError,
+        }) => {
+            validateWhichUrlShouldCMSChoose(
+                existingItem,
+                resolvedData,
+                addValidationError
+            )
+        },
         afterDelete: async ({ existingItem }) => {
-            if (existingItem.file) {
-                await fileAdapter.delete(
-                    existingItem.file.id,
-                    existingItem.file.originalFilename
-                )
-            }
+            deleteOldVideoFileInGCS(existingItem, fileAdapter)
         },
     },
     labelField: 'name',

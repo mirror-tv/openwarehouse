@@ -65,7 +65,12 @@ module.exports = {
         defaultSort: '-createdAt',
     },
     hooks: {
-        resolveInput: ({ operation, existingItem, resolvedData, originalInput }) => {
+        resolveInput: ({
+            operation,
+            existingItem,
+            resolvedData,
+            originalInput,
+        }) => {
             if (resolvedData.file) {
                 resolvedData.meta = resolvedData.file._meta
                 resolvedData.url = resolvedData.file._meta.url
@@ -76,7 +81,10 @@ module.exports = {
 
         afterDelete: async ({ existingItem }) => {
             if (existingItem.file) {
-                await fileAdapter.delete(existingItem.file.id, existingItem.file.originalFilename)
+                await fileAdapter.delete(
+                    existingItem.file.id,
+                    existingItem.file.originalFilename
+                )
             }
         },
     },

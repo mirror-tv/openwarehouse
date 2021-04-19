@@ -105,18 +105,43 @@ module.exports = {
         defaultSort: '-createdAt',
     },
     hooks: {
-        resolveInput: ({ operation, existingItem, resolvedData, originalInput }) => {
-            if (resolvedData.file) {
-                resolvedData.meta = resolvedData.file._meta
-                resolvedData.url = resolvedData.file._meta.url
-                resolvedData.duration = resolvedData.file._meta.duration
+        resolveInput: async ({
+            operation,
+            existingItem,
+            resolvedData,
+            originalInput,
+        }) => {
+            const { file } = resolvedData
+
+            if (typeof file === 'undefined') {
+                // no update file,means now video is youtube
+                // set url to youtubeUrl
+                resolvedData.url = assignYoutubeUrl(existingItem, resolvedData)
+            } else if (file === null) {
+                //  selected file is set to cleared
+                // need to remove file in gcs
+                deleteOldVideoFileInGCS(existingItem, fileAdapter)
+            } else {
+                // update new file
+                await feedNewVideoData(resolvedData)
+                deleteOldVideoFileInGCS(existingItem, fileAdapter)
             }
+
             return resolvedData
         },
+        validateInput: async ({
+            existingItem,
+            resolvedData,
+            addValidationError,
+        }) => {
+            validateWhichUrlShouldCMSChoose(
+                existingItem,
+                resolvedData,
+                addValidationError
+            )
+        },
         afterDelete: async ({ existingItem }) => {
-            if (existingItem.file) {
-                await fileAdapter.delete(existingItem.file.id, existingItem.file.originalFilename)
-            }
+            deleteOldVideoFileInGCS(existingItem, fileAdapter)
         },
     },
     labelField: 'name',

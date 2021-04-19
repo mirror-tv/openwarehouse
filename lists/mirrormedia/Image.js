@@ -1,12 +1,29 @@
-const { Text, Select, Relationship, File, Url, Checkbox } = require('@keystonejs/fields')
+const {
+    Text,
+    Select,
+    Relationship,
+    File,
+    Url,
+    Checkbox,
+} = require('@keystonejs/fields')
 const { atTracking, byTracking } = require('@keystonejs/list-plugins')
 const { ImageAdapter } = require('../../lib/ImageAdapter')
 const { LocalFileAdapter } = require('@keystonejs/file-adapters')
+const TextHide = require('../../fields/TextHide')
 const fs = require('fs')
-const { admin, moderator, editor, allowRoles } = require('../../helpers/access/mirrormedia')
-const { addWatermark } = require('../../helpers/watermark.js')
+const {
+    admin,
+    moderator,
+    editor,
+    allowRoles,
+} = require('../../helpers/access/mirrormedia')
 const cacheHint = require('../../helpers/cacheHint')
 const gcsDir = 'assets/images/'
+const { addWatermarkIfNeeded } = require('../../utils/watermarkHandler')
+const {
+    getNewFilename,
+    getFileDetail,
+} = require('../../utils/fileDetailHandler')
 
 const fileAdapter = new LocalFileAdapter({
     src: './public/images',
@@ -92,6 +109,12 @@ module.exports = {
                 update: false,
             },
         },
+        imageApiData: {
+            type: TextHide,
+            adminConfig: {
+                isReadOnly: true,
+            },
+        },
     },
     plugins: [atTracking(), byTracking()],
     access: {
@@ -107,74 +130,69 @@ module.exports = {
         // Hooks for create and update operations
 
         beforeChange: async ({ existingItem, resolvedData }) => {
-            var origFilename
-            if (typeof resolvedData.file !== 'undefined') {
-                // resolvedData = true
-                // when create or update newer image
-                let fullFileName = resolvedData.file.filename
-                let origFilename = resolvedData.file.originalFilename
-                var id = resolvedData.file.id
+            try {
+                if (typeof resolvedData.file !== 'undefined') {
+                    // resolvedData = true
+                    // when create or update newer image
+                    await addWatermarkIfNeeded(resolvedData, existingItem)
 
-                // add needWatermark to image (Todo)
-                if (resolvedData.needWatermark) {
-                    // stream = await addWatermark(
-                    //     stream,
-                    //     resolvedData.file.id,
-                    //     resolvedData.file.originalFilename
-                    // )
-                }
-
-                var stream = fs.createReadStream(`./public/images/${fullFileName}`)
-
-                // upload image to gcs,and generate corespond meta data(url )
-                const image_adapter = new ImageAdapter(gcsDir)
-                let _meta = await image_adapter.sync_save(stream, id, origFilename)
-
-                resolvedData.urlOriginal = _meta.url.urlOriginal
-                resolvedData.urlDesktopSized = _meta.url.urlDesktopSized
-                resolvedData.urlMobileSized = _meta.url.urlMobileSized
-                resolvedData.urlTabletSized = _meta.url.urlTabletSized
-                resolvedData.urlTinySized = _meta.url.urlTinySized
-
-                // existingItem = null
-                // create image
-                if (typeof existingItem === 'undefined') {
-                    console.log('---create image---')
-                } else {
-                    console.log('---update image---')
+                    const { id, newFileName, originalFileName } = getFileDetail(
+                        resolvedData
+                    )
+                    // upload image to gcs,and generate corespond meta data(url )
+                    const image_adapter = new ImageAdapter(
+                        originalFileName,
+                        newFileName,
+                        id
+                    )
+                    let _meta = await image_adapter.sync_save()
 
                     // existingItem = true
                     // update image
                     // need to delete old image in gcs
-                    await image_adapter.delete(
-                        existingItem.file.id,
-                        existingItem.file.originalFilename
-                    )
-                    console.log('deleted old one')
+                    if (typeof existingItem !== 'undefined') {
+                        console.log('---update image---')
+
+                        await image_adapter.delete(
+                            existingItem.file.id,
+                            existingItem.file.originalFilename
+                        )
+                        console.log('deleted old one')
+                    }
+
+                    // import each url into resolvedData
+                    resolvedData.urlOriginal = _meta.apiData.original.url
+                    resolvedData.urlDesktopSized = _meta.apiData.desktop.url
+                    resolvedData.urlTabletSized = _meta.apiData.tablet.url
+                    resolvedData.urlMobileSized = _meta.apiData.mobile.url
+                    resolvedData.urlTinySized = _meta.apiData.tiny.url
+
+                    // generate imageApiData to resolvedData
+                    resolvedData.imageApiData = JSON.stringify(_meta.apiData)
+
+                    // update stored filename
+                    // filename ex: 5ff2779ebcfb3420789bf003-image.jpg
+                    resolvedData.file.filename = getNewFilename(resolvedData)
+                } else {
+                    // resolvedData = false
+                    // image is no needed to update
+                    console.log('no need to update stream')
+
+                    // if there's no image api data, fetch it
+                    if (!existingItem.imageApiData) {
+                        const id = existingItem.id
+                        const image_adapter = new ImageAdapter(id)
+
+                        const apiData = await image_adapter.generateNewImageApiData(
+                            existingItem
+                        )
+                        resolvedData.imageApiData = apiData
+                    }
                 }
 
-                // update stored filename
-                // filename ex: 5ff2779ebcfb3420789bf003-image.jpg
-
-                const newFilename = formatImagePath(resolvedData)
-                resolvedData.file.filename = newFilename
-
-                // resolvedData.file.filename = newFilename
-
                 return { existingItem, resolvedData }
-            } else {
-                // resolvedData = false
-                // image is no needed to update
-                console.log('no need to update stream')
-
-                resolvedData.file = existingItem.file
-                const newFilename = formatImagePath(existingItem)
-                resolvedData.file.filename = newFilename
-
-                console.log('EXISTING ITEM', existingItem)
-                console.log('RESOLVED DATA', resolvedData)
-
-                return { existingItem, resolvedData }
+            } catch (err) {
+                console.log(`error in hook: `, err.message)
             }
         },
         // When delete image, delete image in gcs as well
@@ -182,7 +200,10 @@ module.exports = {
             const image_adapter = new ImageAdapter(gcsDir)
 
             if (existingItem && typeof existingItem.file !== 'undefined') {
-                await image_adapter.delete(existingItem.file.id, existingItem.file.originalFilename)
+                await image_adapter.delete(
+                    existingItem.file.id,
+                    existingItem.file.originalFilename
+                )
                 console.log('deleted old one')
             }
         },
