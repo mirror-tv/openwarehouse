@@ -7,7 +7,6 @@ const {
     Url,
 } = require('@keystonejs/fields')
 const NewDateTime = require('../../fields/NewDateTime/index.js')
-
 const { atTracking, byTracking } = require('@keystonejs/list-plugins')
 const { GCSAdapter } = require('../../lib/GCSAdapter')
 const {

@@ -1,10 +1,28 @@
-const { Text, Checkbox, Select, Relationship, File, Url } = require('@keystonejs/fields')
+const {
+    Text,
+    Checkbox,
+    Select,
+    Relationship,
+    File,
+    Url,
+} = require('@keystonejs/fields')
+const NewDateTime = require('../../fields/NewDateTime/index.js')
 const { atTracking, byTracking } = require('@keystonejs/list-plugins')
 const { GCSAdapter } = require('../../lib/GCSAdapter')
-const { admin, moderator, editor, allowRoles } = require('../../helpers/access/mirrormedia')
-const gcsDir = 'assets/videos/'
-const NewDateTime = require('../../fields/NewDateTime/index.js')
+const {
+    admin,
+    moderator,
+    editor,
+    allowRoles,
+} = require('../../helpers/access/mirrormedia')
 
+const {
+    deleteOldVideoFileInGCS,
+    feedNewVideoData,
+    validateWhichUrlShouldCMSChoose,
+    assignYoutubeUrl,
+} = require('../../utils/videoHandler')
+const gcsDir = 'assets/videos/'
 const fileAdapter = new GCSAdapter(gcsDir)
 
 module.exports = {
