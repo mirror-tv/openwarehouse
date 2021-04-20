@@ -139,25 +139,22 @@ steps:
 #      event:
 #        - push
 
-#  - name: sendTVWebhookKeel
-#    pull: if-not-exists
-#    image: curlimages/curl:7.75.0
-#    commands:
-#      - curl --request POST
-#        --data "{\"name\":\"gcr.io/mirror-tv-275709/${DRONE_REPO_NAME}\",\"tag\":\"${DRONE_BRANCH}_${DRONE_COMMIT_AUTHOR}_${DRONE_BUILD_NUMBER}_cms\"}"
-#        https://keel-${DRONE_BRANCH}.mnews.tw/v1/webhooks/native
-#      - curl --request POST
-#        --data "{\"name\":\"gcr.io/mirror-tv-275709/${DRONE_REPO_NAME}\",\"tag\":\"${DRONE_BRANCH}_${DRONE_COMMIT_AUTHOR}_${DRONE_BUILD_NUMBER}_graphql\"}"
-#        https://keel-${DRONE_BRANCH}.mnews.tw/v1/webhooks/native
-#    when:
-#      branch:
-#        - dev
-#        - stag
-#      event:
-#        - push
-
-
-
+  - name: sendTVWebhookKeel
+    pull: if-not-exists
+    image: curlimages/curl:7.75.0
+    commands:
+      - curl --request POST
+        --data "{\"name\":\"gcr.io/mirror-tv-275709/${DRONE_REPO_NAME}\",\"tag\":\"${DRONE_BRANCH}_${DRONE_COMMIT_AUTHOR}_${DRONE_BUILD_NUMBER}_ocms\"}"
+        https://keel-${DRONE_BRANCH}.mnews.tw/v1/webhooks/native
+      - curl --request POST
+        --data "{\"name\":\"gcr.io/mirror-tv-275709/${DRONE_REPO_NAME}\",\"tag\":\"${DRONE_BRANCH}_${DRONE_COMMIT_AUTHOR}_${DRONE_BUILD_NUMBER}_ographql\"}"
+        https://keel-${DRONE_BRANCH}.mnews.tw/v1/webhooks/native
+    when:
+      branch:
+        - dev
+        - stag
+      event:
+        - push
 
 #  - name: getDevConfig
 #    image: gcr.io/mirrormedia-1470651750304/drone-cloud-sdk:latest
