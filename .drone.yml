@@ -1,0 +1,272 @@
+---
+kind: pipeline
+name: default
+type: docker
+
+platform:
+  arch: amd64
+  os: linux
+
+workspace:
+  path: /openwarehouse
+
+steps:
+  - name: startSlack
+    image: plugins/slack
+    pull: if-not-exists
+    environment:
+      SLACK_WEBHOOK:
+        from_secret: slack_webhook
+    settings:
+      channel: jenkins
+      icon_url: https://avatars2.githubusercontent.com/u/2181346?s=200&v=4
+      template: >
+        *start* building *{{repo.name}}* <${DRONE_BUILD_LINK}|#{{build.number}}>. Someone gave *{{build.branch}}* a little push.
+      username: drone
+    when:
+      branch:
+        - dev
+        - stag
+        - master
+        - testgraphql
+      event:
+        - push
+
+  - name: restoreCache
+    image: drillster/drone-volume-cache
+    pull: if-not-exists
+    settings:
+      mount:
+        - ./.yarn-cache
+        - ./node_modules
+      restore: true
+    volumes:
+      - name: vol-0
+        path: /cache
+    when:
+      branch:
+        - dev
+        - stag
+        - master
+        - testgraphql
+      event:
+        - push
+
+  # use mirror-tv cms dev configs as dummy configs
+  - name: getTVDummyConfig
+    image: gcr.io/mirror-tv-275709/drone-cloud-sdk:mirror-tv
+    pull: if-not-exists
+    commands:
+      - gcloud source repos clone helm ./dockerignore/helm
+      - cp ./dockerignore/helm/cms/configs/dev/config.js ./configs/config.js
+      - cp ./dockerignore/helm/cms/configs/dev/gcskeyfile.json ./configs/gcskeyfile.json
+    environment:
+      GOOGLE_CREDENTIALS:
+        from_secret: google_credentials-mirror-tv
+    when:
+      branch:
+        - dev
+        - stag
+        - master
+        - testgraphql
+      event:
+        - push
+
+  - name: buildTVImageThenPublish
+    image: plugins/gcr
+    pull: if-not-exists
+    environment:
+      DOCKER_LAUNCH_DEBUG: 'true'
+      GOOGLE_CREDENTIALS:
+        from_secret: google_credentials-mirror-tv
+    settings:
+      repo: mirror-tv-275709/${DRONE_REPO_NAME}
+      tag: 
+        - ${DRONE_BRANCH}_${DRONE_COMMIT_AUTHOR}_${DRONE_BUILD_NUMBER}_cms
+        - ${DRONE_BRANCH}_${DRONE_COMMIT_AUTHOR}_${DRONE_BUILD_NUMBER}_graphql
+    when:
+      branch:
+        - dev
+        - stag
+        - master
+        - testgraphql
+      event:
+        - push
+
+#  - name: deployTVCmsDev
+#    pull: if-not-exists
+#    image: nytimes/drone-gke
+#    settings:
+#      cluster: tv-dev
+#      namespace: default
+#      vars:
+#        type: cms
+#        app: ${DRONE_REPO_NAME}-cms
+#        image: gcr.io/mirror-tv-275709/${DRONE_REPO_NAME}:${DRONE_BRANCH}_${DRONE_COMMIT_AUTHOR}_${DRONE_BUILD_NUMBER}_cms
+#        tier: backend
+#      verbose: true
+#      zone: asia-east1-c
+#    environment:
+#      TOKEN:
+#        from_secret: google_credentials-mirror-tv
+#    when:
+#      branch:
+#        - dev
+#        # - master
+#      event:
+#        - push
+
+#  - name: deployTVGraphQLDev
+#    pull: if-not-exists
+#    image: nytimes/drone-gke
+#    settings:
+#      cluster: tv-dev
+#      namespace: default
+#      vars:
+#        type: graphql
+#        app: ${DRONE_REPO_NAME}-graphql
+#        image: gcr.io/mirror-tv-275709/${DRONE_REPO_NAME}:${DRONE_BRANCH}_${DRONE_COMMIT_AUTHOR}_${DRONE_BUILD_NUMBER}_graphql
+#        tier: backend
+#      verbose: true
+#      zone: asia-east1-c
+#    environment:
+#      TOKEN:
+#        from_secret: google_credentials-mirror-tv
+#    when:
+#      branch:
+#        - dev
+#        # - master
+#      event:
+#        - push
+
+  - name: sendTVWebhookKeel
+    pull: if-not-exists
+    image: curlimages/curl:7.75.0
+    commands:
+      - curl --request POST
+        --data "{\"name\":\"gcr.io/mirror-tv-275709/${DRONE_REPO_NAME}\",\"tag\":\"${DRONE_BRANCH}_${DRONE_COMMIT_AUTHOR}_${DRONE_BUILD_NUMBER}_cms\"}"
+        https://keel-${DRONE_BRANCH}.mnews.tw/v1/webhooks/native
+      - curl --request POST
+        --data "{\"name\":\"gcr.io/mirror-tv-275709/${DRONE_REPO_NAME}\",\"tag\":\"${DRONE_BRANCH}_${DRONE_COMMIT_AUTHOR}_${DRONE_BUILD_NUMBER}_graphql\"}"
+        https://keel-${DRONE_BRANCH}.mnews.tw/v1/webhooks/native
+    when:
+      branch:
+        - dev
+        - stag
+      event:
+        - push
+
+#  - name: getDevConfig
+#    image: gcr.io/mirrormedia-1470651750304/drone-cloud-sdk:latest
+#    pull: if-not-exists
+#    commands:
+#      - gcloud source repos clone configs ./dockerignore/configs
+#      - cp ./dockerignore/configs/openwarehouse/dev/mirrormedia/config.js ./configs/config.js
+#      - cp ./dockerignore/configs/openwarehouse/dev/gcskeyfile.json ./configs/gcskeyfile.json
+#    environment:
+#      GOOGLE_CREDENTIALS:
+#        from_secret: google_credentials-mirrormedia
+#    when:
+#      branch:
+#        - dev
+#        - testgraphql
+#      event:
+#        - push
+#
+#  - name: buildThenPublish
+#    image: plugins/gcr
+#    pull: if-not-exists
+#    environment:
+#      DOCKER_LAUNCH_DEBUG: 'true'
+#      GOOGLE_CREDENTIALS:
+#        from_secret: google_credentials-mirrormedia
+#    settings:
+#      repo: mirrormedia-1470651750304/${DRONE_REPO_NAME}
+#      tag:
+#        - ${DRONE_BRANCH}_${DRONE_COMMIT_AUTHOR}_${DRONE_BUILD_NUMBER}
+#    when:
+#      branch:
+#        - dev
+#        - stag
+#        - master
+#        - testgraphql
+#      event:
+#        - push
+#
+#  - name: deployDev
+#    image: nytimes/drone-gke
+#    pull: if-not-exists
+#    environment:
+#      TOKEN:
+#        from_secret: google_credentials-mirrormedia
+#    settings:
+#      cluster: dev
+#      namespace: default
+#      vars:
+#        app: ${DRONE_REPO_NAME}
+#        image: gcr.io/mirrormedia-1470651750304/${DRONE_REPO_NAME}:${DRONE_BRANCH}_${DRONE_COMMIT_AUTHOR}_${DRONE_BUILD_NUMBER}
+#        tier: backend
+#        type: cms
+#      verbose: true
+#      zone: asia-east1-a
+#    when:
+#      branch:
+#        - dev
+#        - testgraphql
+#      event:
+#        - push
+
+  - name: rebuildCache
+    image: drillster/drone-volume-cache
+    pull: if-not-exists
+    settings:
+      mount:
+        - ./.yarn-cache
+        - ./node_modules
+      rebuild: true
+    volumes:
+      - name: vol-0
+        path: /cache
+    when:
+      branch:
+        - dev
+        - stag
+        - master
+        - testgraphql
+
+  - name: finishSlack
+    image: plugins/slack
+    pull: if-not-exists
+    environment:
+      SLACK_WEBHOOK:
+        from_secret: slack_webhook
+    settings:
+      channel: jenkins
+      icon_url: https://avatars2.githubusercontent.com/u/2181346?s=200&v=4
+      template: >
+        {{#success build.status}}
+          *success* ${DRONE_REPO_NAME}:${DRONE_BRANCH}_${DRONE_COMMIT_AUTHOR}_${DRONE_BUILD_NUMBER} was well served.
+          Check out our new <https://keystone-dev.mirrormedia.mg/admin|Cornerstone>.
+        {{else}}
+          Houston, we have a problem. Build <${DRONE_BUILD_LINK}|#{{build.number}}> failed.
+        {{/success}}
+      username: drone
+    when:
+      branch:
+        - dev
+        - stag
+        - master
+        - testgraphql
+      event:
+        - push
+      status:
+        - success
+        - failure
+
+volumes:
+  - name: vol-0
+    host:
+      path: /tmp/cache
+
+image_pull_secrets:
+  - gcr_docker_config-mirror-tv
