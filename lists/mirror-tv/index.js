@@ -21,4 +21,5 @@ module.exports = {
     ArtShow: require('./ArtShow'),
     Section: require('./Section'),
     Serie: require('./Serie'),
+    Sale: require('./Sale'),
 }
