@@ -18,7 +18,7 @@ const {
     allowRoles,
 } = require('../../helpers/access/mirror-tv')
 const ImageRelationship = require('../../fields/ImageRelationship')
-
+const HTML = require('../../fields/HTML')
 const cacheHint = require('../../helpers/cacheHint')
 
 module.exports = {
@@ -34,57 +34,28 @@ module.exports = {
             type: Text,
             isRequired: true,
         },
-        sections: {
+        heroImage: {
+            label: '首圖',
+            // type: Relationship,
+            type: ImageRelationship,
+            ref: 'Image',
+        },
+        introduction: {
+            label: '內文',
+            type: HTML,
+            // type: Text,
+        },
+        section: {
             label: '相關索引',
             type: Relationship,
-            ref: 'Section.show',
+            ref: 'Section.series',
             many: true,
         },
-        isArtShow: {
-            label: '藝文節目',
-            type: Checkbox,
-        },
-        bannerImg: {
-            label: 'banner',
-            type: ImageRelationship,
-            ref: 'Image',
-            many: false,
-            isRequired: true,
-        },
-        picture: {
-            label: '圖片',
-            type: ImageRelationship,
-            ref: 'Image',
-            many: false,
-        },
-        sortOrder: {
-            label: '排序順位',
-            type: Integer,
-            isUnique: true,
-        },
-
-        introduction: {
-            label: '簡介',
-            type: Text,
-            isMultiline: true,
-        },
-        hostName: {
-            label: '主持人姓名',
+        post: {
+            label: '相關藝文節目',
             type: Relationship,
-            ref: 'Contact',
+            ref: 'ArtShow.series',
             many: true,
-        },
-        facebookUrl: {
-            label: 'facebook 粉專連結',
-            type: Url,
-        },
-        playList01: {
-            label: 'Youtube播放清單1',
-            type: Url,
-        },
-        playList02: {
-            label: 'Youtube播放清單2',
-            type: Url,
         },
     },
     plugins: [atTracking(), byTracking()],
@@ -94,12 +65,10 @@ module.exports = {
         delete: allowRoles(admin),
     },
     hooks: {
-        beforeChange: async ({ existingItem, resolvedData }) => {
-            console.log(resolvedData.introduction)
-        },
+        beforeChange: async ({ existingItem, resolvedData }) => {},
     },
     adminConfig: {
-        defaultColumns: 'sortOrder, updatedAt',
+        defaultColumns: 'name, slug, updatedAt',
         defaultSort: '-updatedAt',
     },
     labelField: 'name',

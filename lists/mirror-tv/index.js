@@ -18,4 +18,7 @@ module.exports = {
     VideoEditorChoice: require('./VideoEditorChoice'),
     EditLog: require('./EditLog'),
     PromotionVideo: require('./PromotionVideo'),
+    ArtShow: require('./ArtShow'),
+    Section: require('./Section'),
+    Serie: require('./Serie'),
 }
