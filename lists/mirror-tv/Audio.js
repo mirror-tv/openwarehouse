@@ -1,4 +1,4 @@
-const { Text, Relationship, File, Url, Integer } = require('@keystonejs/fields')
+const { Text, Relationship, File, Url,Integer } = require('@keystonejs/fields')
 const { atTracking, byTracking } = require('@keystonejs/list-plugins')
 const { GCSAdapter } = require('../../lib/GCSAdapter')
 const {

@@ -258,8 +258,8 @@ module.exports = {
             },
         },
     },
-    // plugins: [logging((args) => emitEditLog(args)), atTracking(), byTracking()],
-    plugins: [atTracking(), byTracking()],
+    plugins: [logging((args) => emitEditLog(args)), atTracking(), byTracking()],
+    // plugins: [atTracking(), byTracking()],
     // access: {
     //     update: allowRoles(admin, moderator, editor, owner),
     //     create: allowRoles(admin, bot, moderator, editor, contributor),
