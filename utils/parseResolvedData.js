@@ -23,23 +23,28 @@ const parseResolvedData = (existingItem, resolvedData) => {
     // get every draft field's storedEditorContent
     let fieldsArray = _generateDraftFieldsArray()
     try {
-        /* 
-        because we use A.content || B.content below
-        (content can be undefined, but A,B can't)
-        so need to make sure A,B is NOT undefined
-         */
-        const existingItemRef = existingItem ? existingItem : resolvedData
+        // only modified draft is needed to parse
+        // push the wanted draft field to storedEditorContentsArray
+        const storedEditorContentsArray = []
+        for (let i = 0; i < fieldsArray.length; i++) {
+            const key = fieldsArray[i]
+            if (_isFeedDataFromGraphQL(resolvedData, key)) continue
+
+            if (resolvedData[key]) {
+                const waitingForParseObj = {
+                    field: key,
+                    editorContent: resolvedData[key],
+                }
+                storedEditorContentsArray.push(waitingForParseObj)
+            }
+        }
 
         // [summary(obj), brief(obj), content(obj)]
-        const storedEditorContentsArray = fieldsArray.map((field) => {
-            return resolvedData[field] || existingItemRef[field]
-        })
-
-        storedEditorContentsArray.forEach((editorContent, index) => {
+        storedEditorContentsArray.forEach(({ field, editorContent }) => {
             let currentEditorContentValve = _getEditorContentValue(
                 editorContent
             )
-            _feedFieldValueToResolvedData(index, currentEditorContentValve)
+            _feedFieldValueToResolvedData(field, currentEditorContentValve)
         })
     } catch (err) {
         console.log(err)
@@ -62,21 +67,17 @@ const parseResolvedData = (existingItem, resolvedData) => {
         }
     }
 
-    function _feedFieldValueToResolvedData(
-        currentFieldIndex,
-        currentEditorContent
-    ) {
+    function _feedFieldValueToResolvedData(currentField, currentEditorContent) {
         // storedEditorContent is formated to 3 part:
         // draftState itself, contentHTML, and contentApidata
         // destructure them and put it into resolvedData's key
-        const { html, apiData } = currentEditorContent
+        const { draft, html, apiData } = currentEditorContent
 
         // ex:brief
         // resolvedData.brief = currentEditorContent
         // resolvedData.briefHtml = html
         // resolvedData.cbriefApiData = JSON.stringify(apiData)
-        const currentField = fieldsArray[currentFieldIndex]
-        resolvedData[`${currentField}`] = JSON.stringify(currentEditorContent)
+        resolvedData[`${currentField}`] = JSON.stringify(draft)
         resolvedData[`${currentField}Html`] = html
         resolvedData[`${currentField}ApiData`] = JSON.stringify(apiData)
     }
@@ -94,6 +95,24 @@ const parseResolvedData = (existingItem, resolvedData) => {
 
             default:
                 return ['brief', 'content']
+        }
+    }
+
+    function _isFeedDataFromGraphQL(resolvedData, key) {
+        // ex:
+        // if content, contentApiData and contentHtml are existed together in resolvedData
+        // means the data is come from graphQL
+        // then no need to parse
+        if (
+            resolvedData[key] &&
+            resolvedData[`${key}ApiData`] &&
+            resolvedData[`${key}Html`]
+        ) {
+            console.log('data is from gql')
+            return true
+        } else {
+            console.log('data is from cms')
+            return false
         }
     }
 }

@@ -23,8 +23,8 @@ const TextHideField = (props) => {
     )
 
     const showField = () => {
-        return { display: 'none' }
-        // return { display: 'block' }
+        // return { display: 'none' }
+        return { display: 'block' }
     }
 
     const inputStyle = {
@@ -52,7 +52,7 @@ const TextHideField = (props) => {
                     placeholder={canRead ? undefined : error.message}
                     onChange={handleChange}
                     id={htmlID}
-                    isMultiline={isMultiline}
+                    ismultiline={isMultiline}
                     disabled={isDisabled}
                 />
             </FieldInput>

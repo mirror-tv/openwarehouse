@@ -5,8 +5,9 @@ export function convertDbDataToEditorState(data) {
     // convert saved editor content into the editor state
     let editorState
     try {
-        const { draft, html } = data
-        if (draft && html !== '') {
+        const draft = handleDraftData(data)
+
+        if (draft) {
             // create an EditorState from the raw Draft data
             let contentState = convertFromRaw(draft)
             editorState = EditorState.createWithContent(contentState)
@@ -31,5 +32,15 @@ export function convertEditorStateToDbData(editorState) {
         draft: content,
         html: cHtml,
         apiData,
+    }
+    // return content
+}
+
+function handleDraftData(data) {
+    if (data['draft']) {
+        return data.draft
+        // for new post, data = draft
+    } else {
+        return data
     }
 }

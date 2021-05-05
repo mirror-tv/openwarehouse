@@ -24,7 +24,6 @@ const emitEditLog = async (arg) => {
             // const { data, errors, extensions } = result;
             // GraphQL errors and extensions are optional
             console.log('===Editlog emitted===\n')
-            console.log(result)
         })
         .catch((error) => {
             // respond to a network error
@@ -91,9 +90,8 @@ function removeUnusedKey(editData) {
 
 function generateVariablesForGql(operation, arg, postId, editedData) {
     const fieldsArray = ['summary', 'brief', 'content']
-
     let variables = {
-        name: arg.authedItem.name,
+        name: arg.authedItem ? arg.authedItem.name : 'graphQL',
         operation: operation,
         postId: postId,
     }

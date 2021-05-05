@@ -13,18 +13,10 @@ function DraftEditor(props) {
 
     const onEditorStateChange = (newEditorState) => {
         setEditorState(newEditorState)
-        // onChange(newEditorState)
-        // console.log(setEditorState)
+        onChange(newEditorState)
     }
 
-    return (
-        <Editor
-            editorState={editorState}
-            onChange={onEditorStateChange}
-            placeholder="Enter HTML Here..."
-        />
-        // <input type="text" />
-    )
+    return <Editor editorState={editorState} onChange={onEditorStateChange} />
 }
 
 export default DraftEditor

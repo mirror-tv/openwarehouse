@@ -16,7 +16,6 @@ function getUrlImageDimentions(url) {
             let result = await probe(url, { rejectUnauthorized: false })
             resolve({ width: result.width, height: result.height })
         } catch (err) {
-            resolve({ width: 0, height: 0 })
             reject(err)
         }
     })
