@@ -1,6 +1,6 @@
 const { Text, Relationship, File, Url, Integer } = require('@keystonejs/fields')
 const { atTracking, byTracking } = require('@keystonejs/list-plugins')
-const { GCSAdapter } = require('../../lib/GCSAdapter')
+const { DocumentAdapter } = require('../../lib/DocumentAdapter')
 const {
     admin,
     moderator,
@@ -8,9 +8,9 @@ const {
     allowRoles,
 } = require('../../helpers/access/mirror-tv')
 const cacheHint = require('../../helpers/cacheHint')
+const { deleteOldFileInGCS } = require('../../utils/gcsHandler')
 
-const gcsDir = 'assets/documents/'
-const fileAdapter = new GCSAdapter(gcsDir)
+const fileAdapter = new DocumentAdapter()
 
 module.exports = {
     fields: {
@@ -36,7 +36,19 @@ module.exports = {
         delete: allowRoles(admin),
     },
     hooks: {
-        beforeChange: async ({ existingItem, resolvedData }) => {},
+        resolveInput: ({ resolvedData }) => {
+            if (resolvedData.file) {
+                resolvedData.pdfUrl = resolvedData.file._meta.url
+            }
+            return resolvedData
+        },
+        afterDelete: async ({ existingItem }) => {
+            try {
+                deleteOldFileInGCS(existingItem, fileAdapter)
+            } catch (err) {
+                console.log(err)
+            }
+        },
     },
     adminConfig: {
         // defaultColumns: 'schedule, time, updatedAt',
