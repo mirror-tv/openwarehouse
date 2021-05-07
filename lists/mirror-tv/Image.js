@@ -18,7 +18,7 @@ const {
     allowRoles,
 } = require('../../helpers/access/mirror-tv')
 const cacheHint = require('../../helpers/cacheHint')
-const gcsDir = 'assets/images/'
+const mediaUrlBase = 'assets/images/'
 const { addWatermarkIfNeeded } = require('../../utils/watermarkHandler')
 const {
     getNewFilename,
@@ -139,6 +139,7 @@ module.exports = {
                     )
                     // upload image to gcs,and generate corespond meta data(url )
                     const image_adapter = new ImageAdapter(
+                        mediaUrlBase,
                         originalFileName,
                         newFileName,
                         id
@@ -195,7 +196,7 @@ module.exports = {
         },
         // When delete image, delete image in gcs as well
         beforeDelete: async ({ existingItem }) => {
-            const image_adapter = new ImageAdapter(gcsDir)
+            const image_adapter = new ImageAdapter(mediaUrlBase)
 
             if (existingItem && typeof existingItem.file !== 'undefined') {
                 await image_adapter.delete(

@@ -1,4 +1,4 @@
-const { Text, Relationship, File, Url,Integer } = require('@keystonejs/fields')
+const { Text, Relationship, File, Url, Integer } = require('@keystonejs/fields')
 const { atTracking, byTracking } = require('@keystonejs/list-plugins')
 const { GCSAdapter } = require('../../lib/GCSAdapter')
 const {
@@ -9,8 +9,8 @@ const {
 } = require('../../helpers/access/mirror-tv')
 const cacheHint = require('../../helpers/cacheHint')
 
-const gcsDir = 'assets/audios/'
-const fileAdapter = new GCSAdapter(gcsDir)
+const mediaUrlBase = 'assets/audios/'
+const fileAdapter = new GCSAdapter(mediaUrlBase)
 
 module.exports = {
     fields: {

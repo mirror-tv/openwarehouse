@@ -5,7 +5,7 @@ const {
     Relationship,
     File,
     Url,
-    Integer
+    Integer,
 } = require('@keystonejs/fields')
 const NewDateTime = require('../../fields/NewDateTime/index.js')
 
@@ -22,8 +22,8 @@ const {
 } = require('../../helpers/access/mirror-tv')
 const cacheHint = require('../../helpers/cacheHint')
 
-const gcsDir = 'assets/videos/'
-const fileAdapter = new GCSAdapter(gcsDir)
+const mediaUrlBase = 'assets/videos/'
+const fileAdapter = new GCSAdapter(mediaUrlBase)
 
 const {
     getNewFilename,
