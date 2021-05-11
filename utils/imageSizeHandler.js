@@ -2,6 +2,7 @@ const probe = require('probe-image-size')
 const sharp = require('sharp')
 const fs = require('fs')
 const { ImageAdapter } = require('../lib/ImageAdapter')
+const Jimp = require('jimp')
 
 const resizeTarget = {
     desktop: { width: 1268, height: 713 },
@@ -18,31 +19,6 @@ function getUrlImageDimentions(url) {
         } catch (err) {
             reject(err)
         }
-    })
-}
-
-function getOriginalImageDimentionInLocal(originalFileName) {
-    const stream = fs.createReadStream(`./public/images/${originalFileName}`)
-
-    return new Promise((resolve, reject) => {
-        const metaReader = sharp()
-        metaReader
-            .metadata()
-            .then((info) => {
-                resolve({
-                    width: info.width,
-                    height: info.height,
-                })
-            })
-            .catch((err) => {
-                console.log('err', err)
-                reject({
-                    width: 'unknown',
-                    height: 'unknown',
-                })
-            })
-
-        stream.pipe(metaReader)
     })
 }
 
@@ -67,6 +43,5 @@ function generateImageApiDataFromExistingItem(existingItem) {
 
 module.exports = {
     getUrlImageDimentions,
-    getOriginalImageDimentionInLocal,
     generateImageApiDataFromExistingItem,
 }

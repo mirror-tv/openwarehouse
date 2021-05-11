@@ -19,7 +19,6 @@ const {
     allowRoles,
 } = require('../../helpers/access/mirror-tv')
 const cacheHint = require('../../helpers/cacheHint')
-const mediaUrlBase = 'assets/images/'
 const { addWatermarkIfNeeded } = require('../../utils/watermarkHandler')
 const {
     getNewFilename,
@@ -28,10 +27,11 @@ const {
 const {
     generateImageApiDataFromExistingItem,
 } = require('../../utils/imageSizeHandler')
+
 const {
     storage: { gcpUrlBase },
 } = require('../../configs/config')
-
+const mediaUrlBase = 'assets/images/'
 const fileAdapter = new LocalFileAdapter({
     src: './public/images',
     path: `${gcpUrlBase}assets/images`, //function({id, }){}
@@ -132,9 +132,9 @@ module.exports = {
 
         beforeChange: async ({ existingItem, resolvedData }) => {
             try {
+                // resolvedData = true
+                // when create or update newer image
                 if (typeof resolvedData.file !== 'undefined') {
-                    // resolvedData = true
-                    // when create or update newer image
                     await addWatermarkIfNeeded(resolvedData, existingItem)
 
                     const { id, newFileName, originalFileName } = getFileDetail(
@@ -153,13 +153,12 @@ module.exports = {
                     // update image
                     // need to delete old image in gcs
                     if (typeof existingItem !== 'undefined') {
-                        console.log('---update image---')
-
+                        // console.log('---update image---')
                         await image_adapter.delete(
                             existingItem.file.id,
                             existingItem.file.originalFilename
                         )
-                        console.log('deleted old one')
+                        // console.log('deleted old one')
                     }
 
                     // import each url into resolvedData
@@ -182,19 +181,19 @@ module.exports = {
 
                     // if there's no image api data, fetch it
                     if (!existingItem.imageApiData) {
-                        const id = existingItem.id
-                        const image_adapter = new ImageAdapter(id)
-
-                        const apiData = await image_adapter.generateNewImageApiData(
-                            existingItem
-                        )
-                        resolvedData.imageApiData = apiData
+                        // (Todo)
+                        // const id = existingItem.id
+                        // const image_adapter = new ImageAdapter(mediaUrlBase)
+                        // const apiData = await image_adapter.generateNewImageApiData(
+                        //     existingItem
+                        // )
+                        // resolvedData.imageApiData = apiData
                     }
                 }
 
                 return { existingItem, resolvedData }
             } catch (err) {
-                console.log(`error in hook: `, err.message)
+                console.log(`error in hook: `, err)
             }
         },
         // When delete image, delete image in gcs as well
