@@ -13,6 +13,7 @@ const TextHide = require('../../fields/TextHide')
 const fs = require('fs')
 const {
     admin,
+    bot,
     moderator,
     editor,
     allowRoles,
@@ -117,7 +118,7 @@ module.exports = {
     plugins: [atTracking(), byTracking()],
     access: {
         update: allowRoles(admin, moderator, editor),
-        create: allowRoles(admin, moderator, editor),
+        create: allowRoles(admin, bot, moderator, editor),
         delete: allowRoles(admin),
     },
     adminConfig: {
