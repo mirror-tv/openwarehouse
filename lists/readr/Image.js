@@ -17,10 +17,13 @@ const {
     getFileDetail,
 } = require('../../utils/fileDetailHandler')
 
+const {
+    storage: { gcpUrlBase },
+} = require('../../configs/config')
+
 const fileAdapter = new LocalFileAdapter({
     src: './public/images',
-    path: 'https://storage.googleapis.com/static-readr-tw-dev/assets/images', //function({id, }){}
-    // path: 'https://www.readr.tw/assets/images', //function({id, }){}
+    path: `${gcpUrlBase}assets/images`, //function({id, }){}
 })
 
 module.exports = {
