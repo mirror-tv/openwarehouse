@@ -14,9 +14,9 @@ const getNewFilename = (data) => {
 
 function getFileDetail(resolvedData) {
     const originalFileName = resolvedData.file.filename //image's name format: id-orgName.ext
-    const newFileName = getNewFilename(resolvedData)
+    const newFilename = getNewFilename(resolvedData)
     const id = resolvedData.file.id
-    return { id, newFileName, originalFileName }
+    return { id, newFilename, originalFileName }
 }
 
 module.exports = { getNewFilename, getFileDetail }

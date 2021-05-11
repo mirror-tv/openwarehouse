@@ -139,13 +139,13 @@ module.exports = {
                     // when create or update newer image
                     await addWatermarkIfNeeded(resolvedData, existingItem)
 
-                    const { id, newFileName, originalFileName } = getFileDetail(
+                    const { id, newFilename, originalFileName } = getFileDetail(
                         resolvedData
                     )
                     // upload image to gcs,and generate corespond meta data(url )
                     const image_adapter = new ImageAdapter(
                         originalFileName,
-                        newFileName,
+                        newFilename,
                         id
                     )
                     let _meta = await image_adapter.sync_save()
