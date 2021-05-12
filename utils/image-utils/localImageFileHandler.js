@@ -40,15 +40,11 @@ function saveVariousSizeImageToLocal(newFilename, apiData) {
                 )
                 // if original image is smaller than resize frame,
                 // then no need to resize, just save it to local
-                if (width < frameWidth && height < frameHeight) {
+                if (width < frameWidth) {
                     await saveImageToLocal(image, resized_filename)
                 } else {
                     // resize image with desired resize method
-                    await image.resize(
-                        frameWidth,
-                        frameHeight,
-                        Jimp.RESIZE_NEAREST_NEIGHBOR
-                    )
+                    await image.resize(frameWidth, Jimp.AUTO)
 
                     // dont forget to save resized image's dimention to apiData
                     feedDimentionToApiData(resizeKey, image, apiData)

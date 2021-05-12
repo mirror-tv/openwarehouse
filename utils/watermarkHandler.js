@@ -58,7 +58,7 @@ function getWatermarkOpacity(currentCmsName) {
             return 1
 
         case 'mirormedia':
-            return 0.5
+            return 0.9
     }
 }
 
