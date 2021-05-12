@@ -14,6 +14,7 @@ const resizeTarget = {
 function generateImageApiData(imageNameList, apiData) {
     return new Promise((resolve, reject) => {
         try {
+            console.log('current webUrlBase: ' + webUrlBase)
             imageNameList.forEach((imageName) => {
                 createUrlToApiData(imageName, apiData)
             })
@@ -40,7 +41,6 @@ function generateImageNameListArray(newFilename) {
 
 function createUrlToApiData(filename, apiData) {
     const { resizeKey } = generateFileNameSeperation(filename)
-
     if (resizeKey) {
         switch (resizeKey) {
             case 'tiny':
