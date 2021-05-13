@@ -45,13 +45,12 @@ function saveVariousSizeImageToLocal(newFilename, apiData) {
                 } else {
                     // resize image with desired resize method
                     await image.resize(frameWidth, Jimp.AUTO)
-
-                    // dont forget to save resized image's dimention to apiData
-                    feedDimentionToApiData(resizeKey, image, apiData)
-
-                    // then save it to local
-                    await saveImageToLocal(image, resized_filename)
                 }
+                // dont forget to save resized image's dimention to apiData
+                feedDimentionToApiData(resizeKey, image, apiData)
+
+                // then save it to local
+                await saveImageToLocal(image, resized_filename)
             }
             resolve()
         } catch (err) {
