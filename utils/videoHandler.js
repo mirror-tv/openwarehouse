@@ -1,7 +1,4 @@
 const { getNewFilename, getFileDetail } = require('./fileDetailHandler')
-const {
-    returnExistedKeyValueBetweenObjects,
-} = require('./returnExistedKeyValueBetweenObjects')
 
 const feedNewVideoData = (resolvedData) => {
     return new Promise((resolve, reject) => {
@@ -18,8 +15,14 @@ const feedNewVideoData = (resolvedData) => {
     })
 }
 
-const deleteOldVideoFileInGCS = async (existingItem, fileAdapter) => {
-    if (existingItem.file) {
+const deleteOldVideoFileInGCSIfNeeded = async (
+    existingItem,
+    resolvedData,
+    fileAdapter
+) => {
+    if (existingItem && existingItem.file) {
+        resolvedData.file = null
+
         await fileAdapter.delete(
             existingItem.file.id,
             existingItem.file.originalFilename
@@ -27,48 +30,44 @@ const deleteOldVideoFileInGCS = async (existingItem, fileAdapter) => {
     }
 }
 
-const validateWhichUrlShouldCMSChoose = async (
+const validateWhichKeyShouldCMSChoose = (
     existingItem,
     resolvedData,
     addValidationError
 ) => {
-    const youtubeUrl = returnExistedKeyValueBetweenObjects(
-        'youtubeUrl',
-        resolvedData,
-        existingItem
-    )
-    const file = returnExistedKeyValueBetweenObjects(
-        'file',
-        resolvedData,
-        existingItem
-    )
+    const { youtubeUrl, file } = resolvedData
+    const { youtubeUrl: oldYoutubeUrl, file: oldFile } = existingItem
 
-    if (youtubeUrl && file) {
+    if (
+        (youtubeUrl && file) ||
+        (file && oldYoutubeUrl) ||
+        (youtubeUrl && oldFile)
+    ) {
+        // if has both, or conflict with prev data's video type
         addValidationError(
             '「Youtube網址」與「檔案」只能選擇一個作為影片來源，清除其中一個'
         )
+        return false
     }
 
-    if (!youtubeUrl && !file) {
+    if (youtubeUrl) {
+        return 'youtubeUrl'
+    } else if (file) {
+        return 'file'
+    } else if (existingItem && (oldYoutubeUrl || oldFile)) {
+        return 'no-need-to-update'
+    } else {
         addValidationError(
             '沒有影片來源，請在「Youtube網址」與「檔案」兩者中選擇一個作為影片來源'
         )
+        return false
     }
 }
 
-const assignYoutubeUrl = (existingItem, resolvedData) => {
-    const youtubeUrl = returnExistedKeyValueBetweenObjects(
-        'youtubeUrl',
-        resolvedData,
-        existingItem
-    )
-
-    return youtubeUrl
-}
+const validateIfConflictWithStoredData = () => {}
 
 module.exports = {
-    deleteOldVideoFileInGCS,
+    deleteOldVideoFileInGCSIfNeeded,
     feedNewVideoData,
-    validateWhichUrlShouldCMSChoose,
-    assignYoutubeUrl,
+    validateWhichKeyShouldCMSChoose,
 }

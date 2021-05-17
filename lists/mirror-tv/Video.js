@@ -30,10 +30,9 @@ const {
     getFileDetail,
 } = require('../../utils/fileDetailHandler')
 const {
-    deleteOldVideoFileInGCS,
+    deleteOldVideoFileInGCSIfNeeded,
     feedNewVideoData,
-    validateWhichUrlShouldCMSChoose,
-    assignYoutubeUrl,
+    validateWhichKeyShouldCMSChoose,
 } = require('../../utils/videoHandler')
 
 module.exports = {
@@ -136,43 +135,64 @@ module.exports = {
         defaultSort: '-createdAt',
     },
     hooks: {
-        resolveInput: async ({
-            operation,
-            existingItem,
-            resolvedData,
-            originalInput,
-        }) => {
-            const { file } = resolvedData
-
-            if (typeof file === 'undefined') {
-                // no update file,means now video is youtube
-                // set url to youtubeUrl
-                resolvedData.url = assignYoutubeUrl(existingItem, resolvedData)
-            } else if (file === null) {
-                //  selected file is set to cleared
-                // need to remove file in gcs
-                deleteOldVideoFileInGCS(existingItem, fileAdapter)
-            } else {
-                // update new file
-                await feedNewVideoData(resolvedData)
-                deleteOldVideoFileInGCS(existingItem, fileAdapter)
-            }
-
-            return resolvedData
-        },
         validateInput: async ({
             existingItem,
             resolvedData,
             addValidationError,
         }) => {
-            validateWhichUrlShouldCMSChoose(
+            const keyToUse = validateWhichKeyShouldCMSChoose(
                 existingItem,
                 resolvedData,
                 addValidationError
             )
+            if (!keyToUse) return
+
+            switch (keyToUse) {
+                case 'youtubeUrl':
+                    // video is from youtube
+                    resolvedData.url = resolvedData.youtubeUrl
+
+                    deleteOldVideoFileInGCSIfNeeded(
+                        existingItem,
+                        resolvedData,
+                        fileAdapter
+                    )
+                    break
+
+                case 'file':
+                    // video is from file
+                    if (existingItem) {
+                        resolvedData.youtubeUrl = null
+                    }
+
+                    await feedNewVideoData(resolvedData)
+
+                    deleteOldVideoFileInGCSIfNeeded(
+                        existingItem,
+                        resolvedData,
+                        fileAdapter
+                    )
+                    break
+                case 'no-need-to-update':
+                    break
+
+                default:
+                    break
+            }
+        },
+        beforeChange: async ({
+            existingItem,
+            resolvedData,
+            addValidationError,
+        }) => {
+            // validateWhichKeyShouldCMSChoose(
+            //     existingItem,
+            //     resolvedData,
+            //     addValidationError
+            // )
         },
         afterDelete: async ({ existingItem }) => {
-            deleteOldVideoFileInGCS(existingItem, fileAdapter)
+            deleteOldVideoFileInGCSIfNeeded(existingItem, fileAdapter)
         },
     },
     labelField: 'name',
