@@ -30,20 +30,33 @@ const deleteOldVideoFileInGCSIfNeeded = async (
     }
 }
 
+const deleteVideoFileInGCS = async (existingItem, fileAdapter) => {
+    if (existingItem && existingItem.file) {
+        await fileAdapter.delete(
+            existingItem.file.id,
+            existingItem.file.originalFilename
+        )
+    }
+}
+
 const validateWhichKeyShouldCMSChoose = (
     existingItem,
     resolvedData,
-    addValidationError
+    addValidationError,
+    fileAdapter
 ) => {
     const { youtubeUrl, file } = resolvedData
-    const { youtubeUrl: oldYoutubeUrl, file: oldFile } = existingItem
+    const { youtubeUrl: oldYoutubeUrl, file: oldFile } = existingItem || {}
 
     if (
-        (youtubeUrl && file) ||
-        (file && oldYoutubeUrl) ||
-        (youtubeUrl && oldFile)
+        youtubeUrl &&
+        file
+        // (file && oldYoutubeUrl) ||
+        // (youtubeUrl && oldFile)
     ) {
         // if has both, or conflict with prev data's video type
+        // if validation fail, need to clear uploaded video in gcs
+        deleteVideoFileInGCS(resolvedData, fileAdapter)
         addValidationError(
             '「Youtube網址」與「檔案」只能選擇一個作為影片來源，清除其中一個'
         )

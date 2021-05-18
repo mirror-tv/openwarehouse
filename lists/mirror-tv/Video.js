@@ -143,7 +143,8 @@ module.exports = {
             const keyToUse = validateWhichKeyShouldCMSChoose(
                 existingItem,
                 resolvedData,
-                addValidationError
+                addValidationError,
+                fileAdapter
             )
             if (!keyToUse) return
 
@@ -161,8 +162,11 @@ module.exports = {
 
                 case 'file':
                     // video is from file
+
+                    // if it has prev data,
+                    // no matter what, clear youtubeUrl
                     if (existingItem) {
-                        resolvedData.youtubeUrl = null
+                        resolvedData.youtubeUrl = ''
                     }
 
                     await feedNewVideoData(resolvedData)
