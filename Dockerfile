@@ -17,6 +17,9 @@ RUN yarn install
 RUN yarn build && yarn cache clean
 RUN yarn migrate
 
+# remove any dummy configs from build time
+RUN rm -rf configs
+
 # Runtime container
 FROM node:${NODE_VERSION}-alpine
 RUN apk add imagemagick graphicsmagick ffmpeg
