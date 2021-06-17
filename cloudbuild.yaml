@@ -4,17 +4,17 @@ steps:
       - source
       - repos
       - clone
-      - helm
-      - ./dockerignore/helm
+      - github_nickhsine_kubernetes_configs
+      - ./dockerignore/configs
   - name: bash
     args:
       - cp
-      - ./dockerignore/helm/cms/configs/dev/config.js
+      - ./dockerignore/configs/openwarehouse/overlays/dev/overlays/tv/overlays/cms/configs/config.js
       - ./configs/config.js
   - name: bash
     args:
       - cp
-      - ./dockerignore/helm/cms/configs/dev/gcskeyfile.json
+      - ./dockerignore/configs/openwarehouse/base/configs/gcskeyfile.json
       - ./configs/gcskeyfile.json
   - name: gcr.io/cloud-builders/docker
     args:
