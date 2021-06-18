@@ -1,7 +1,12 @@
-const { Text, Relationship, File ,Integer} = require('@keystonejs/fields')
+const { Text, Relationship, File, Integer } = require('@keystonejs/fields')
 const { atTracking, byTracking } = require('@keystonejs/list-plugins')
 const { GCSAdapter } = require('../../lib/GCSAdapter')
-const { admin, moderator, editor, allowRoles } = require('../../helpers/access/mirrormedia')
+const {
+    admin,
+    moderator,
+    editor,
+    allowRoles,
+} = require('../../helpers/access/mirrormedia')
 const gcsDir = 'assets/audios/'
 
 const fileAdapter = new GCSAdapter(gcsDir)
@@ -32,25 +37,22 @@ module.exports = {
         meta: {
             label: '中繼資料',
             type: Text,
-            access: {
-                create: false,
-                update: false,
+            adminConfig: {
+                isReadOnly: true,
             },
         },
         url: {
             label: '檔案網址',
             type: Text,
-            access: {
-                create: false,
-                update: false,
+            adminConfig: {
+                isReadOnly: true,
             },
         },
         duration: {
             label: '音檔長度（秒）',
             type: Integer,
-            access: {
-                create: false,
-                update: false,
+            adminConfig: {
+                isReadOnly: true,
             },
         },
     },
