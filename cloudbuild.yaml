@@ -40,7 +40,7 @@ steps:
         # mv kubernetes-configs folder
         mv ./dockerignore/kubernetes-configs /workspace/kubernetes-configs
 
-        # cd to dev environment kustimzation root
+        # cd to (dev|staging) environment kustimzation root
         cd /workspace/kubernetes-configs/openwarehouse/overlays/${BRANCH_NAME}/base
 
         # update docker image
