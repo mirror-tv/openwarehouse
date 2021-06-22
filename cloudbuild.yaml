@@ -4,7 +4,7 @@ steps:
       - source
       - repos
       - clone
-      - github_nickhsine_kubernetes-configs
+      - github_mirror-media_kubernetes-configs
       - ./dockerignore/kubernetes-configs
   - name: bash
     args:
