@@ -10,7 +10,8 @@ const {
 const cacheHint = require('../../helpers/cacheHint')
 const { deleteOldFileInGCS } = require('../../utils/gcsHandler')
 
-const fileAdapter = new DocumentAdapter()
+const mediaUrlBase = 'assets/documents/'
+const fileAdapter = new DocumentAdapter(mediaUrlBase)
 
 module.exports = {
     fields: {
@@ -27,6 +28,9 @@ module.exports = {
         pdfUrl: {
             label: 'PDF網址',
             type: Text,
+            adminConfig: {
+                isReadOnly: true,
+            },
         },
     },
     plugins: [atTracking(), byTracking()],

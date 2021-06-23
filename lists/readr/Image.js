@@ -58,37 +58,32 @@ module.exports = {
         },
         urlOriginal: {
             type: Url,
-            access: {
-                create: false,
-                update: false,
+            adminConfig: {
+                isReadOnly: true,
             },
         },
         urlDesktopSized: {
             type: Url,
-            access: {
-                create: false,
-                update: false,
+            adminConfig: {
+                isReadOnly: true,
             },
         },
         urlMobileSized: {
             type: Url,
-            access: {
-                create: false,
-                update: false,
+            adminConfig: {
+                isReadOnly: true,
             },
         },
         urlTabletSized: {
             type: Url,
-            access: {
-                create: false,
-                update: false,
+            adminConfig: {
+                isReadOnly: true,
             },
         },
         urlTinySized: {
             type: Url,
-            access: {
-                create: false,
-                update: false,
+            adminConfig: {
+                isReadOnly: true,
             },
         },
     },

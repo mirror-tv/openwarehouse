@@ -90,25 +90,22 @@ module.exports = {
         meta: {
             label: '中繼資料',
             type: Text,
-            access: {
-                create: false,
-                update: false,
+            adminConfig: {
+                isReadOnly: true,
             },
         },
         url: {
             label: '檔案網址',
             type: Url,
-            access: {
-                create: false,
-                update: false,
+            adminConfig: {
+                isReadOnly: true,
             },
         },
         duration: {
             label: '影片長度（秒）',
             type: Text,
-            access: {
-                create: false,
-                update: false,
+            adminConfig: {
+                isReadOnly: true,
             },
         },
     },
