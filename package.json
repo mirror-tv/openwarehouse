@@ -50,6 +50,7 @@
         "moment": "^2.29.1",
         "probe-image-size": "^7.0.1",
         "purejswatermark": "^0.0.7",
+        "react": "^17.0.2",
         "react-datetime": "^3.0.4",
         "redis": "^3.0.2",
         "sharp": "^0.27.0",
