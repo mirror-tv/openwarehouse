@@ -1,7 +1,7 @@
 // Modified from https://github.com/dburrows/draft-js-basic-html-editor/blob/master/src/utils/processInlineStylesAndEntities.js
 
 import _ from 'lodash'
-import ENTITY from './entities'
+import ENTITY_LIST from './entities'
 
 function _fullfilIntersection(block) {
     // SORT BEFORE PROCESSING
@@ -163,7 +163,7 @@ function _entityTag(entityTagMap, entityMap, entityRanges, tagInsertMap = {}) {
         let data = entity.data
 
         // special case
-        if (type === ENTITY.ANNOTATION.type) {
+        if (type === ENTITY_LIST.ANNOTATION.type) {
             data = _.pick(data, 'text', 'annotation', 'pureAnnotationText')
         }
 
@@ -206,7 +206,6 @@ function convertToHtml(inlineTagMap, entityTagMap, entityMap, block) {
         block.entityRanges,
         tagInsertMap
     )
-
     tagInsertMap = _inlineTag(inlineTagMap, inlineStyleRanges, tagInsertMap)
 
     // sort on position, as we'll need to keep track of offset
