@@ -31,6 +31,8 @@ const {
 } = require('../../utils/publishTimeHandler')
 const { publishStateExaminer } = require('../../utils/publishStateExaminer')
 
+const { blockFieldToAnonymous } = require('../../helpers/blockFieldToAnonymous')
+
 module.exports = {
     fields: {
         slug: {
@@ -261,6 +263,10 @@ module.exports = {
     plugins: [logging((args) => emitEditLog(args)), atTracking(), byTracking()],
     plugins: [atTracking(), byTracking()],
     access: {
+        read: blockFieldToAnonymous({
+            gateFieldName: 'state',
+            fieldPassValue: ['published', 'invisible'],
+        }),
         update: allowRoles(admin, bot, moderator, editor, owner),
         create: allowRoles(admin, bot, moderator, editor, contributor),
         delete: allowRoles(admin),
@@ -310,7 +316,7 @@ module.exports = {
                 addValidationError
             )
         },
-        beforeChange: async ({ existingItem, resolvedData }) => { },
+        beforeChange: async ({ existingItem, resolvedData }) => {},
     },
     adminConfig: {
         defaultColumns:

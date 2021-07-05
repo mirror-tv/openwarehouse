@@ -9,8 +9,8 @@ const {
     moderator,
     owner,
 } = require('../../helpers/access/mirror-tv')
-const HTML = require('../../fields/HTML')
 const cacheHint = require('../../helpers/cacheHint')
+const { blockFieldToAnonymous } = require('../../helpers/blockFieldToAnonymous')
 
 module.exports = {
     fields: {
@@ -33,6 +33,10 @@ module.exports = {
     },
     plugins: [atTracking(), byTracking()],
     access: {
+        read: blockFieldToAnonymous({
+            gateFieldName: 'state',
+            fieldPassValue: ['published', 'invisible'],
+        }),
         update: allowRoles(admin, bot, moderator),
         create: allowRoles(admin, moderator),
         delete: allowRoles(admin),
