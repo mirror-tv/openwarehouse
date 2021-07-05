@@ -4,14 +4,17 @@ import './PreviewBtn.style.css'
 import { getPostIdFromUrl, getPreviewUrl } from '../../utils/previewHandler'
 XMLHttpRequest
 function PreviewBtn() {
-    const postId = getPostIdFromUrl()
-
-    const previewUrl = getPreviewUrl(postId)
-    return (
-        <a className="preview-button" href={previewUrl} target="_blank">
-            Preview
-        </a>
-    )
+    const { id: postId, currentListName } = getPostIdFromUrl()
+    if (currentListName && currentListName === 'posts') {
+        const previewUrl = getPreviewUrl(postId)
+        return (
+            <a className="preview-button" href={previewUrl} target="_blank">
+                Preview
+            </a>
+        )
+    } else {
+        return null
+    }
 }
 
 PreviewBtn.propTypes = {}
