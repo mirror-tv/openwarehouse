@@ -24,7 +24,7 @@ keystone
         preview.get(
             '/posts/*',
             createProxyMiddleware({
-                target: 'https://dev.mnews.tw',
+                target: process.env.K5_PREVIEW_URL || 'http://localhost:3001',
                 changeOrigin: true,
                 pathRewrite: {
                     '/preview/posts': '/story',
