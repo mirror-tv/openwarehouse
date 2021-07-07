@@ -17,12 +17,11 @@ function getPostIdFromUrl() {
 }
 
 function getPreviewUrl(postId) {
-    const currentEnv = app.currentEnv || 'dev'
     const previewUrl = generatePreviewUrl(postId, currentEnv)
     return previewUrl
 }
 
-function generatePreviewUrl(postId, currentEnv) {
+function generatePreviewUrl(postId) {
     return `/preview/posts/${postId}`
 }
 
