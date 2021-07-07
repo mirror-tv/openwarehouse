@@ -1,7 +1,12 @@
 const blockFieldToAnonymous = (args) => {
     const { gateFieldName, fieldPassValue } = args
 
-    return ({ authentication: { item } }) => {
+    // return ({ authentication: { item } }) => {
+    return (accessInput) => {
+        const {
+            authentication: { item },
+        } = accessInput
+
         // if request is from keystone itself,
         // item will have logged-in user data
         // otherwise not only nuxt, but just normal post request will have undefined
