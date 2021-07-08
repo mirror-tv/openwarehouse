@@ -17,7 +17,8 @@ function getPostIdFromUrl() {
 }
 
 function getPreviewUrl(postId) {
-    const previewUrl = generatePreviewUrl(postId, currentEnv)
+    const previewUrl = generatePreviewUrl(postId)
+    console.log(previewUrl)
     return previewUrl
 }
 

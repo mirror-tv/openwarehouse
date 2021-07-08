@@ -5,7 +5,8 @@ const { KnexAdapter: Adapter } = require('@keystonejs/adapter-knex')
 const { PasswordAuthStrategy } = require('@keystonejs/auth-password')
 const { StaticApp } = require('@keystonejs/app-static')
 
-var bodyParser = require('body-parser')
+const bodyParser = require('body-parser')
+const preview = require('./preview')
 
 const {
     app,
@@ -154,6 +155,7 @@ module.exports = {
         app.get('/', (req, res) => {
             res.send('OK')
         })
+        app.use('/preview', preview)
     },
 }
 // [CI SKIP]
