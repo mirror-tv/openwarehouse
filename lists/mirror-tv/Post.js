@@ -33,7 +33,7 @@ const { publishStateExaminer } = require('../../utils/publishStateExaminer')
 
 const {
     getAccessControlViaServerType,
-} = require('../../helpers/blockFieldToAnonymous')
+} = require('../../helpers/ListAccessHandler')
 
 module.exports = {
     fields: {

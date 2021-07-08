@@ -12,7 +12,7 @@ const {
 const cacheHint = require('../../helpers/cacheHint')
 const {
     getAccessControlViaServerType,
-} = require('../../helpers/blockFieldToAnonymous')
+} = require('../../helpers/ListAccessHandler')
 
 module.exports = {
     fields: {
