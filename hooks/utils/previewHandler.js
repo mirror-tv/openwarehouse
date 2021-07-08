@@ -17,12 +17,6 @@ function getPostIdFromUrl() {
 }
 
 function getPreviewUrl(postId) {
-    const previewUrl = generatePreviewUrl(postId)
-    console.log(previewUrl)
-    return previewUrl
-}
-
-function generatePreviewUrl(postId) {
     return `/preview/posts/${postId}`
 }
 

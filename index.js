@@ -4,7 +4,7 @@ const { AdminUIApp } = require('@keystonejs/app-admin-ui')
 const { KnexAdapter: Adapter } = require('@keystonejs/adapter-knex')
 const { PasswordAuthStrategy } = require('@keystonejs/auth-password')
 const { StaticApp } = require('@keystonejs/app-static')
-const { PreviewApp } = require('./customApps/PreviewApp/PreviewApp')
+const { PreviewApp } = require('./customApps/PreviewApp')
 
 var bodyParser = require('body-parser')
 
