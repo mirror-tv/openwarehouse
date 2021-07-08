@@ -25,7 +25,7 @@ function getAccessControlViaServerType(...args) {
         // only logged-in user can read data
         // (anonymous can't read anything)
         case 'CMS':
-            return null
+
         default:
             return (auth) => {
                 return allowRoles(auth, args)

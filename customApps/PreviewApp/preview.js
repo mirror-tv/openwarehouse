@@ -4,12 +4,15 @@ const { createProxyMiddleware } = require('http-proxy-middleware')
 const preview = express.Router()
 
 preview.use((req, res, next) => {
+    // check if this req is verified
+    // if not, then redirect to login page
     if (req.session && req.session.keystoneListKey === 'User') {
         next()
         return
     }
     res.redirect('/admin/signin')
 })
+
 preview.get(
     '/posts/*',
     createProxyMiddleware({

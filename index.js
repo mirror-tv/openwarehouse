@@ -4,9 +4,9 @@ const { AdminUIApp } = require('@keystonejs/app-admin-ui')
 const { KnexAdapter: Adapter } = require('@keystonejs/adapter-knex')
 const { PasswordAuthStrategy } = require('@keystonejs/auth-password')
 const { StaticApp } = require('@keystonejs/app-static')
+const { PreviewApp } = require('./customApps/PreviewApp/PreviewApp')
 
-const bodyParser = require('body-parser')
-const preview = require('./preview')
+var bodyParser = require('body-parser')
 
 const {
     app,
@@ -141,7 +141,8 @@ if (!!app.isAdminAppRequired) {
             hooks: require.resolve(`./hooks/${app.project}`),
             authStrategy,
         }),
-        new StaticApp({ path: '/', src: 'public' })
+        new StaticApp({ path: '/', src: 'public' }),
+        new PreviewApp({ path: '/preview' })
     )
 }
 
@@ -155,7 +156,6 @@ module.exports = {
         app.get('/', (req, res) => {
             res.send('OK')
         })
-        app.use('/preview', preview)
     },
 }
 // [CI SKIP]
