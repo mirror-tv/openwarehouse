@@ -7,15 +7,6 @@ function getAccessControlViaServerType(...args) {
     const serviceType = process.env.K5_SERVICE_TYPE || 'CMS'
 
     switch (serviceType) {
-        // if type of server is CMS,
-        // then use normal allowRoles
-        // only logged-in user can read data
-        // (anonymous can't read anything)
-        case 'CMS':
-            return (auth) => {
-                return allowRoles(auth, args)
-            }
-
         // if type of server is GQL (which handles front-end website)
         // then restrict read access via user's role
         // (anonymous can only read public)
@@ -28,6 +19,17 @@ function getAccessControlViaServerType(...args) {
         // then open the gate of access
         case 'PREVIEW':
             return true
+
+        // if type of server is CMS,
+        // then use normal allowRoles
+        // only logged-in user can read data
+        // (anonymous can't read anything)
+        case 'CMS':
+            return null
+        default:
+            return (auth) => {
+                return allowRoles(auth, args)
+            }
     }
 }
 
