@@ -1,14 +1,12 @@
-const {
-    app: { K5_SERVICE_TYPE },
-} = require('../configs/config')
-
 const fieldFilter = {
     gateFieldName: 'state',
     fieldPassValue: ['published', 'invisible'],
 }
 
 function getAccessControlViaServerType(...args) {
-    switch (K5_SERVICE_TYPE) {
+    const serviceType = process.env.K5_SERVICE_TYPE || 'CMS'
+
+    switch (serviceType) {
         // if type of server is CMS,
         // then use normal allowRoles
         // only logged-in user can read data
