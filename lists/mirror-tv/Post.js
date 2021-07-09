@@ -31,7 +31,9 @@ const {
 } = require('../../utils/publishTimeHandler')
 const { publishStateExaminer } = require('../../utils/publishStateExaminer')
 
-const { blockFieldToAnonymous } = require('../../helpers/blockFieldToAnonymous')
+const {
+    getAccessControlViaServerType,
+} = require('../../helpers/ListAccessHandler')
 
 module.exports = {
     fields: {
@@ -263,10 +265,13 @@ module.exports = {
     plugins: [logging((args) => emitEditLog(args)), atTracking(), byTracking()],
     plugins: [atTracking(), byTracking()],
     access: {
-        read: blockFieldToAnonymous({
-            gateFieldName: 'state',
-            fieldPassValue: ['published', 'invisible'],
-        }),
+        read: getAccessControlViaServerType(
+            admin,
+            bot,
+            moderator,
+            editor,
+            owner
+        ),
         update: allowRoles(admin, bot, moderator, editor, owner),
         create: allowRoles(admin, bot, moderator, editor, contributor),
         delete: allowRoles(admin),
