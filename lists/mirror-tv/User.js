@@ -5,7 +5,8 @@ const {
     Select,
     Relationship,
 } = require('@keystonejs/fields')
-const { atTracking, byTracking } = require('@keystonejs/list-plugins')
+const { byTracking } = require('@keystonejs/list-plugins')
+const { atTracking } = require('../../helpers/list-plugins')
 const {
     admin,
     moderator,
@@ -61,7 +62,13 @@ module.exports = {
             },
         },
     },
-    plugins: [atTracking(), byTracking()],
+    plugins: [
+        atTracking({
+            hasNowBtn: false,
+            isReadOnly: true,
+        }),
+        byTracking(),
+    ],
     access: {
         read: allowRoles(admin, moderator, owner),
         update: allowRoles(admin, moderator, owner),

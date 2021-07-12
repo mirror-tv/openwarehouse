@@ -1,6 +1,7 @@
 const { Text, Select, Relationship, Decimal } = require('@keystonejs/fields')
 
-const { atTracking, byTracking } = require('@keystonejs/list-plugins')
+const { byTracking } = require('@keystonejs/list-plugins')
+const { atTracking } = require('../../helpers/list-plugins')
 const {
     admin,
     bot,
@@ -34,7 +35,13 @@ module.exports = {
             defaultValue: 'draft',
         },
     },
-    plugins: [atTracking(), byTracking()],
+    plugins: [
+        atTracking({
+            hasNowBtn: false,
+            isReadOnly: true,
+        }),
+        byTracking(),
+    ],
     access: {
         read: getAccessControlViaServerType(
             admin,

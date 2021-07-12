@@ -266,8 +266,8 @@ module.exports = {
             },
         },
     },
-    plugins: [logging((args) => emitEditLog(args)), atTracking(), byTracking()],
     plugins: [
+        logging((args) => emitEditLog(args)),
         atTracking({
             hasNowBtn: false,
             isReadOnly: true,
