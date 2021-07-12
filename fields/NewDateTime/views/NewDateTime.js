@@ -3,7 +3,6 @@ import './NewDateTime.style.css'
 import Datetime from 'react-datetime'
 import 'react-datetime/css/react-datetime.css'
 import './DateFormat'
-import moment from 'moment'
 
 function NewDateTime({ value, onChange, config, isReadOnly }) {
     // react-datetime accept integer unix timestamp
@@ -11,8 +10,6 @@ function NewDateTime({ value, onChange, config, isReadOnly }) {
     const newValue = Date.parse(value)
 
     const [inputField, setInputField] = useState(newValue)
-
-    console.log(inputField)
 
     // get selected unix timestamp by moment from callback
     const changeHandler = (momentObj) => {
