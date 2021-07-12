@@ -5,7 +5,9 @@ const {
     Select,
     Relationship,
 } = require('@keystonejs/fields')
-const { atTracking, byTracking } = require('@keystonejs/list-plugins')
+const { byTracking } = require('@keystonejs/list-plugins')
+const { atTracking } = require('../../helpers/list-plugins')
+
 const { logging } = require('@keystonejs/list-plugins')
 const {
     admin,
@@ -63,6 +65,8 @@ module.exports = {
         publishTime: {
             label: '發佈時間',
             type: NewDateTime,
+            hasNowBtn: true,
+            isReadOnly: false,
         },
         categories: {
             label: '分類',
@@ -263,7 +267,13 @@ module.exports = {
         },
     },
     plugins: [logging((args) => emitEditLog(args)), atTracking(), byTracking()],
-    plugins: [atTracking(), byTracking()],
+    plugins: [
+        atTracking({
+            hasNowBtn: false,
+            isReadOnly: true,
+        }),
+        byTracking(),
+    ],
     access: {
         read: getAccessControlViaServerType(
             admin,

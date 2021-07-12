@@ -5,12 +5,14 @@ import 'react-datetime/css/react-datetime.css'
 import './DateFormat'
 import moment from 'moment'
 
-function NewDateTime({ value, onChange }) {
-    const [inputField, setInputField] = useState(value)
-
+function NewDateTime({ value, onChange, config, isReadOnly }) {
     // react-datetime accept integer unix timestamp
     // transform ISO 8601 to unix timestamp
     const newValue = Date.parse(value)
+
+    const [inputField, setInputField] = useState(newValue)
+
+    console.log(inputField)
 
     // get selected unix timestamp by moment from callback
     const changeHandler = (momentObj) => {
@@ -42,6 +44,12 @@ function NewDateTime({ value, onChange }) {
         onChange(nowISO8601)
     }
 
+    const { hasNowBtn } = config
+    const inputProps = {
+        placeholder: isReadOnly ? '' : '請輸入日期',
+        disabled: isReadOnly,
+    }
+
     return (
         <div className="NewDateTime">
             <Datetime
@@ -51,10 +59,13 @@ function NewDateTime({ value, onChange }) {
                 dateFormat="YYYY-MM-DD Z"
                 timeFormat="HH:mm:ss"
                 strictParsing={false}
+                inputProps={inputProps}
             />
-            <button className="nowButton" onClick={(e) => nowHandler(e)}>
-                Now
-            </button>
+            {hasNowBtn ? (
+                <button className="nowButton" onClick={(e) => nowHandler(e)}>
+                    Now
+                </button>
+            ) : null}
         </div>
     )
 }
