@@ -1,7 +1,7 @@
 import _ from 'lodash'
 // import sizeOf from 'image-size';
 import ApiDataInstance from './api-data-instance'
-import ENTITY from './entities'
+import ENTITY_LIST from './entities'
 // import htmlparser2 from 'htmlparser2'
 const htmlparser2 = require('htmlparser2')
 
@@ -20,7 +20,7 @@ const processor = {
 
         // backward compatible. Old entity type might be lower case
         switch (type && type.toUpperCase()) {
-            case ENTITY.BLOCKQUOTE.type:
+            case ENTITY_LIST.BLOCKQUOTE.type:
                 // this is different from default blockquote of draftjs
                 // so we name our specific blockquote as 'quoteby'
                 type = 'quoteby'
@@ -28,20 +28,20 @@ const processor = {
                 content = _.get(entity, 'data')
                 content = Array.isArray(content) ? content : [content]
                 break
-            case ENTITY.AUDIO.type:
-            case ENTITY.IMAGE.type:
-            case ENTITY.IMAGEDIFF.type:
-            case ENTITY.INFOBOX.type:
-            case ENTITY.SLIDESHOW.type:
-            case ENTITY.VIDEO.type:
-            case ENTITY.YOUTUBE.type:
+            case ENTITY_LIST.AUDIO.type:
+            case ENTITY_LIST.IMAGE.type:
+            case ENTITY_LIST.IMAGEDIFF.type:
+            case ENTITY_LIST.INFOBOX.type:
+            case ENTITY_LIST.SLIDESHOW.type:
+            case ENTITY_LIST.VIDEO.type:
+            case ENTITY_LIST.YOUTUBE.type:
                 alignment = (entity.data && entity.data.alignment) || alignment
                 content = _.get(entity, 'data')
                 content = Array.isArray(content) ? content : [content]
                 break
-            case ENTITY.IMAGELINK.type:
+            case ENTITY_LIST.IMAGELINK.type:
                 // use Embedded component to dangerouslySetInnerHTML
-                type = ENTITY.EMBEDDEDCODE.type
+                type = ENTITY_LIST.EMBEDDEDCODE.type
                 alignment = (entity.data && entity.data.alignment) || alignment
                 let description = _.get(entity, ['data', 'description'], '')
                 let url = _.get(entity, ['data', 'url'], '')
@@ -53,10 +53,10 @@ const processor = {
                     },
                 ]
                 break
-            case ENTITY.EMBEDDEDCODE.type:
+            case ENTITY_LIST.EMBEDDEDCODE.type:
                 alignment = (entity.data && entity.data.alignment) || alignment
                 let caption = _.get(entity, ['data', 'caption'], '')
-                let embeddedCode = _.get(entity, ['data', 'code'], '')
+                let embeddedCode = _.get(entity, ['data', 'embeddedCode'], '')
                 let script = {}
                 let scripts = []
                 let scriptTagStart = false

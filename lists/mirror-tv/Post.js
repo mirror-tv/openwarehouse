@@ -5,7 +5,9 @@ const {
     Select,
     Relationship,
 } = require('@keystonejs/fields')
-const { atTracking, byTracking } = require('@keystonejs/list-plugins')
+const { byTracking } = require('@keystonejs/list-plugins')
+const { atTracking } = require('../../helpers/list-plugins')
+
 const { logging } = require('@keystonejs/list-plugins')
 const {
     admin,
@@ -30,6 +32,10 @@ const {
     validateIfPublishTimeIsFutureTime,
 } = require('../../utils/publishTimeHandler')
 const { publishStateExaminer } = require('../../utils/publishStateExaminer')
+
+const {
+    getAccessControlViaServerType,
+} = require('../../helpers/ListAccessHandler')
 
 module.exports = {
     fields: {
@@ -59,6 +65,8 @@ module.exports = {
         publishTime: {
             label: '發佈時間',
             type: NewDateTime,
+            hasNowBtn: true,
+            isReadOnly: false,
         },
         categories: {
             label: '分類',
@@ -258,9 +266,22 @@ module.exports = {
             },
         },
     },
-    plugins: [logging((args) => emitEditLog(args)), atTracking(), byTracking()],
-    plugins: [atTracking(), byTracking()],
+    plugins: [
+        logging((args) => emitEditLog(args)),
+        atTracking({
+            hasNowBtn: false,
+            isReadOnly: true,
+        }),
+        byTracking(),
+    ],
     access: {
+        read: getAccessControlViaServerType(
+            admin,
+            bot,
+            moderator,
+            editor,
+            owner
+        ),
         update: allowRoles(admin, bot, moderator, editor, owner),
         create: allowRoles(admin, bot, moderator, editor, contributor),
         delete: allowRoles(admin),
@@ -310,7 +331,7 @@ module.exports = {
                 addValidationError
             )
         },
-        beforeChange: async ({ existingItem, resolvedData }) => { },
+        beforeChange: async ({ existingItem, resolvedData }) => {},
     },
     adminConfig: {
         defaultColumns:

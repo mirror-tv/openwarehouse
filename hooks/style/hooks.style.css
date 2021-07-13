@@ -1,0 +1,16 @@
+.item-header-actions {
+    display: flex;
+    align-items: center;
+}
+.list-header-actions {
+    display: flex;
+    align-items: center;
+}
+.list-header-actions > :first-child {
+    margin-right: 20px;
+}
+
+#ks-list-search-input,
+#ks-list-search-input ~ div {
+    display: none;
+}
