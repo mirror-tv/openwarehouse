@@ -24,7 +24,8 @@ class PreviewApp {
         preview.get(
             '/posts/*',
             createProxyMiddleware({
-                target: process.env.K5_PREVIEW_URL || 'http://localhost:3001',
+                // target: process.env.K5_PREVIEW_URL || 'http://localhost:3001',
+                target: process.env.K5_PREVIEW_URL || 'https://dev.mnews.tw',
                 changeOrigin: true,
                 pathRewrite: {
                     '/preview/posts': '/story',

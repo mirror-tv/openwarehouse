@@ -1,4 +1,5 @@
 const { app, project } = require('../../configs/config')
+const axios = require('axios')
 
 function getPostIdFromUrl() {
     const currentUrl = document.location.href
@@ -17,7 +18,36 @@ function getPostIdFromUrl() {
 }
 
 function getPreviewUrl(postId) {
-    return `/preview/posts/${postId}`
+    return new Promise((resolve, reject) => {
+        // get post slug with postId
+        axios({
+            url: 'http://api-dev.mnews.tw/admin/api',
+            method: 'post',
+            data: {
+                query: `
+                    query getPost($id: ID!){
+                        Post(where:{id:$id}){
+                            slug
+                        } 
+                    }
+                `,
+                variables: {
+                    id: postId,
+                },
+            },
+        })
+            .then((result) => {
+                // distructure and combine it with path
+                const { data } = result.data
+                const { slug } = data.Post
+                resolve(`/preview/posts/${slug}`)
+            })
+            .catch((err) => {
+                console.log(err.message)
+                // if error happened,return empty string
+                reject('')
+            })
+    })
 }
 
 module.exports = { getPostIdFromUrl, getPreviewUrl }
