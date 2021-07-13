@@ -6,7 +6,7 @@ import {
     AddNewItem,
     CreateItem,
 } from '@keystonejs/app-admin-ui/components'
-import PreviewBtn from './components/PreviewBtn/PreviewBtn'
+import PreviewBar from './components/PreviewBar/PreviewBar'
 import './style/hooks.style.css'
 
 import Search from './components/Search/Search'
@@ -24,7 +24,7 @@ export default {
         return (
             <div className="item-header-actions">
                 <ItemId />
-                <PreviewBtn />
+                <PreviewBar />
                 <AddNewItem />
             </div>
         )

@@ -1,31 +1,25 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import './PreviewBtn.style.css'
-import { getPostIdFromUrl, getPreviewUrl } from '../../utils/previewHandler'
-XMLHttpRequest
 
-function PreviewBtn() {
-    const [url, setUrl] = useState('/')
-    const { id: postId, currentListName } = getPostIdFromUrl()
-
-    useEffect(async () => {
-        const newUrl = await getPreviewUrl(postId)
-        setUrl(newUrl)
-    }, [])
-
-    if (currentListName && currentListName === 'posts') {
-        // const previewUrl = getPreviewUrl(postId)
-
-        return (
-            <a className="preview-button" href={url} target="_blank">
-                Preview
-            </a>
-        )
-    } else {
-        return null
-    }
+function PreviewBtn({ url, isLoading }) {
+    return isLoading ? (
+        <a className="preview-button" href={url} target="_blank">
+            Preview
+        </a>
+    ) : (
+        <div className="preview-button preview-button-loading">Loading...</div>
+    )
 }
 
-PreviewBtn.propTypes = {}
+PreviewBtn.propTypes = {
+    url: PropTypes.string,
+    isLoading: PropTypes.bool,
+}
+
+PreviewBtn.defaultProps = {
+    url: '',
+    isLoading: true,
+}
 
 export default PreviewBtn
