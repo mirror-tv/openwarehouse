@@ -6,8 +6,8 @@ const { createProxyMiddleware } = require('http-proxy-middleware')
 class PreviewApp {
     constructor({ path }) {
         this._path = path
-        // this.proxyTarget = process.env.K5_PREVIEW_URL || 'http://localhost:3001',
         this.proxyTarget = process.env.K5_PREVIEW_URL || 'https://dev.mnews.tw'
+        // this.proxyTarget = process.env.K5_PREVIEW_URL || 'http://localhost:3001'
     }
 
     getPreviewRouter() {
@@ -24,8 +24,7 @@ class PreviewApp {
         })
 
         preview.get(
-            '/*',
-            // '/posts/*',
+            '/posts/*',
             createProxyMiddleware({
                 target: this.proxyTarget,
                 changeOrigin: true,
@@ -40,17 +39,10 @@ class PreviewApp {
 
     // nuxt page has some route also need to proxy together
     // or preview page's source (like _nuxt folder .etc) won't have correct url path
-    handleApiAndStaticFileRouter() {
+    handleApiAndNuxtFileRouter() {
         const nuxt = express.Router()
 
-        nuxt.get(
-            '/*',
-            createProxyMiddleware({
-                target: this.proxyTarget,
-                changeOrigin: true,
-            })
-        )
-        nuxt.post(
+        nuxt.use(
             '/*',
             createProxyMiddleware({
                 target: this.proxyTarget,
@@ -66,9 +58,9 @@ class PreviewApp {
         app.use(this._path, this.getPreviewRouter())
 
         // handle nuxt website's corresponding route
-        app.use('/_nuxt', this.handleApiAndStaticFileRouter())
-        app.use('/site.webmanifest', this.handleApiAndStaticFileRouter())
-        app.use('/api', this.handleApiAndStaticFileRouter())
+        app.use('/_nuxt/*', this.handleApiAndNuxtFileRouter())
+        app.use('/site.webmanifest', this.handleApiAndNuxtFileRouter())
+        app.use('/api/*', this.handleApiAndNuxtFileRouter())
 
         return app
     }
