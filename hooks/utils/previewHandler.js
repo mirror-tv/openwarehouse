@@ -1,37 +1,35 @@
 const axios = require('axios')
 
 function getPreviewUrl(postId) {
-    return new Promise((resolve, reject) => {
-        // get post slug with postId
-        axios({
-            // fetch post's slug from api which depend on server's type (dev || staging || prod)
-            url: getApiUrl(),
-            method: 'post',
-            data: {
-                query: `
+    // get post slug with postId
+    return axios({
+        // fetch post's slug from api which depend on server's type (dev || staging || prod)
+        url: getApiUrl(),
+        method: 'post',
+        data: {
+            query: `
                 query getPost($id: ID!){
                     Post(where:{id:$id}){
                         slug
                     } 
                 }
                 `,
-                variables: {
-                    id: postId,
-                },
+            variables: {
+                id: postId,
             },
-        })
-            .then((result) => {
-                // distructure and combine it with path
-                const { data } = result.data
-                const { slug } = data.Post
-                resolve(`/story/${slug}`)
-            })
-            .catch((err) => {
-                console.log(err.message)
-                // if error happened,return empty string
-                reject('')
-            })
+        },
     })
+        .then((result) => {
+            // distructure and combine it with path
+            const { data } = result.data
+            const { slug } = data.Post
+            return `/story/${slug}`
+        })
+        .catch((err) => {
+            console.err(err.message)
+            // if error happened,return empty string
+            return ''
+        })
 }
 
 function getApiUrl() {

@@ -6,7 +6,7 @@ import {
     AddNewItem,
     CreateItem,
 } from '@keystonejs/app-admin-ui/components'
-import PreviewBar from './components/PreviewBar/PreviewBar'
+import PreviewBar from './components/PreviewBar'
 import './style/hooks.style.css'
 
 import Search from './components/Search/Search'
