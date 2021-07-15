@@ -23,7 +23,7 @@ function getPreviewUrl(postId) {
                 // distructure and combine it with path
                 const { data } = result.data
                 const { slug } = data.Post
-                resolve(`/preview/posts/${slug}`)
+                resolve(`/story/${slug}`)
             })
             .catch((err) => {
                 console.log(err.message)
