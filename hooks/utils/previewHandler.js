@@ -5,7 +5,7 @@ function getPreviewUrl(postId) {
         // get post slug with postId
         axios({
             // fetch post's slug from api which depend on server's type (dev || staging || prod)
-            url: getApiUrl(process.env.RELEASE_TARGET || 'dev'),
+            url: getApiUrl(),
             method: 'post',
             data: {
                 query: `
@@ -34,21 +34,10 @@ function getPreviewUrl(postId) {
     })
 }
 
-function getApiUrl(releaseTarget) {
-    switch (releaseTarget) {
-        case 'prod':
-            return 'https://cms.mnews.tw/admin/api'
+function getApiUrl() {
+    const { protocol, host } = document.location
 
-        case 'staging':
-            return 'https://cms-staging.mnews.tw/admin/api'
-
-        case 'local':
-            return 'http://localhost:3000/admin/api'
-
-        case 'dev':
-        default:
-            return 'https://cms-dev.mnews.tw/admin/api'
-    }
+    return `${protocol}//${host}/admin/api`
 }
 
 // get current url from browser
