@@ -6,38 +6,36 @@ const { createProxyMiddleware } = require('http-proxy-middleware')
 class PreviewApp {
     constructor({ path }) {
         this._path = path
+        this.proxyTarget = process.env.K5_PREVIEW_URL || 'http://localhost:3000'
     }
 
-    getPreviewRouter() {
-        const preview = express.Router()
+    checkAuthentication(req, res, next) {
+        if (req.session && req.session.keystoneListKey === 'User') {
+            next()
+            return
+        }
+        res.redirect('/admin/signin')
+    }
 
-        preview.use((req, res, next) => {
-            // check if this req is verified
-            // if not, then redirect to login page
-            if (req.session && req.session.keystoneListKey === 'User') {
-                next()
-                return
-            }
-            res.redirect('/admin/signin')
+    createPreviewServerProxy() {
+        return createProxyMiddleware({
+            target: process.env.K5_PREVIEW_URL,
+            changeOrigin: true,
         })
-
-        preview.get(
-            '/posts/*',
-            createProxyMiddleware({
-                target: process.env.K5_PREVIEW_URL || 'http://localhost:3001',
-                changeOrigin: true,
-                pathRewrite: {
-                    '/preview/posts': '/story',
-                },
-            })
-        )
-
-        return preview
     }
 
     prepareMiddleware() {
         const app = express()
-        app.use(this._path, this.getPreviewRouter())
+        const previewServerProxy = this.createPreviewServerProxy()
+
+        // handle root route (in here: /story) proxy
+        app.use(this._path, this.checkAuthentication, previewServerProxy)
+
+        // handle nuxt website's corresponding route
+        // nuxt page has some route also need to be proxyed together
+        // otherwise preview page's source (like _nuxt folder .etc) won't have correct url path
+        app.use('/_nuxt/*', previewServerProxy)
+
         return app
     }
 }
