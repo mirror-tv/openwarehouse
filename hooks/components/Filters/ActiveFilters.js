@@ -7,7 +7,7 @@ import { Button } from '@arch-ui/button'
 import { gridSize } from '@arch-ui/theme'
 
 import EditFilterPopout from '@keystonejs/app-admin-ui/client/pages/List/Filters/EditFilterPopout'
-import AddFilterPopout from '@keystonejs/app-admin-ui/client/pages/List/Filters/AddFilterPopout'
+import AddFilterPopout from './AddFilterPopout'
 import { useListFilter } from '@keystonejs/app-admin-ui/client/pages/List/dataHooks'
 
 export const elementOffsetStyles = {

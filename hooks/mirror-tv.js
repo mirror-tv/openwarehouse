@@ -10,7 +10,7 @@ import PreviewBtn from './components/PreviewBtn/PreviewBtn'
 import './style/hooks.style.css'
 
 import Search from './components/Search/Search'
-import ActiveFilters from './components/ActiveFilters/ActiveFilters'
+import ActiveFilters from './components/Filters/ActiveFilters'
 
 import { useList } from '@keystonejs/app-admin-ui/client/providers/List'
 import { useListUrlState } from '@keystonejs/app-admin-ui/client/pages/List/dataHooks'
