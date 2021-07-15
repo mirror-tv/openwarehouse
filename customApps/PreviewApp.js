@@ -6,8 +6,7 @@ const { createProxyMiddleware } = require('http-proxy-middleware')
 class PreviewApp {
     constructor({ path }) {
         this._path = path
-        this.proxyTarget = process.env.K5_PREVIEW_URL || 'https://dev.mnews.tw'
-        // this.proxyTarget = process.env.K5_PREVIEW_URL || 'http://localhost:3001'
+        this.proxyTarget = process.env.K5_PREVIEW_URL || 'http://localhost:3001'
     }
 
     getPreviewRouter() {
