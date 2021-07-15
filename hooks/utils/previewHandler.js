@@ -26,16 +26,15 @@ function getPreviewUrl(postId) {
             return `/story/${slug}`
         })
         .catch((err) => {
-            console.err(err.message)
             // if error happened,return empty string
             return ''
         })
 }
 
 function getApiUrl() {
-    const { protocol, host } = document.location
+    const { origin } = document.location
 
-    return `${protocol}//${host}/admin/api`
+    return `${origin}/admin/api`
 }
 
 // get current url from browser
