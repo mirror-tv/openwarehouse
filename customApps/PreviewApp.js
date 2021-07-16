@@ -35,6 +35,7 @@ class PreviewApp {
         // nuxt page has some route also need to be proxyed together
         // otherwise preview page's source (like _nuxt folder .etc) won't have correct url path
         app.use('/_nuxt/*', previewServerProxy)
+        app.use('/api/*', previewServerProxy)
 
         return app
     }
