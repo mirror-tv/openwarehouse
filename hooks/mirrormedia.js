@@ -1,8 +1,17 @@
+import React from 'react'
+import K5Logo from './components/K5Logo/K5Logo'
 export default {
     pages: () => [
         {
             label: 'Content',
-            children: ['Post', 'EditorChoice', 'Image', 'Video', 'Audio', 'Event'],
+            children: [
+                'Post',
+                'EditorChoice',
+                'Image',
+                'Video',
+                'Audio',
+                'Event',
+            ],
         },
         {
             label: 'Class',
@@ -19,6 +28,7 @@ export default {
         {
             label: 'Other',
             children: ['Partner', 'External'],
-        }
-    ]
-};
+        },
+    ],
+    logo: () => <K5Logo />,
+}

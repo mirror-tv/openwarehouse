@@ -1,0 +1,15 @@
+.item-header-actions {
+    display: flex;
+    align-items: center;
+}
+.list-header-actions {
+    display: flex;
+    align-items: center;
+}
+.list-header-actions > :first-child {
+    margin-right: 20px;
+}
+
+#ks-list-active-filters {
+    display: none;
+}
