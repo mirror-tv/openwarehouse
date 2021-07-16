@@ -1,6 +1,6 @@
 # Openwarehouse Changelog
 
-## Version 1.1.0
+## 2021-07-16, Version 1.1.0 @liyibass
 ### Notable Changes
 - feat: add custom PreviewApp to handle preview-related router
 - feat: add graphQL read access depends on server's type, such as CMS, QGL and PREVIEW
