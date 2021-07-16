@@ -19,7 +19,7 @@ class PreviewApp {
 
     createPreviewServerProxy() {
         return createProxyMiddleware({
-            target: process.env.K5_PREVIEW_URL,
+            target: this.proxyTarget,
             changeOrigin: true,
         })
     }
