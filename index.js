@@ -142,7 +142,7 @@ if (!!app.isAdminAppRequired) {
             authStrategy,
         }),
         new StaticApp({ path: '/', src: 'public' }),
-        new PreviewApp({ path: '/preview' })
+        new PreviewApp({ path: '/story' })
     )
 }
 

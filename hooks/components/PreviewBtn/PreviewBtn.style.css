@@ -28,3 +28,10 @@
 .preview-button:hover {
     text-decoration: none;
 }
+
+.preview-button-loading {
+    opacity: 0.5;
+    cursor: default;
+    background: darkgrey;
+    border: none;
+}

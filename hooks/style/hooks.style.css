@@ -10,7 +10,6 @@
     margin-right: 20px;
 }
 
-#ks-list-search-input,
-#ks-list-search-input ~ div {
+#ks-list-active-filters {
     display: none;
 }
