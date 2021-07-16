@@ -2,7 +2,7 @@
     "name": "@keystonejs/example-projects-blank",
     "description": "A blank KeystoneJS starter project.",
     "private": true,
-    "version": "5.0.16",
+    "version": "1.1.0",
     "author": "The KeystoneJS Development Team",
     "repository": "https://github.com/keystonejs/keystone/tree/master/packages/create-keystone-app/example-projects/blank",
     "homepage": "https://github.com/keystonejs/keystone",
