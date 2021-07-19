@@ -10,6 +10,8 @@ class PreviewApp {
     }
 
     checkAuthentication(req, res, next) {
+        res.set('Cache-Control', 'public, max-age=0')
+
         if (req.session && req.session.keystoneListKey === 'User') {
             next()
             return
