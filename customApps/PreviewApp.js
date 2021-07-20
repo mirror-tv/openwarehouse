@@ -10,7 +10,6 @@ class PreviewApp {
     }
 
     checkAuthentication(req, res, next) {
-        res.set('Cache-Control', 'public, max-age=0')
 
         if (req.session && req.session.keystoneListKey === 'User') {
             next()
@@ -23,6 +22,9 @@ class PreviewApp {
         return createProxyMiddleware({
             target: this.proxyTarget,
             changeOrigin: true,
+            onProxyRes: (proxyRes) => {
+                proxyRes.headers['Cache-Control'] = 'max-age=0' // add new header to response
+            },
         })
     }
 
