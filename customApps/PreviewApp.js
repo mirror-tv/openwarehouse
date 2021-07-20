@@ -10,7 +10,6 @@ class PreviewApp {
     }
 
     checkAuthentication(req, res, next) {
-
         if (req.session && req.session.keystoneListKey === 'User') {
             next()
             return
@@ -23,7 +22,8 @@ class PreviewApp {
             target: this.proxyTarget,
             changeOrigin: true,
             onProxyRes: (proxyRes) => {
-                proxyRes.headers['Cache-Control'] = 'max-age=0' // add new header to response
+                // clear cache-control setting
+                proxyRes.headers['Cache-Control'] = 'no-store' 
             },
         })
     }
