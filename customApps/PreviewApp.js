@@ -17,25 +17,38 @@ class PreviewApp {
         res.redirect('/admin/signin')
     }
 
-    createPreviewServerProxy() {
+    createPreviewServerProxy(config) {
+        const headers = config && config.headers ? config.headers : {}
+
         return createProxyMiddleware({
             target: this.proxyTarget,
             changeOrigin: true,
+            onProxyRes: (proxyRes) => {
+                // clear cache-control setting
+                for (const headerKey in headers) {
+                    proxyRes.headers[headerKey] = headers[headerKey]
+                }
+            },
         })
     }
 
     prepareMiddleware() {
         const app = express()
-        const previewServerProxy = this.createPreviewServerProxy()
 
         // handle root route (in here: /story) proxy
-        app.use(this._path, this.checkAuthentication, previewServerProxy)
+        app.use(
+            this._path,
+            this.checkAuthentication,
+            this.createPreviewServerProxy({
+                headers: { 'Cache-Control': 'no-store' },
+            })
+        )
 
         // handle nuxt website's corresponding route
         // nuxt page has some route also need to be proxyed together
         // otherwise preview page's source (like _nuxt folder .etc) won't have correct url path
-        app.use('/_nuxt/*', previewServerProxy)
-        app.use('/api/*', previewServerProxy)
+        app.use('/_nuxt/*', this.createPreviewServerProxy())
+        app.use('/api/*', this.createPreviewServerProxy())
 
         return app
     }

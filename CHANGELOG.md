@@ -1,5 +1,22 @@
 # Openwarehouse Changelog
 
+## 2021-07-16, Version 1.1.1 @liyibass
+### Notable Changes
+- feat: add config in createPreviewServerProxy(to add custom header in proxy)
+- feat: set proxy page Cache-Control to no-store
+
+
+### Commits
+* [[`ef179e831a`](https://github.com/mirror-media/openwarehouse/commit/ef179e831a)] - Merge pull request #50 from liyibass/dev (LIYI)
+* [[`7b7badb0b1`](https://github.com/mirror-media/openwarehouse/commit/7b7badb0b1)] - **feat**: add config in createPreviewServerProxy for setting custom proxy headers (liyibass)
+* [[`fc58bd286f`](https://github.com/mirror-media/openwarehouse/commit/fc58bd286f)] - **chore**: update package.json#version to 1.1.1 (liyibass)
+* [[`2e8b41ad1b`](https://github.com/mirror-media/openwarehouse/commit/2e8b41ad1b)] - Merge pull request #49 from liyibass/dev (LIYI)
+* [[`cb72bf479b`](https://github.com/mirror-media/openwarehouse/commit/cb72bf479b)] - **feat**: set cache control to no-store (liyibass)
+* [[`6cfeeb330d`](https://github.com/mirror-media/openwarehouse/commit/6cfeeb330d)] - **feat**: update adding Cashe-Control in preview page (liyibass)
+* [[`7ff9cfdde3`](https://github.com/mirror-media/openwarehouse/commit/7ff9cfdde3)] - **feat**: add Cashe-Control in preview page (liyibass)
+* [[`e29d7d8217`](https://github.com/mirror-media/openwarehouse/commit/e29d7d8217)] - Merge pull request #46 from liyibass/dev (LIYI)
+
+
 ## 2021-07-16, Version 1.1.0 @liyibass
 ### Notable Changes
 - feat: add custom PreviewApp to handle preview-related router
