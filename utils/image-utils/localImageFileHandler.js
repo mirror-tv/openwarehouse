@@ -17,11 +17,12 @@ const resizeTarget = {
 function saveVariousSizeImageToLocal(newFilename, apiData) {
     return new Promise(async (resolve, reject) => {
         const { id, ext } = generateFileNameSeperation(newFilename)
-
+        now = Date.now()
         // first, get original-size image in local
-        console.log("before Jimp.read " + newFilename + ": " + Date.now())
         const image = await Jimp.read(`./public/images/${newFilename}`)
-        console.log("after Jimp.read " + newFilename + ": " + Date.now())
+        pass = Date.now()
+        diff = pass - now
+        console.log("after Jimp.read " + newFilename + ": " + diff)
 
         // need to get original iamge's dimention
         // in order to deciding whether is needed to scale image,
