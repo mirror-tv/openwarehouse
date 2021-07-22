@@ -19,7 +19,9 @@ function saveVariousSizeImageToLocal(newFilename, apiData) {
         const { id, ext } = generateFileNameSeperation(newFilename)
 
         // first, get original-size image in local
+        console.log("before Jimp.read " + newFilename + ": " + Date.now())
         const image = await Jimp.read(`./public/images/${newFilename}`)
+        console.log("after Jimp.read " + newFilename + ": " + Date.now())
 
         // need to get original iamge's dimention
         // in order to deciding whether is needed to scale image,
