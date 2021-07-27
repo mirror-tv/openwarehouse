@@ -9,9 +9,9 @@ const { getDimentionFromJimpImage } = require('./imageSizeHandler')
 
 const resizeTarget = {
     desktop: { width: 1268, height: 713 },
-    //tablet: { width: 1200, height: 675 },
-    //mobile: { width: 800, height: 450 },
-    //tiny: { width: 150, height: 84 },
+    tablet: { width: 1200, height: 675 },
+    mobile: { width: 800, height: 450 },
+    tiny: { width: 150, height: 84 },
 }
 
 function getFrameDimension(resizeTarget, resizeKey) {
