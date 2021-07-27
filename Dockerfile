@@ -27,7 +27,7 @@ COPY ./public /build/public
 COPY --from=build /build /app
 
 # add sharp again to build the dependency in this stage
-RUN yarn add sharp
+#RUN yarn add sharp
 
 EXPOSE 3000
 CMD ["./dumb-init", "yarn", "start"]
