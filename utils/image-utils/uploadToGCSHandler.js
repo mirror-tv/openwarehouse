@@ -1,47 +1,27 @@
-const fs = require('fs')
+const { Readable } = require('stream')
+
 const imageUrlBase = 'assets/images/'
-const { deleteImageFromLocal } = require('../image-utils/localImageFileHandler')
 
-function uploadImagesToGCS(imageNameList, bucket) {
-    return new Promise(async (resolve, reject) => {
-        try {
-            // need to ensure first image is uploaded
-            // (or CMS won't have file snapshot)
-            await saveLocalImageToGCS(imageNameList[0], bucket)
-
-            // however, for loop can't handle async function
-            // so we need to seperate first upload
-            for (let i = 1; i < imageNameList.length; i++) {
-                saveLocalImageToGCS(imageNameList[i], bucket)
-            }
-
-            resolve()
-        } catch (err) {
-            reject(`error in upload images to GCS, ${err}`)
-        }
-    })
-}
-function saveLocalImageToGCS(fileName, bucket) {
-    const stream = fs.createReadStream(`./public/images/${fileName}`)
-
-    return new Promise(async (resolve, reject) => {
+function uploadBufferToGCS(fileName, buffer, bucket) {
+    return new Promise((resolve, reject) => {
         const gcsUploadPath = `${imageUrlBase}${fileName}`
-        const file = bucket.file(gcsUploadPath) //get the upload path
-        const write = file
-            .createWriteStream()
-            .on('finish', (data) => {
-                console.log(`${fileName} has been uploaded to GCS`)
+        let writer = bucket.file(gcsUploadPath).createWriteStream({
+            contentType: 'auto',
+            gzip: true,
+        })
 
-                // after update to gcs, delete local image
-                deleteImageFromLocal(fileName)
-                resolve()
-            })
-            .on('error', (err) => {
-                reject(`error in upload image to GCS, ${err}`)
-            })
+        let reader = Readable.from(buffer)
+        reader.on('end', () => {
+            console.log('uploaded', gcsUploadPath)
+            resolve()
+        })
+        reader.on('error', (err) => {
+            console.error(err)
+            reject(err)
+        })
 
-        stream.pipe(write)
+        reader.pipe(writer)
     })
 }
 
-module.exports = { uploadImagesToGCS }
+module.exports = { uploadBufferToGCS }
