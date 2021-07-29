@@ -1,7 +1,11 @@
 const { Text } = require('@keystonejs/fields')
 const { byTracking } = require('@keystonejs/list-plugins')
 const { atTracking } = require('../../helpers/list-plugins')
-const { admin, allowRoles } = require('../../helpers/access/mirror-tv')
+const {
+    admin,
+    moderator,
+    allowRoles,
+} = require('../../helpers/access/mirror-tv')
 
 const { formatChangedList } = require('../../utils/formatChangedList')
 const HTML = require('../../fields/HTML')
@@ -77,8 +81,8 @@ module.exports = {
         byTracking(),
     ],
     access: {
-        update: allowRoles(admin),
-        delete: allowRoles(admin),
+        update: allowRoles(admin, moderator),
+        delete: allowRoles(admin, moderator),
     },
     adminConfig: {
         defaultColumns: 'name, operation, createdAt',

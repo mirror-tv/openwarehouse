@@ -48,7 +48,7 @@ module.exports = {
     access: {
         update: allowRoles(admin, moderator, editor, contributor, owner),
         create: allowRoles(admin, moderator, editor, contributor, owner),
-        delete: allowRoles(admin),
+        delete: allowRoles(admin, moderator),
     },
     adminConfig: {
         defaultColumns: 'name, sortOrder, state',

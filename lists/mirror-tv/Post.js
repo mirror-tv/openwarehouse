@@ -283,7 +283,7 @@ module.exports = {
         ),
         update: allowRoles(admin, bot, moderator, editor, owner),
         create: allowRoles(admin, bot, moderator, editor, contributor),
-        delete: allowRoles(admin),
+        delete: allowRoles(admin, moderator),
     },
     hooks: {
         resolveInput: async ({
