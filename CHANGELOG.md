@@ -1,5 +1,16 @@
 # Openwarehouse Changelog
 
+## 2021-07-29, Version 1.1.3 @liyibass
+
+### Notable Changes
+
+-   feat: add all list's delete access control to moderator
+
+### Commits
+
+-   [[`324fb5ec97`](https://github.com/mirror-media/openwarehouse/commit/324fb5ec97)] - **chore**: bum version to v1.1.3 (LIYI)
+-   [[`b1ac24c9d6`](https://github.com/mirror-media/openwarehouse/commit/b1ac24c9d6)] - **feat**: add all list's delete access control to moderator (LIYI)
+
 ## 2021-07-27, Version 1.1.2 @liyibass
 
 ### Notable Changes
