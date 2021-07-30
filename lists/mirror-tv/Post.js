@@ -129,7 +129,6 @@ module.exports = {
         heroCaption: {
             label: '首圖圖說',
             type: Text,
-            defaultValue: '',
         },
         heroImageSize: {
             label: '首圖尺寸',
@@ -284,7 +283,7 @@ module.exports = {
         ),
         update: allowRoles(admin, bot, moderator, editor, owner),
         create: allowRoles(admin, bot, moderator, editor, contributor),
-        delete: allowRoles(admin),
+        delete: allowRoles(admin, moderator),
     },
     hooks: {
         resolveInput: async ({
@@ -331,7 +330,7 @@ module.exports = {
                 addValidationError
             )
         },
-        beforeChange: async ({ existingItem, resolvedData }) => {},
+        beforeChange: async ({ existingItem, resolvedData }) => { },
     },
     adminConfig: {
         defaultColumns:

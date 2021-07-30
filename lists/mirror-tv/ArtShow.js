@@ -76,7 +76,7 @@ module.exports = {
     access: {
         update: allowRoles(admin, moderator),
         create: allowRoles(admin, moderator),
-        delete: allowRoles(admin),
+        delete: allowRoles(admin, moderator),
     },
     hooks: {
         beforeChange: async ({ existingItem, resolvedData }) => {},

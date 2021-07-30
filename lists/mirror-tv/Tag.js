@@ -56,7 +56,7 @@ module.exports = {
     access: {
         update: allowRoles(admin, moderator, editor),
         create: allowRoles(admin, moderator, editor),
-        delete: allowRoles(admin),
+        delete: allowRoles(admin, moderator),
     },
     hooks: {},
     adminConfig: {
