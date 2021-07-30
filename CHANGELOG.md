@@ -5,11 +5,17 @@
 ### Notable Changes
 
 -   feat: add all list's delete access control to moderator
+-   remove defaultValue of heroCaption in Post.js
 
 ### Commits
 
+-   [[`f625b34592`](https://github.com/mirror-media/openwarehouse/commit/f625b34592)] - **chore**: update CHANGELOG.md (LIYI)
 -   [[`324fb5ec97`](https://github.com/mirror-media/openwarehouse/commit/324fb5ec97)] - **chore**: bum version to v1.1.3 (LIYI)
 -   [[`b1ac24c9d6`](https://github.com/mirror-media/openwarehouse/commit/b1ac24c9d6)] - **feat**: add all list's delete access control to moderator (LIYI)
+-   [[`57c3563a78`](https://github.com/mirror-media/openwarehouse/commit/57c3563a78)] - feat(mirror-tv): remove defaultValue of heroCaption in Post.js (#60) (Baron Chiu)
+-   [[`2e9ee1840d`](https://github.com/mirror-media/openwarehouse/commit/2e9ee1840d)] - finished the test (Hsin-chan Chien)
+-   [[`ec0ab74068`](https://github.com/mirror-media/openwarehouse/commit/ec0ab74068)] - test for just doing resize once (Hsin-chan Chien)
+-   [[`64d8c0c111`](https://github.com/mirror-media/openwarehouse/commit/64d8c0c111)] - test the cloud build (Hsin-chan Chien)
 
 ## 2021-07-27, Version 1.1.2 @liyibass
 
@@ -19,6 +25,7 @@
 
 ### Commits
 
+-   [[`d2d4bf32b8`](https://github.com/mirror-media/openwarehouse/commit/d2d4bf32b8)] - **chore**: bump version to 1.1.2, update CHANGELOG.md (LIYI)
 -   [[`d875c2549f`](https://github.com/mirror-media/openwarehouse/commit/d875c2549f)] - **refactor**: remove unuse console.log (LIYI)
 -   [[`3da6db6a48`](https://github.com/mirror-media/openwarehouse/commit/3da6db6a48)] - **refactor**: optimize image processing workflow (#53) (Baron Chiu)
 -   [[`9b5625254b`](https://github.com/mirror-media/openwarehouse/commit/9b5625254b)] - **feat**: update draft to fix paste error in infobox/annotation (liyibass)
