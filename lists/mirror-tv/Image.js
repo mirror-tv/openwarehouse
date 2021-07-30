@@ -8,10 +8,9 @@ const {
 } = require('@keystonejs/fields')
 const { byTracking } = require('@keystonejs/list-plugins')
 const { atTracking } = require('../../helpers/list-plugins')
-const { ImageAdapter } = require('../../lib/ImageAdapter')
+const { ImageAdapter, isWatermarkNeeded } = require('../../lib/ImageAdapter')
 const { LocalFileAdapter } = require('@keystonejs/file-adapters')
 const TextHide = require('../../fields/TextHide')
-const fs = require('fs')
 const {
     admin,
     bot,
@@ -20,7 +19,6 @@ const {
     allowRoles,
 } = require('../../helpers/access/mirror-tv')
 const cacheHint = require('../../helpers/cacheHint')
-const { addWatermarkIfNeeded } = require('../../utils/watermarkHandler')
 const {
     getNewFilename,
     getFileDetail,
@@ -128,7 +126,7 @@ module.exports = {
     access: {
         update: allowRoles(admin, moderator, editor),
         create: allowRoles(admin, bot, moderator, editor),
-        delete: allowRoles(admin),
+        delete: allowRoles(admin, moderator),
     },
     adminConfig: {
         defaultColumns: 'name, image, createdAt',
@@ -142,8 +140,7 @@ module.exports = {
                 // resolvedData = true
                 // when create or update newer image
                 if (typeof resolvedData.file !== 'undefined') {
-                    await addWatermarkIfNeeded(resolvedData, existingItem)
-
+                    // await addWatermarkIfNeeded(resolvedData, existingItem)
                     const { id, newFilename, originalFileName } = getFileDetail(
                         resolvedData
                     )
@@ -154,6 +151,12 @@ module.exports = {
                         newFilename,
                         id
                     )
+                    await image_adapter.loadImage({ quality: 80 })
+                    if (isWatermarkNeeded(resolvedData, existingItem)) {
+                        await image_adapter.addWatermark()
+                    }
+
+                    // await image_adapter.uploadOriginalImage()
                     let _meta = await image_adapter.sync_save()
 
                     // existingItem = true
@@ -205,7 +208,17 @@ module.exports = {
         },
         // When delete image, delete image in gcs as well
         beforeDelete: async ({ existingItem }) => {
-            const image_adapter = new ImageAdapter(mediaUrlBase)
+            console.log('delete')
+            // add all needed params into ImageAdapter
+            const { id, newFilename, originalFileName } = getFileDetail(
+                existingItem
+            )
+            const image_adapter = new ImageAdapter(
+                mediaUrlBase,
+                originalFileName,
+                newFilename,
+                id
+            )
 
             if (existingItem && typeof existingItem.file !== 'undefined') {
                 await image_adapter.delete(
@@ -228,7 +241,7 @@ module.exports = {
             console.log("resolveInput RESOLVED DATA", resolvedData)
             return resolvedData
         },
-		*/
+        */
     },
     labelField: 'name',
     cacheHint: cacheHint,

@@ -12,17 +12,8 @@ const resizeTarget = {
 }
 
 function generateImageApiData(imageNameList, apiData) {
-    return new Promise((resolve, reject) => {
-        try {
-            console.log('current webUrlBase: ' + webUrlBase)
-            imageNameList.forEach((imageName) => {
-                createUrlToApiData(imageName, apiData)
-            })
-
-            resolve()
-        } catch (err) {
-            reject(`error in generateApiData, ${err}`)
-        }
+    imageNameList.forEach((imageName) => {
+        createUrlToApiData(imageName, apiData)
     })
 }
 
@@ -85,15 +76,13 @@ function generateFileNameSeperation(newFilename) {
     }
 }
 
-function feedDimentionToApiData(resizeKey, image, apiData) {
-    const { width, height } = getDimentionFromJimpImage(image)
-
+function feedDimensionToApiData(resizeKey, { width, height } = {}, apiData) {
     apiData[resizeKey] = { ...apiData[resizeKey], width, height }
 }
 
 module.exports = {
     generateImageApiData,
     generateFileNameSeperation,
-    feedDimentionToApiData,
+    feedDimensionToApiData,
     generateImageNameListArray,
 }
