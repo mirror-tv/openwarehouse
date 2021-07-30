@@ -22,6 +22,7 @@
 ### Notable Changes
 
 -   feat: optimize image compress/resize method
+-   feat:update draft: fix infobox/annotation paste bug
 
 ### Commits
 
