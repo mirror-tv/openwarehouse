@@ -91,7 +91,7 @@ const Relationship = forwardRef(
                     const loadingRef = useRef(null)
                     const QUERY = gql`
             query RelationshipSelectMore($search: String!, $first: Int!, $skip: Int!) {
-              ${refList.gqlNames.listQueryName}(search: $search, first: $first, skip: $skip) {
+              ${refList.gqlNames.listQueryName}(where:{ OR:[{name_contains:$search}, {slug_contains:$search}]}, first: $first, skip: $skip) {
                 _label_
                 id
                 slug
@@ -194,14 +194,15 @@ const RelationshipSelect = ({
 
     const QUERY = gql`
     query RelationshipSelect($search: String!, $first: Int!, $skip: Int!) {
-      ${refList.gqlNames.listQueryName}(search: $search, first: $first, skip: $skip) {
+      ${refList.gqlNames.listQueryName}(where:{ OR:[{name_contains:$search}, {slug_contains:$search}]}, first: $first, skip: $skip) {
         _label_
         id
         slug
         name
+      
       }
 
-      ${refList.gqlNames.listQueryMetaName}(search: $search) {
+      ${refList.gqlNames.listQueryMetaName}(where:{ OR:[{name_contains:$search}, {slug_contains:$search}]}) {
         count
       }
     }
