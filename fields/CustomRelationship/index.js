@@ -6,7 +6,7 @@ const {
 const { importView } = require('@keystonejs/build-field-types')
 
 module.exports = {
-    type: 'ImageRelationship',
+    type: 'CustomRelationship',
     isRelationship: true, // Used internally for this special case
     implementation: Implementation,
     views: {
