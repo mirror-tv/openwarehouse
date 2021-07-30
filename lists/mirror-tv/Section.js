@@ -31,7 +31,7 @@ module.exports = {
             isUnique: true,
         },
         name: {
-            label: '節目名稱',
+            label: '索引名稱',
             type: Text,
             isRequired: true,
         },

@@ -32,7 +32,7 @@ module.exports = {
             isUnique: true,
         },
         name: {
-            label: '節目名稱',
+            label: '單集名稱',
             type: Text,
             isRequired: true,
         },

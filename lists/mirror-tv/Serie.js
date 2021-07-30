@@ -31,7 +31,7 @@ module.exports = {
             isUnique: true,
         },
         name: {
-            label: '節目名稱',
+            label: '單元名稱',
             type: Text,
             isRequired: true,
         },
@@ -53,7 +53,7 @@ module.exports = {
             many: true,
         },
         post: {
-            label: '相關藝文節目',
+            label: '相關單集',
             type: Relationship,
             ref: 'ArtShow.series',
             many: true,
