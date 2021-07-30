@@ -48,7 +48,7 @@ const Relationship = forwardRef(
             data && data[refList.gqlNames.listQueryName]
                 ? data[refList.gqlNames.listQueryName].map((val) => ({
                       value: val,
-                      label: `${val.slug} (${val._label_})`,
+                      label: `${val.slug} 【${val._label_}】`,
                   }))
                 : []
         const serverError =
@@ -66,7 +66,7 @@ const Relationship = forwardRef(
                       value: value,
                   }
                 : {
-                      label: `${value.slug} (${value._label_})`,
+                      label: `${value.slug} 【${value._label_}】`,
                       value: value,
                   }
         }
