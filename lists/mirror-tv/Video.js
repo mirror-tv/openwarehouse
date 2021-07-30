@@ -8,6 +8,7 @@ const {
     Integer,
 } = require('@keystonejs/fields')
 const NewDateTime = require('../../fields/NewDateTime/index.js')
+const CustomRelationship = require('../../fields/CustomRelationship')
 
 const { byTracking } = require('@keystonejs/list-plugins')
 const { atTracking } = require('../../helpers/list-plugins')
@@ -88,7 +89,7 @@ module.exports = {
         },
         relatedPosts: {
             label: '相關文章',
-            type: Relationship,
+            type: CustomRelationship,
             ref: 'Post',
             many: true,
         },
