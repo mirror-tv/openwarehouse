@@ -10,7 +10,6 @@ const { atTracking } = require('../../helpers/list-plugins')
 const {
     admin,
     moderator,
-    bot,
     allowRoles,
 } = require('../../helpers/access/mirror-tv')
 const cacheHint = require('../../helpers/cacheHint')
@@ -59,7 +58,7 @@ module.exports = {
         byTracking(),
     ],
     access: {
-        update: allowRoles(admin, moderator, bot),
+        update: allowRoles(admin, moderator),
         create: allowRoles(admin, moderator),
         delete: allowRoles(admin, moderator),
     },
