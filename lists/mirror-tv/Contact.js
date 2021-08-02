@@ -15,6 +15,7 @@ const {
     editor,
     contributor,
     owner,
+    bot,
     allowRoles,
 } = require('../../helpers/access/mirror-tv')
 const cacheHint = require('../../helpers/cacheHint')
@@ -84,8 +85,8 @@ module.exports = {
         byTracking(),
     ],
     access: {
-        update: allowRoles(admin, moderator, editor, owner),
-        create: allowRoles(admin, moderator, editor, contributor),
+        update: allowRoles(admin, moderator, editor),
+        create: allowRoles(admin, moderator, editor, contributor, bot),
         delete: allowRoles(admin, moderator),
     },
     hooks: {},

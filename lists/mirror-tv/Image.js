@@ -16,6 +16,7 @@ const {
     bot,
     moderator,
     editor,
+    contributor,
     allowRoles,
 } = require('../../helpers/access/mirror-tv')
 const cacheHint = require('../../helpers/cacheHint')
@@ -125,7 +126,7 @@ module.exports = {
     ],
     access: {
         update: allowRoles(admin, moderator, editor),
-        create: allowRoles(admin, bot, moderator, editor),
+        create: allowRoles(admin, moderator, editor, contributor, bot),
         delete: allowRoles(admin, moderator),
     },
     adminConfig: {

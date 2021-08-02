@@ -133,7 +133,7 @@ module.exports = {
     ],
     access: {
         update: allowRoles(admin, moderator, editor),
-        create: allowRoles(admin, bot, moderator, editor),
+        create: allowRoles(admin, moderator, editor, contributor, bot),
         delete: allowRoles(admin, moderator),
     },
     hooks: {},
