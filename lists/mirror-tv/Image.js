@@ -3,7 +3,6 @@ const {
     Select,
     Relationship,
     File,
-    Url,
     Checkbox,
 } = require('@keystonejs/fields')
 const { byTracking } = require('@keystonejs/list-plugins')

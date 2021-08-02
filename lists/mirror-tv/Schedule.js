@@ -1,20 +1,10 @@
-const {
-    Checkbox,
-    Relationship,
-    Select,
-    Text,
-    Url,
-} = require('@keystonejs/fields')
-const NewDateTime = require('../../fields/NewDateTime/index.js')
+const { Checkbox, Relationship, Select, Text } = require('@keystonejs/fields')
 
 const { byTracking } = require('@keystonejs/list-plugins')
 const { atTracking } = require('../../helpers/list-plugins')
 const {
     admin,
     moderator,
-    editor,
-    contributor,
-    owner,
     allowRoles,
 } = require('../../helpers/access/mirror-tv')
 const cacheHint = require('../../helpers/cacheHint')

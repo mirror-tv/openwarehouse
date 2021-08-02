@@ -19,7 +19,6 @@ const {
     moderator,
     editor,
     contributor,
-    owner,
     allowRoles,
 } = require('../../helpers/access/mirror-tv')
 const cacheHint = require('../../helpers/cacheHint')

@@ -1,16 +1,9 @@
-const {
-    Text,
-    Checkbox,
-    Password,
-    Select,
-    Relationship,
-} = require('@keystonejs/fields')
+const { Text, Checkbox, Password, Select } = require('@keystonejs/fields')
 const { byTracking } = require('@keystonejs/list-plugins')
 const { atTracking } = require('../../helpers/list-plugins')
 const {
     admin,
     moderator,
-    editor,
     owner,
     allowRoles,
 } = require('../../helpers/access/mirror-tv')

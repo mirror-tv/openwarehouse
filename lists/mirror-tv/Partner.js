@@ -5,8 +5,6 @@ const {
     admin,
     moderator,
     editor,
-    contributor,
-    owner,
     bot,
     allowRoles,
 } = require('../../helpers/access/mirror-tv')

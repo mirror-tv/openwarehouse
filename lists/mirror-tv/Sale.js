@@ -1,11 +1,10 @@
-const { Text, Relationship, File, Url, Integer } = require('@keystonejs/fields')
+const { Text, File } = require('@keystonejs/fields')
 const { byTracking } = require('@keystonejs/list-plugins')
 const { atTracking } = require('../../helpers/list-plugins')
 const { DocumentAdapter } = require('../../lib/DocumentAdapter')
 const {
     admin,
     moderator,
-    editor,
     allowRoles,
 } = require('../../helpers/access/mirror-tv')
 const cacheHint = require('../../helpers/cacheHint')

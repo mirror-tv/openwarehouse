@@ -1,4 +1,4 @@
-const { Text, Select, Relationship, Decimal } = require('@keystonejs/fields')
+const { Select, Decimal } = require('@keystonejs/fields')
 const CustomRelationship = require('../../fields/CustomRelationship')
 const { byTracking } = require('@keystonejs/list-plugins')
 const { atTracking } = require('../../helpers/list-plugins')
@@ -7,7 +7,6 @@ const {
     bot,
     moderator,
     editor,
-    contributor,
     owner,
     allowRoles,
 } = require('../../helpers/access/mirror-tv')
