@@ -5,6 +5,8 @@ const {
     admin,
     moderator,
     allowRoles,
+    editor,
+    bot,
 } = require('../../helpers/access/mirror-tv')
 
 const { formatChangedList } = require('../../utils/formatChangedList')
@@ -81,7 +83,8 @@ module.exports = {
         byTracking(),
     ],
     access: {
-        update: allowRoles(admin, moderator),
+        update: allowRoles(admin, moderator, editor, bot),
+        create: allowRoles(admin, moderator, editor),
         delete: allowRoles(admin, moderator),
     },
     adminConfig: {

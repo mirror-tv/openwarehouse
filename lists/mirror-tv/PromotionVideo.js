@@ -46,8 +46,8 @@ module.exports = {
         byTracking(),
     ],
     access: {
-        update: allowRoles(admin, moderator, editor, contributor, owner),
-        create: allowRoles(admin, moderator, editor, contributor, owner),
+        update: allowRoles(admin, moderator, editor),
+        create: allowRoles(admin, moderator, editor),
         delete: allowRoles(admin, moderator),
     },
     adminConfig: {
