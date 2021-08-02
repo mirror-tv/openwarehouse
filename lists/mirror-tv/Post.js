@@ -36,6 +36,9 @@ const { publishStateExaminer } = require('../../utils/publishStateExaminer')
 const {
     getAccessControlViaServerType,
 } = require('../../helpers/ListAccessHandler')
+const {
+    AclRoleAccessorMethods,
+} = require('@google-cloud/storage/build/src/acl')
 
 module.exports = {
     fields: {
@@ -60,6 +63,14 @@ module.exports = {
             type: Select,
             options: 'draft, published, scheduled, archived, invisible',
             defaultValue: 'draft',
+            access: {
+                // 如果user.role是contributor 那將不能發佈文章（draft以外的狀態）
+                // 所以在此不給contributor有更動post.state的create/update權限
+                // 但又因post.state的defaultValue是draft
+                // 所以也就變相地達到contributor只能發佈draft的要求
+                create: allowRoles(admin, moderator, editor),
+                update: allowRoles(admin, moderator, editor),
+            },
         },
         publishTime: {
             label: '發佈時間',
@@ -277,7 +288,7 @@ module.exports = {
             editor,
             owner
         ),
-        update: allowRoles(admin, bot, moderator, editor, owner),
+        update: allowRoles(admin, bot, moderator, owner),
         create: allowRoles(admin, bot, moderator, editor, contributor),
         delete: allowRoles(admin, moderator),
     },
@@ -326,7 +337,7 @@ module.exports = {
                 addValidationError
             )
         },
-        beforeChange: async ({ existingItem, resolvedData }) => { },
+        beforeChange: async ({ existingItem, resolvedData }) => {},
     },
     adminConfig: {
         defaultColumns:

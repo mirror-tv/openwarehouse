@@ -72,7 +72,7 @@ module.exports = {
     access: {
         read: allowRoles(admin, moderator, owner),
         update: allowRoles(admin, moderator, owner),
-        create: allowRoles(admin, moderator),
+        create: allowRoles(admin),
         delete: allowRoles(admin),
     },
     hooks: {
