@@ -205,7 +205,6 @@ module.exports = {
         },
     },
     plugins: [
-        logging((args) => emitEditLog(args)),
         atTracking({
             hasNowBtn: false,
             isReadOnly: true,
@@ -260,7 +259,14 @@ module.exports = {
                 addValidationError
             )
         },
-        beforeChange: async ({ existingItem, resolvedData }) => {},
+        beforeChange: async ({
+            operation,
+            existingItem,
+            resolvedData,
+            context,
+        }) => {
+            emitEditLog(operation, resolvedData, existingItem, context)
+        },
     },
     labelField: 'name',
     cacheHint: cacheHint,

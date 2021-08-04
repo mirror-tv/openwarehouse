@@ -18,7 +18,7 @@ const emitEditLog = async (operation, resolvedData, existingItem, context) => {
         postId,
         editedData
     )
-    console.log(variables)
+
     axios({
         // fetch post's slug from api which depend on server's type (dev || staging || prod)
         url: `${req.get('origin')}/admin/api`,
@@ -27,12 +27,16 @@ const emitEditLog = async (operation, resolvedData, existingItem, context) => {
             query: generateGqlQueryByCMS(),
             variables,
         },
+        headers: req.headers,
     })
         .then((result) => {
             // const { data, errors, extensions } = result;
             // GraphQL errors and extensions are optional
             console.log('===Editlog emitted===\n')
-            console.log(result.data)
+
+            if (result.data.errors) {
+                console.log(result.data.errors)
+            }
         })
         .catch((error) => {
             console.log(error)
