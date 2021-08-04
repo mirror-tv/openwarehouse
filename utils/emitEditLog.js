@@ -1,58 +1,43 @@
-const { createApolloFetch } = require('apollo-fetch')
-const fetch = createApolloFetch({
-    uri: 'http://localhost:3000/admin/api',
-})
+const axios = require('axios')
 const { app } = require('../configs/config.js')
 
-const emitEditLog = async (arg) => {
-    let { operation, postId, editedData } = returnPostEditingDetails(arg)
+const emitEditLog = async (operation, resolvedData, existingItem, context) => {
+    const { authedItem, req } = context
 
+    const editorName = authedItem.name
+    const postId = existingItem ? existingItem.id : resolvedData.id
+    let editedData = { ...resolvedData }
+
+    // remove unwanted field
     editedData = removeUnusedKey(editedData)
     editedData = removeHtmlAndApiData(editedData)
 
     const variables = generateVariablesForGql(
         operation,
-        arg,
+        editorName,
         postId,
         editedData
     )
-    fetch({
-        query: generateGqlQueryByCMS(),
-        variables: variables,
+    console.log(variables)
+    axios({
+        // fetch post's slug from api which depend on server's type (dev || staging || prod)
+        url: `${req.get('origin')}/admin/api`,
+        method: 'post',
+        data: {
+            query: generateGqlQueryByCMS(),
+            variables,
+        },
     })
         .then((result) => {
             // const { data, errors, extensions } = result;
             // GraphQL errors and extensions are optional
             console.log('===Editlog emitted===\n')
+            console.log(result.data)
         })
         .catch((error) => {
+            console.log(error)
             // respond to a network error
         })
-}
-
-function returnPostEditingDetails(arg) {
-    switch (arg.operation) {
-        case 'create':
-            return {
-                operation: 'create',
-                postId: arg.createdItem.id,
-                editedData: arg.createdItem,
-            }
-
-        case 'update':
-            return {
-                operation: 'update',
-                postId: arg.changedItem.id,
-                editedData: arg.changedItem,
-            }
-
-        case 'delete':
-            return {
-                operation: 'delete',
-                postId: arg.deletedItem.id,
-                editedData: arg.deletedItem,
-            }
-    }
 }
 
 function removeHtmlAndApiData(editData) {
@@ -88,10 +73,10 @@ function removeUnusedKey(editData) {
     return editData
 }
 
-function generateVariablesForGql(operation, arg, postId, editedData) {
+function generateVariablesForGql(operation, editorName, postId, editedData) {
     const fieldsArray = ['summary', 'brief', 'content']
     let variables = {
-        name: arg.authedItem ? arg.authedItem.name : 'graphQL',
+        name: editorName,
         operation: operation,
         postId: postId,
     }
