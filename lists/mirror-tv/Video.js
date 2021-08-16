@@ -8,6 +8,7 @@ const {
     Integer,
 } = require('@keystonejs/fields')
 const NewDateTime = require('../../fields/NewDateTime/index.js')
+const CustomRelationship = require('../../fields/CustomRelationship')
 
 const { byTracking } = require('@keystonejs/list-plugins')
 const { atTracking } = require('../../helpers/list-plugins')
@@ -18,7 +19,6 @@ const {
     moderator,
     editor,
     contributor,
-    owner,
     allowRoles,
 } = require('../../helpers/access/mirror-tv')
 const cacheHint = require('../../helpers/cacheHint')
@@ -88,7 +88,7 @@ module.exports = {
         },
         relatedPosts: {
             label: '相關文章',
-            type: Relationship,
+            type: CustomRelationship,
             ref: 'Post',
             many: true,
         },
@@ -132,7 +132,7 @@ module.exports = {
     ],
     access: {
         update: allowRoles(admin, moderator, editor),
-        create: allowRoles(admin, bot, moderator, editor),
+        create: allowRoles(admin, moderator, editor, contributor, bot),
         delete: allowRoles(admin, moderator),
     },
     hooks: {},

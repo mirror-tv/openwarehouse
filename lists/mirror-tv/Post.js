@@ -36,6 +36,9 @@ const { publishStateExaminer } = require('../../utils/publishStateExaminer')
 const {
     getAccessControlViaServerType,
 } = require('../../helpers/ListAccessHandler')
+const {
+    AclRoleAccessorMethods,
+} = require('@google-cloud/storage/build/src/acl')
 
 module.exports = {
     fields: {
@@ -54,13 +57,20 @@ module.exports = {
         subtitle: {
             label: '副標',
             type: Text,
-            defaultValue: '',
         },
         state: {
             label: '狀態',
             type: Select,
             options: 'draft, published, scheduled, archived, invisible',
             defaultValue: 'draft',
+            access: {
+                // 如果user.role是contributor 那將不能發佈文章（draft以外的狀態）
+                // 所以在此不給contributor有更動post.state的create/update權限
+                // 但又因post.state的defaultValue是draft
+                // 所以也就變相地達到contributor只能發佈draft的要求
+                create: allowRoles(admin, moderator, editor),
+                update: allowRoles(admin, moderator, editor),
+            },
         },
         publishTime: {
             label: '發佈時間',
@@ -113,7 +123,6 @@ module.exports = {
         otherbyline: {
             label: '作者（其他）',
             type: Text,
-            defaultValue: '',
         },
         heroVideo: {
             label: '影片',
@@ -189,12 +198,10 @@ module.exports = {
         ogTitle: {
             label: 'FB 分享標題',
             type: Text,
-            defaultValue: '',
         },
         ogDescription: {
             label: 'FB 分享說明',
             type: Text,
-            defaultValue: '',
         },
         ogImage: {
             label: 'FB 分享縮圖',
@@ -266,7 +273,6 @@ module.exports = {
         },
     },
     plugins: [
-        logging((args) => emitEditLog(args)),
         atTracking({
             hasNowBtn: false,
             isReadOnly: true,
@@ -279,9 +285,10 @@ module.exports = {
             bot,
             moderator,
             editor,
+            contributor,
             owner
         ),
-        update: allowRoles(admin, bot, moderator, editor, owner),
+        update: allowRoles(admin, bot, moderator, owner),
         create: allowRoles(admin, bot, moderator, editor, contributor),
         delete: allowRoles(admin, moderator),
     },
@@ -330,7 +337,14 @@ module.exports = {
                 addValidationError
             )
         },
-        beforeChange: async ({ existingItem, resolvedData }) => { },
+        beforeChange: async ({
+            operation,
+            existingItem,
+            resolvedData,
+            context,
+        }) => {
+            emitEditLog(operation, resolvedData, existingItem, context)
+        },
     },
     adminConfig: {
         defaultColumns:

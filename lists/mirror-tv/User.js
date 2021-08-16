@@ -1,16 +1,9 @@
-const {
-    Text,
-    Checkbox,
-    Password,
-    Select,
-    Relationship,
-} = require('@keystonejs/fields')
+const { Text, Checkbox, Password, Select } = require('@keystonejs/fields')
 const { byTracking } = require('@keystonejs/list-plugins')
 const { atTracking } = require('../../helpers/list-plugins')
 const {
     admin,
     moderator,
-    editor,
     owner,
     allowRoles,
 } = require('../../helpers/access/mirror-tv')
@@ -72,7 +65,7 @@ module.exports = {
     access: {
         read: allowRoles(admin, moderator, owner),
         update: allowRoles(admin, moderator, owner),
-        create: allowRoles(admin, moderator),
+        create: allowRoles(admin),
         delete: allowRoles(admin),
     },
     hooks: {
