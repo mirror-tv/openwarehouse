@@ -17,6 +17,10 @@ const {
     allowRoles,
 } = require('../../helpers/access/mirror-tv')
 const cacheHint = require('../../helpers/cacheHint')
+const HTML = require('../../fields/HTML')
+const TextHide = require('../../fields/TextHide')
+const { controlCharacterFilter } = require('../../utils/controlCharacterFilter')
+const { parseResolvedData } = require('../../utils/parseResolvedData')
 
 module.exports = {
     fields: {
@@ -64,7 +68,7 @@ module.exports = {
         },
         bio: {
             label: '個人簡介',
-            type: Markdown,
+            type: HTML,
         },
         anchorperson: {
             label: '主播',
@@ -73,6 +77,20 @@ module.exports = {
         host: {
             label: '節目主持人',
             type: Checkbox,
+        },
+        bioApiData: {
+            label: 'bio API Data',
+            type: TextHide,
+            adminConfig: {
+                isReadOnly: true,
+            },
+        },
+        bioHtml: {
+            label: 'bio HTML',
+            type: TextHide,
+            adminConfig: {
+                isReadOnly: true,
+            },
         },
     },
     plugins: [
@@ -87,7 +105,19 @@ module.exports = {
         create: allowRoles(admin, moderator, editor, contributor),
         delete: allowRoles(admin, moderator),
     },
-    hooks: {},
+    hooks: {
+        resolveInput: async ({ existingItem, originalInput, resolvedData }) => {
+            await controlCharacterFilter(
+                originalInput,
+                existingItem,
+                resolvedData
+            )
+
+            await parseResolvedData(existingItem, resolvedData, ['bio'])
+
+            return resolvedData
+        },
+    },
     adminConfig: {
         defaultColumns: 'slug, name, email, homepage, createdAt',
         defaultSort: '-createdAt',

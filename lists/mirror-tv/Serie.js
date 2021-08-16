@@ -11,6 +11,9 @@ const {
 const ImageRelationship = require('../../fields/ImageRelationship')
 const HTML = require('../../fields/HTML')
 const cacheHint = require('../../helpers/cacheHint')
+const TextHide = require('../../fields/TextHide')
+const { controlCharacterFilter } = require('../../utils/controlCharacterFilter')
+const { parseResolvedData } = require('../../utils/parseResolvedData')
 
 module.exports = {
     fields: {
@@ -48,6 +51,20 @@ module.exports = {
             ref: 'ArtShow.series',
             many: true,
         },
+        introductionApiData: {
+            label: 'Introduction API Data',
+            type: TextHide,
+            adminConfig: {
+                isReadOnly: true,
+            },
+        },
+        introductionHtml: {
+            label: 'Introduction HTML',
+            type: TextHide,
+            adminConfig: {
+                isReadOnly: true,
+            },
+        },
     },
     plugins: [
         atTracking({
@@ -62,6 +79,19 @@ module.exports = {
         delete: allowRoles(admin, moderator),
     },
     hooks: {
+        resolveInput: async ({ existingItem, originalInput, resolvedData }) => {
+            await controlCharacterFilter(
+                originalInput,
+                existingItem,
+                resolvedData
+            )
+
+            await parseResolvedData(existingItem, resolvedData, [
+                'introduction',
+            ])
+
+            return resolvedData
+        },
         beforeChange: async ({ existingItem, resolvedData }) => {},
     },
     adminConfig: {
