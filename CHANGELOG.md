@@ -1,5 +1,33 @@
 # Openwarehouse Changelog
 
+## 2021-08-16, Version 1.1.4 @liyibass
+
+### Notable Changes
+
+-   fix: EditLog error fixed
+-   feat: update all list's access control
+-   feat:relationship with Post can browse/search with slug & name
+
+### commits
+
+-   [[`84c569da11`](https://github.com/mirror-media/openwarehouse/commit/84c569da11)] - **feat**: emitEditLog with headers (LIYI)
+-   [[`5649ebb982`](https://github.com/mirror-media/openwarehouse/commit/5649ebb982)] - **refactor**: re-constructor emitEditLog (LIYI)
+-   [[`0bb2557f39`](https://github.com/mirror-media/openwarehouse/commit/0bb2557f39)] - **feat**: update bot access control (LIYI)
+-   [[`4725778b54`](https://github.com/mirror-media/openwarehouse/commit/4725778b54)] - **feat**: update bot create/update edit control (LIYI)
+-   [[`c56ed242df`](https://github.com/mirror-media/openwarehouse/commit/c56ed242df)] - **feat**: update contributor acccess control in EditorChoice, Post and VideoEditorChoice (LIYI)
+-   [[`d5e0d5197e`](https://github.com/mirror-media/openwarehouse/commit/d5e0d5197e)] - **refactor**: remove unuse imported package (LIYI)
+-   [[`a053593448`](https://github.com/mirror-media/openwarehouse/commit/a053593448)] - **feat**: update all list's access control (LIYI)
+-   [[`23612fc7e3`](https://github.com/mirror-media/openwarehouse/commit/23612fc7e3)] - **feat**: update media list access control (LIYI)
+-   [[`44118194af`](https://github.com/mirror-media/openwarehouse/commit/44118194af)] - **feat**: update User/Post access control (LIYI)
+-   [[`ece72bc0de`](https://github.com/mirror-media/openwarehouse/commit/ece72bc0de)] - feat(mirror-tv/list): remove unwanted defaultValue of fields in Post.js (#62) (Baron Chiu)
+-   [[`0d8579c655`](https://github.com/mirror-media/openwarehouse/commit/0d8579c655)] - **feat**: update field naming (LIYI)
+-   [[`7533faa3a9`](https://github.com/mirror-media/openwarehouse/commit/7533faa3a9)] - **feat**: update CustomRelationship slug/name layout (LIYI)
+-   [[`41a6119038`](https://github.com/mirror-media/openwarehouse/commit/41a6119038)] - **feat**: CustomRelationship can search within name and slug (LIYI)
+-   [[`c729c9529c`](https://github.com/mirror-media/openwarehouse/commit/c729c9529c)] - **rafactor**: update CustomRelationship naming (LIYI)
+-   [[`4241817df8`](https://github.com/mirror-media/openwarehouse/commit/4241817df8)] - **feat**: set all Relationship (ref to Post) to CustomRelationship (LIYI)
+-   [[`95905f6e8c`](https://github.com/mirror-media/openwarehouse/commit/95905f6e8c)] - **feat**: add customRelationship to see slug (LIYI)
+-   [[`c0006f1e38`](https://github.com/mirror-media/openwarehouse/commit/c0006f1e38)] - **chore**: update CHANGELOG.md: add detail change log (LIYI)
+
 ## 2021-07-29, Version 1.1.3 @liyibass
 
 ### Notable Changes

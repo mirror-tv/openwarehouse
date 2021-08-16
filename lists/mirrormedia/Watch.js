@@ -7,6 +7,7 @@ const {
     Checkbox,
     Url,
 } = require('@keystonejs/fields')
+const CustomRelationship = require('../../fields/CustomRelationship')
 const { atTracking, byTracking } = require('@keystonejs/list-plugins')
 const { uuid } = require('uuidv4')
 const {
@@ -130,7 +131,7 @@ module.exports = {
         },
         relatedPosts: {
             label: '相關文章',
-            type: Relationship,
+            type: CustomRelationship,
             ref: 'Post',
             many: true,
         },

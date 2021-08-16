@@ -6,6 +6,7 @@ const {
     File,
     Url,
 } = require('@keystonejs/fields')
+const CustomRelationship = require('../../fields/CustomRelationship')
 const NewDateTime = require('../../fields/NewDateTime/index.js')
 const { atTracking, byTracking } = require('@keystonejs/list-plugins')
 const { GCSAdapter } = require('../../lib/GCSAdapter')
@@ -80,7 +81,7 @@ module.exports = {
         },
         relatedPosts: {
             label: '相關文章',
-            type: Relationship,
+            type: CustomRelationship,
             ref: 'Post',
             many: true,
         },

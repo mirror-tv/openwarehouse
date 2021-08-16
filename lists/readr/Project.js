@@ -5,6 +5,7 @@ const {
     Relationship,
     Select,
 } = require('@keystonejs/fields')
+const CustomRelationship = require('../../fields/CustomRelationship')
 const { atTracking, byTracking } = require('@keystonejs/list-plugins')
 const { admin, moderator, allowRoles } = require('../../helpers/access/readr')
 const cacheHint = require('../../helpers/cacheHint')
@@ -40,7 +41,7 @@ module.exports = {
         },
         relatedPosts: {
             label: '相關文章',
-            type: Relationship,
+            type: CustomRelationship,
             ref: 'Post',
             many: true,
         },

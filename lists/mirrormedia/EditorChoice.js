@@ -1,4 +1,5 @@
 const { Integer, Select, Relationship } = require('@keystonejs/fields')
+const CustomRelationship = require('../../fields/CustomRelationship')
 const { atTracking, byTracking } = require('@keystonejs/list-plugins')
 const {
     admin,
@@ -19,7 +20,7 @@ module.exports = {
         },
         choice: {
             label: '精選文章',
-            type: Relationship,
+            type: CustomRelationship,
             ref: 'Post',
         },
         state: {

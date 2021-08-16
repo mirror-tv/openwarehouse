@@ -1,4 +1,5 @@
 const { Integer, Text, Relationship, Select } = require('@keystonejs/fields')
+const CustomRelationship = require('../../fields/CustomRelationship')
 const { atTracking, byTracking } = require('@keystonejs/list-plugins')
 const { logging } = require('@keystonejs/list-plugins')
 const { admin, moderator, allowRoles } = require('../../helpers/access/readr')
@@ -143,7 +144,7 @@ module.exports = {
         },
         relatedPosts: {
             label: '相關文章',
-            type: Relationship,
+            type: CustomRelationship,
             ref: 'Post',
             many: true,
         },
@@ -204,7 +205,6 @@ module.exports = {
         },
     },
     plugins: [
-        logging((args) => emitEditLog(args)),
         atTracking({
             hasNowBtn: false,
             isReadOnly: true,
@@ -259,7 +259,14 @@ module.exports = {
                 addValidationError
             )
         },
-        beforeChange: async ({ existingItem, resolvedData }) => {},
+        beforeChange: async ({
+            operation,
+            existingItem,
+            resolvedData,
+            context,
+        }) => {
+            emitEditLog(operation, resolvedData, existingItem, context)
+        },
     },
     labelField: 'name',
     cacheHint: cacheHint,
