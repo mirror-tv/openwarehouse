@@ -120,6 +120,7 @@ module.exports = {
             label: '導演',
             type: Relationship,
             ref: 'Contact',
+            many: true,
         },
         series: {
             label: '相關單元',
