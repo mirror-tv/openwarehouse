@@ -69,6 +69,51 @@ module.exports = {
         bio: {
             label: '個人簡介',
             type: HTML,
+            editorConfig: {
+                blocktypes: [
+                    {
+                        label: 'Normal',
+                        style: 'unstyled',
+                        icon: '',
+                        text: 'Normal',
+                    },
+                    { label: 'H1', style: 'header-one', icon: '', text: 'H1' },
+                    { label: 'H2', style: 'header-two', icon: '', text: 'H2' },
+                ],
+                inlineStyles: [
+                    { label: 'Bold', style: 'BOLD', icon: 'fa-bold', text: '' },
+                    {
+                        label: 'Italic',
+                        style: 'ITALIC',
+                        icon: 'fa-italic',
+                        text: '',
+                    },
+                    {
+                        label: 'Underline',
+                        style: 'UNDERLINE',
+                        icon: 'fa-underline',
+                        text: '',
+                    },
+                    // { label: 'Monospace', style: 'CODE', icon: 'fa-terminal', text: '' },
+                ],
+                entityList: {
+                    LINK: {
+                        type: 'LINK',
+                    },
+                    AUDIO: {
+                        type: 'AUDIO',
+                    },
+                    VIDEO: {
+                        type: 'VIDEO',
+                    },
+                    IMAGE: {
+                        type: 'IMAGE',
+                    },
+                    YOUTUBE: {
+                        type: 'YOUTUBE',
+                    },
+                },
+            },
         },
         anchorperson: {
             label: '主播',

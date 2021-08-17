@@ -4,6 +4,7 @@ import HtmlDraftEditor from '@liyibass/html-draft-editor'
 import DraftEditor from './Editor'
 
 const HtmlField = ({ onChange, autoFocus, field, value, errors }) => {
+    const { blocktypes, inlineStyles, entityList } = field.config?.editorConfig
     return (
         <FieldContainer>
             <div
@@ -22,6 +23,9 @@ const HtmlField = ({ onChange, autoFocus, field, value, errors }) => {
                     autoFocus={autoFocus}
                     field={field}
                     value={value}
+                    customBlocktypes={blocktypes}
+                    customInlineStyles={inlineStyles}
+                    customEntityList={entityList}
                 />
                 {/* <DraftEditor value={value} onChange={onChange} /> */}
             </div>
