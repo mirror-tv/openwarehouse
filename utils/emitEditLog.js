@@ -18,10 +18,11 @@ const emitEditLog = async (operation, resolvedData, existingItem, context) => {
         postId,
         editedData
     )
-
+    console.log(generateGqlQueryByCMS())
+    console.log(variables)
     axios({
         // fetch post's slug from api which depend on server's type (dev || staging || prod)
-        url: `${req.get('origin')}/admin/api`,
+        url: `http://localhost:3000/admin/api`,
         method: 'post',
         data: {
             query: generateGqlQueryByCMS(),
@@ -39,7 +40,7 @@ const emitEditLog = async (operation, resolvedData, existingItem, context) => {
             }
         })
         .catch((error) => {
-            console.log(error)
+            console.log(error.message)
             // respond to a network error
         })
 }

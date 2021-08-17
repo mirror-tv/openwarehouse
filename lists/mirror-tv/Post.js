@@ -7,8 +7,6 @@ const {
 } = require('@keystonejs/fields')
 const { byTracking } = require('@keystonejs/list-plugins')
 const { atTracking } = require('../../helpers/list-plugins')
-
-const { logging } = require('@keystonejs/list-plugins')
 const {
     admin,
     bot,
@@ -31,7 +29,6 @@ const {
     validateIfPostNeedPublishTime,
     validateIfPublishTimeIsFutureTime,
 } = require('../../utils/publishTimeHandler')
-const { publishStateExaminer } = require('../../utils/publishStateExaminer')
 
 const {
     getAccessControlViaServerType,
@@ -39,6 +36,7 @@ const {
 const {
     AclRoleAccessorMethods,
 } = require('@google-cloud/storage/build/src/acl')
+const { generateSource } = require('../../utils/postSourceHandler')
 
 module.exports = {
     fields: {
@@ -293,18 +291,7 @@ module.exports = {
         delete: allowRoles(admin, moderator),
     },
     hooks: {
-        resolveInput: async ({
-            existingItem,
-            originalInput,
-            resolvedData,
-            context,
-            operation,
-        }) => {
-            // console.log('=====resolveInput=====')
-            // console.log(originalInput?.brief)
-            // console.log(existingItem?.brief)
-            // console.log(resolvedData?.brief)
-
+        resolveInput: async ({ existingItem, originalInput, resolvedData }) => {
             await controlCharacterFilter(
                 originalInput,
                 existingItem,
@@ -312,12 +299,8 @@ module.exports = {
             )
 
             await parseResolvedData(existingItem, resolvedData)
-            await publishStateExaminer(
-                operation,
-                existingItem,
-                resolvedData,
-                context
-            )
+
+            await generateSource(existingItem, resolvedData)
 
             return resolvedData
         },
