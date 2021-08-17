@@ -102,6 +102,11 @@ module.exports = {
             ref: 'Serie.post',
             many: true,
         },
+        show: {
+            label: '相關節目',
+            type: Relationship,
+            ref: 'Show',
+        },
         contentApiData: {
             label: 'Content API Data',
             type: TextHide,
