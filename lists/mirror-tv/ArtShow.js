@@ -1,4 +1,4 @@
-const { Relationship, Slug, Text } = require('@keystonejs/fields')
+const { Relationship, Slug, Text, Select } = require('@keystonejs/fields')
 
 const { byTracking } = require('@keystonejs/list-plugins')
 const { atTracking } = require('../../helpers/list-plugins')
@@ -7,15 +7,20 @@ const {
     admin,
     moderator,
     editor,
+    contributor,
     allowRoles,
 } = require('../../helpers/access/mirror-tv')
 const ImageRelationship = require('../../fields/ImageRelationship')
 const HTML = require('../../fields/HTML')
+const NewDateTime = require('../../fields/NewDateTime/index.js')
 const cacheHint = require('../../helpers/cacheHint')
 const TextHide = require('../../fields/TextHide')
 const { controlCharacterFilter } = require('../../utils/controlCharacterFilter')
 const { parseResolvedData } = require('../../utils/parseResolvedData')
-
+const {
+    validateIfPostNeedPublishTime,
+    validateIfPublishTimeIsFutureTime,
+} = require('../../utils/publishTimeHandler')
 module.exports = {
     fields: {
         slug: {
@@ -28,6 +33,26 @@ module.exports = {
             label: '單集名稱',
             type: Text,
             isRequired: true,
+        },
+        state: {
+            label: '狀態',
+            type: Select,
+            options: 'draft, published, scheduled',
+            defaultValue: 'draft',
+            access: {
+                // 如果user.role是contributor 那將不能發佈文章（draft以外的狀態）
+                // 所以在此不給contributor有更動post.state的create/update權限
+                // 但又因post.state的defaultValue是draft
+                // 所以也就變相地達到contributor只能發佈draft的要求
+                create: allowRoles(admin, moderator, editor),
+                update: allowRoles(admin, moderator, editor),
+            },
+        },
+        publishTime: {
+            label: '發佈時間',
+            type: NewDateTime,
+            hasNowBtn: true,
+            isReadOnly: false,
         },
         heroImage: {
             label: '首圖',
@@ -130,8 +155,8 @@ module.exports = {
         byTracking(),
     ],
     access: {
-        update: allowRoles(admin, moderator, editor),
-        create: allowRoles(admin, moderator, editor),
+        update: allowRoles(admin, moderator, editor, contributor),
+        create: allowRoles(admin, moderator, editor, contributor),
         delete: allowRoles(admin, moderator),
     },
     hooks: {
@@ -145,6 +170,22 @@ module.exports = {
             await parseResolvedData(existingItem, resolvedData, ['content'])
 
             return resolvedData
+        },
+        validateInput: async ({
+            existingItem,
+            resolvedData,
+            addValidationError,
+        }) => {
+            await validateIfPostNeedPublishTime(
+                existingItem,
+                resolvedData,
+                addValidationError
+            )
+            await validateIfPublishTimeIsFutureTime(
+                existingItem,
+                resolvedData,
+                addValidationError
+            )
         },
         beforeChange: async ({ existingItem, resolvedData }) => {},
     },
