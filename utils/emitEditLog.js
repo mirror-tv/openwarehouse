@@ -1,11 +1,17 @@
 const axios = require('axios')
 const { app } = require('../configs/config.js')
 
-const emitEditLog = async (operation, resolvedData, existingItem, context) => {
+const emitEditLog = async (
+    operation,
+    resolvedData,
+    existingItem,
+    context,
+    updatedItem
+) => {
     const { authedItem, req } = context
 
     const editorName = authedItem.name
-    const postId = existingItem ? existingItem.id : resolvedData.id
+    const postId = updatedItem.id
     let editedData = { ...resolvedData }
 
     // remove unwanted field
@@ -18,8 +24,6 @@ const emitEditLog = async (operation, resolvedData, existingItem, context) => {
         postId,
         editedData
     )
-    console.log(generateGqlQueryByCMS())
-    console.log(variables)
     axios({
         // fetch post's slug from api which depend on server's type (dev || staging || prod)
         url: `http://localhost:3000/admin/api`,
