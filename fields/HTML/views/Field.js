@@ -4,7 +4,10 @@ import HtmlDraftEditor from '@liyibass/html-draft-editor'
 import DraftEditor from './Editor'
 
 const HtmlField = ({ onChange, autoFocus, field, value, errors }) => {
-    const { blocktypes, inlineStyles, entityList } = field.config?.editorConfig
+    // NOTE: k5 can't use optional chaining......
+    const { editorConfig } = field.config || {}
+    const { blocktypes, inlineStyles, entityList } = editorConfig || {}
+
     return (
         <FieldContainer>
             <div
