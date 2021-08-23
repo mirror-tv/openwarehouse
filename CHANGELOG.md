@@ -1,5 +1,20 @@
 # Openwarehouse Changelog
 
+## 2021-08-23, Version 1.1.5 @liyibass
+
+### Notable Changes
+
+-   feat: change Post slug to Text field(to prevent auto-overwrite existing slug)
+-   fix: fix emitEditLog while creating Post
+-   feat: add new post sourceHandler, generate source depend on post's style
+
+### commits
+
+-   [[`0c1db6d1ea`](https://github.com/mirror-media/openwarehouse/commit/0c1db6d1ea)] - **feat**: change Post slug from Slug to Text field (LIYI)
+-   [[`f7d1ac87bb`](https://github.com/mirror-media/openwarehouse/commit/f7d1ac87bb)] - **fix**: fix emitEditLog issue in create mode (LIYI)
+-   [[`20d3f1e823`](https://github.com/mirror-media/openwarehouse/commit/20d3f1e823)] - **feat**: add postSourceHandler (LIYI)
+-   [[`e314b9968f`](https://github.com/mirror-media/openwarehouse/commit/e314b9968f)] - **chore**: update package.json and CHANGLOG.md (LIYI)
+
 ## 2021-08-16, Version 1.1.4 @liyibass
 
 ### Notable Changes
