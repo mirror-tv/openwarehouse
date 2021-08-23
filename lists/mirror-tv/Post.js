@@ -42,7 +42,7 @@ module.exports = {
     fields: {
         slug: {
             label: 'Slug',
-            type: Slug,
+            type: Text,
             isRequired: true,
             isUnique: true,
         },
