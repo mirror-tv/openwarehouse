@@ -36,12 +36,13 @@ const {
 const {
     AclRoleAccessorMethods,
 } = require('@google-cloud/storage/build/src/acl')
+const { generateSource } = require('../../utils/postSourceHandler')
 
 module.exports = {
     fields: {
         slug: {
             label: 'Slug',
-            type: Slug,
+            type: Text,
             isRequired: true,
             isUnique: true,
         },
@@ -299,6 +300,9 @@ module.exports = {
 
             await parseResolvedData(existingItem, resolvedData)
 
+            await generateSource(existingItem, resolvedData)
+
+
             return resolvedData
         },
         validateInput: async ({
@@ -317,13 +321,20 @@ module.exports = {
                 addValidationError
             )
         },
-        beforeChange: async ({
+        afterChange: async ({
             operation,
             existingItem,
             resolvedData,
             context,
+            updatedItem,
         }) => {
-            emitEditLog(operation, resolvedData, existingItem, context)
+            emitEditLog(
+                operation,
+                resolvedData,
+                existingItem,
+                context,
+                updatedItem
+            )
         },
     },
     adminConfig: {

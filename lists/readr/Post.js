@@ -259,13 +259,20 @@ module.exports = {
                 addValidationError
             )
         },
-        beforeChange: async ({
+        afterChange: async ({
             operation,
             existingItem,
             resolvedData,
             context,
+            updatedItem,
         }) => {
-            emitEditLog(operation, resolvedData, existingItem, context)
+            emitEditLog(
+                operation,
+                resolvedData,
+                existingItem,
+                context,
+                updatedItem
+            )
         },
     },
     labelField: 'name',
