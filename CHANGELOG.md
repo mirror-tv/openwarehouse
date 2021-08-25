@@ -40,6 +40,7 @@
 
 ### commits
 
+-   [[`2bee53394d`](https://github.com/mirror-media/openwarehouse/commit/2bee53394d)] - **chore**: bump version to v1.1.6, update package.json and CHANGELOG (LIYI)
 -   [[`b0b0a5956c`](https://github.com/mirror-media/openwarehouse/commit/b0b0a5956c)] - Alter table ArtShow to add publishTime related columns (Hsin-chan Chien)
 -   [[`62bdd66fb8`](https://github.com/mirror-media/openwarehouse/commit/62bdd66fb8)] - add a new migration about post/authors and topic/posts relationship (Hsin-chan Chien)
 -   [[`1aae6847ef`](https://github.com/mirror-media/openwarehouse/commit/1aae6847ef)] - **feat**: add Topic.post reference(one to many) (LIYI)
