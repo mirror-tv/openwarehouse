@@ -1,5 +1,53 @@
 # Openwarehouse Changelog
 
+## 2021-08-25, Version 1.1.6 @liyibass
+
+### Notable Changes
+
+-   feat: add new fields:
+
+#### Post
+
+-   isAdult: boolean
+
+#### Serie
+
+-   introductionApiData: string
+-   introductionHtml:string
+
+#### Contact
+
+-   bioApiData: string
+-   bioHtml: string
+
+#### ArtShow
+
+-   state: type: Select
+-   publishTime: type: DateTime
+-   show: Type: Relationship to Show （ArtShow to Show 單方向 一對一）
+-   contentApiData:string
+-   contentHtml: string
+-   author(修改)：relationship 改成一對多
+
+#### Topic
+
+-   post: relationship 單方向一對多
+
+#### 移除 list
+
+-   mmPost
+-   Schedule
+
+### commits
+
+-   [[`2bee53394d`](https://github.com/mirror-media/openwarehouse/commit/2bee53394d)] - **chore**: bump version to v1.1.6, update package.json and CHANGELOG (LIYI)
+-   [[`b0b0a5956c`](https://github.com/mirror-media/openwarehouse/commit/b0b0a5956c)] - Alter table ArtShow to add publishTime related columns (Hsin-chan Chien)
+-   [[`62bdd66fb8`](https://github.com/mirror-media/openwarehouse/commit/62bdd66fb8)] - add a new migration about post/authors and topic/posts relationship (Hsin-chan Chien)
+-   [[`1aae6847ef`](https://github.com/mirror-media/openwarehouse/commit/1aae6847ef)] - **feat**: add Topic.post reference(one to many) (LIYI)
+-   [[`47cbcc2180`](https://github.com/mirror-media/openwarehouse/commit/47cbcc2180)] - Merge pull request #65 from mirror-media/fieldModify (LIYI)
+-   [[`145854f2d7`](https://github.com/mirror-media/openwarehouse/commit/145854f2d7)] - Merge branch 'dev' into fieldModify (LIYI)
+-   [[`d129823dc2`](https://github.com/mirror-media/openwarehouse/commit/d129823dc2)] - **chore**: bump version to v1.1.5 (LIYI)
+
 ## 2021-08-23, Version 1.1.5 @liyibass
 
 ### Notable Changes

@@ -12,8 +12,6 @@ module.exports = {
     User: require('./User'),
     Partner: require('./Partner'),
     External: require('./External'),
-    MmPost: require('./MmPost'),
-    Schedule: require('./Schedule'),
     Show: require('./Show'),
     VideoEditorChoice: require('./VideoEditorChoice'),
     EditLog: require('./EditLog'),
