@@ -62,7 +62,7 @@ module.exports = {
             label: 'Twitter',
             type: Url,
         },
-        instatgram: {
+        instagram: {
             label: 'Instatgram',
             type: Url,
         },
