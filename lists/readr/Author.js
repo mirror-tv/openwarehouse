@@ -46,7 +46,7 @@ module.exports = {
             type: Url,
         },
         instagram: {
-            label: 'Instatgram',
+            label: 'Instagram',
             type: Url,
         },
         bio: {
