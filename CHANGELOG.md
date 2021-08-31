@@ -1,5 +1,21 @@
 # Openwarehouse Changelog
 
+## 2021-08-31, Version 1.1.7 @liyibass
+
+### Notable Changes
+
+-   fix: fix Contact instagram typo
+-   feat: update ArtShow_author_many part
+
+### commits
+
+-   [[`95a128f6ea`](https://github.com/mirror-media/openwarehouse/commit/95a128f6ea)] - **chore**: bump version to v1.1.7 (LIYI)
+-   [[`369a33f8f9`](https://github.com/mirror-media/openwarehouse/commit/369a33f8f9)] - **fix**: fix Contact label typo (LIYI)
+-   [[`ad45660644`](https://github.com/mirror-media/openwarehouse/commit/ad45660644)] - **fix**: fix typo (LIYI)
+-   [[`e034bbb1a7`](https://github.com/mirror-media/openwarehouse/commit/e034bbb1a7)] - miss the ArtShow_author_many part (Hsin-chan Chien)
+-   [[`7abea3d558`](https://github.com/mirror-media/openwarehouse/commit/7abea3d558)] - **chore**: update CHANGELOG (LIYI)
+-   [[`2bee53394d`](https://github.com/mirror-media/openwarehouse/commit/2bee53394d)] - **chore**: bump version to v1.1.6, update package.json and CHANGELOG (LIYI)
+
 ## 2021-08-25, Version 1.1.6 @liyibass
 
 ### Notable Changes
