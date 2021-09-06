@@ -20,4 +20,5 @@ module.exports = {
     Section: require('./Section'),
     Serie: require('./Serie'),
     Sale: require('./Sale'),
+    Sponsor: require('./Sponsor'),
 }
