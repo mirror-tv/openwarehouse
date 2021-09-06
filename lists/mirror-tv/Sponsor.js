@@ -21,7 +21,7 @@ module.exports = {
             isUnique: true,
         },
         topic: {
-            label: '藝文節目',
+            label: '專題',
             type: Relationship,
             ref: 'Topic',
             isRequired: true,
