@@ -1,11 +1,4 @@
-const {
-    Slug,
-    Text,
-    Url,
-    Relationship,
-    Checkbox,
-} = require('@keystonejs/fields')
-const { Markdown } = require('@keystonejs/fields-markdown')
+const { Slug, Text, Url, Checkbox } = require('@keystonejs/fields')
 const { byTracking } = require('@keystonejs/list-plugins')
 const { atTracking } = require('../../helpers/list-plugins')
 const { uuid } = require('uuidv4')
@@ -17,6 +10,7 @@ const {
     allowRoles,
 } = require('../../helpers/access/mirror-tv')
 const cacheHint = require('../../helpers/cacheHint')
+const ImageRelationship = require('../../fields/ImageRelationship')
 const HTML = require('../../fields/HTML')
 const TextHide = require('../../fields/TextHide')
 const { controlCharacterFilter } = require('../../utils/controlCharacterFilter')
@@ -45,9 +39,14 @@ module.exports = {
             label: 'Email',
             type: Text,
         },
-        image: {
-            label: '圖片',
-            type: Relationship,
+        anchorImg: {
+            label: '圖片(大)',
+            type: ImageRelationship,
+            ref: 'Image',
+        },
+        showhostImg: {
+            label: '圖片（小）',
+            type: ImageRelationship,
             ref: 'Image',
         },
         homepage: {
