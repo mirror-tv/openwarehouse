@@ -1,6 +1,24 @@
 # Openwarehouse Changelog
 
-## 2021-08-31, Version 1.1.7 @liyibass
+## 2021-09-07, Version 1.1.8 @liyibass
+
+### Notable Changes
+
+-   feat: add new list: Sponsor
+-   feat: add new field in Show
+-   feat: add new field in Contact
+
+### commits
+
+-   [[`648e434c4f`](https://github.com/mirror-media/openwarehouse/commit/648e434c4f)] - **chore**: bump version to v1.1.8 (LIYI)
+-   [[`0e4c059c6f`](https://github.com/mirror-media/openwarehouse/commit/0e4c059c6f)] - Merge pull request #72 from mirror-media/updateFields (LIYI)
+-   [[`90e4978050`](https://github.com/mirror-media/openwarehouse/commit/90e4978050)] - feat(migration): add migration script (bcgodev)
+-   [[`4bf5819e1b`](https://github.com/mirror-media/openwarehouse/commit/4bf5819e1b)] - **feat**: add new field:trailerPlaylist in Show (LIYI)
+-   [[`c066eb60f3`](https://github.com/mirror-media/openwarehouse/commit/c066eb60f3)] - **feat**: update Contact image fields (LIYI)
+-   [[`e3430de555`](https://github.com/mirror-media/openwarehouse/commit/e3430de555)] - **feat**: add Sponsor table (LIYI)
+-   [[`eb5ec2ad55`](https://github.com/mirror-media/openwarehouse/commit/eb5ec2ad55)] - **chore**: update CHANGELOG.md (LIYI)
+
+# 2021-08-31, Version 1.1.7 @liyibass
 
 ### Notable Changes
 
