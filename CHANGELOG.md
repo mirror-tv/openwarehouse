@@ -1,5 +1,21 @@
 # Openwarehouse Changelog
 
+## 2021-09-15, Version 1.1.9 @liyibass
+
+### Notable Changes
+
+-   feat: update draft: fix empity embedded code issue (LIYI)
+-   feat: allow bot to update ArtShow and Post
+
+### commits
+
+-   [[`aeb4b8b168`](https://github.com/mirror-media/openwarehouse/commit/aeb4b8b168)] - **chore**: bump version to v1.1.9 (LIYI)
+-   [[`7c73bfb277`](https://github.com/mirror-media/openwarehouse/commit/7c73bfb277)] - **feat**: update draft: fix empity embedded code issue (LIYI)
+-   [[`99eadf9924`](https://github.com/mirror-media/openwarehouse/commit/99eadf9924)] - try to fix bot permission for the status update (Hsin-chan Chien)
+-   [[`f6979e57f8`](https://github.com/mirror-media/openwarehouse/commit/f6979e57f8)] - fix syntax error in ArtShow.js (#76) (Baron Chiu)
+-   [[`e05aa990d9`](https://github.com/mirror-media/openwarehouse/commit/e05aa990d9)] - feat(list/tv): allow bot to update art shows (#75) (Baron Chiu)
+-   [[`fb740d619f`](https://github.com/mirror-media/openwarehouse/commit/fb740d619f)] - **chore**: update CHANGELOG.md (LIYI)
+
 ## 2021-09-07, Version 1.1.8 @liyibass
 
 ### Notable Changes
