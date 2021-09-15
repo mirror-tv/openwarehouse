@@ -5,6 +5,7 @@ const { atTracking } = require('../../helpers/list-plugins')
 
 const {
     admin,
+    bot,
     moderator,
     editor,
     contributor,
@@ -45,7 +46,7 @@ module.exports = {
                 // 但又因post.state的defaultValue是draft
                 // 所以也就變相地達到contributor只能發佈draft的要求
                 create: allowRoles(admin, moderator, editor),
-                update: allowRoles(admin, moderator, editor),
+                update: allowRoles(admin, moderator, editor, bot),
             },
         },
         publishTime: {
@@ -156,7 +157,7 @@ module.exports = {
         byTracking(),
     ],
     access: {
-        update: allowRoles(admin, moderator, editor, contributor),
+        update: allowRoles(admin, moderator, editor, contributor, bot),
         create: allowRoles(admin, moderator, editor, contributor),
         delete: allowRoles(admin, moderator),
     },
