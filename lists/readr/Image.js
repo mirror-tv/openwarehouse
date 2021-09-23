@@ -11,7 +11,7 @@ const {
 } = require('../../helpers/access/readr')
 const cacheHint = require('../../helpers/cacheHint')
 const gcsDir = 'assets/images/'
-const { addWatermarkIfNeeded } = require('../../utils/watermarkHandler')
+const { addWatermarkIfNeeded } = require('../../lib/ImageAdapter')
 const {
     getNewFilename,
     getFileDetail,
