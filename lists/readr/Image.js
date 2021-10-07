@@ -2,6 +2,7 @@ const { Text, Select, Relationship, File, Url } = require('@keystonejs/fields')
 const { atTracking, byTracking } = require('@keystonejs/list-plugins')
 const { ImageAdapter } = require('../../lib/ImageAdapter')
 const { LocalFileAdapter } = require('@keystonejs/file-adapters')
+const TextHide = require('../../fields/TextHide')
 const fs = require('fs')
 const {
     admin,
@@ -57,31 +58,31 @@ module.exports = {
             type: Text,
         },
         urlOriginal: {
-            type: Url,
+            type: TextHide,
             adminConfig: {
                 isReadOnly: true,
             },
         },
         urlDesktopSized: {
-            type: Url,
+            type: TextHide,
             adminConfig: {
                 isReadOnly: true,
             },
         },
         urlMobileSized: {
-            type: Url,
+            type: TextHide,
             adminConfig: {
                 isReadOnly: true,
             },
         },
         urlTabletSized: {
-            type: Url,
+            type: TextHide,
             adminConfig: {
                 isReadOnly: true,
             },
         },
         urlTinySized: {
-            type: Url,
+            type: TextHide,
             adminConfig: {
                 isReadOnly: true,
             },
