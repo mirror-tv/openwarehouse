@@ -19,6 +19,10 @@ module.exports = {
             type: Text,
             isRequired: true,
         },
+        youtubeUrl: {
+            label: 'Youtube網址',
+            type: Text,
+        },
         file: {
             label: '檔案',
             type: File,
