@@ -11,6 +11,8 @@ const {
 const cacheHint = require('../../helpers/cacheHint')
 const HTML = require('../../fields/HTML')
 const NewDateTime = require('../../fields/NewDateTime/index.js')
+const ImageRelationship = require('../../fields/ImageRelationship')
+const TextHide = require('../../fields/TextHide')
 
 const { parseResolvedData } = require('../../utils/parseResolvedData')
 const { emitEditLog } = require('../../utils/emitEditLog')
@@ -19,6 +21,14 @@ const {
     validateIfPostNeedPublishTime,
     validateIfPublishTimeIsFutureTime,
 } = require('../../utils/publishTimeHandler')
+
+const {
+    getAccessControlViaServerType,
+} = require('../../helpers/ListAccessHandler')
+const {
+    AclRoleAccessorMethods,
+} = require('@google-cloud/storage/build/src/acl')
+const { generateSource } = require('../../utils/postSourceHandler')
 
 module.exports = {
     fields: {
@@ -36,6 +46,7 @@ module.exports = {
             label: '標題',
             type: Text,
             isRequired: true,
+            defaultValue: 'untitled',
         },
         subtitle: {
             label: '副標',
@@ -114,7 +125,7 @@ module.exports = {
         },
         heroImage: {
             label: '首圖',
-            type: Relationship,
+            type: ImageRelationship,
             ref: 'Image',
         },
         heroCaption: {
@@ -174,42 +185,42 @@ module.exports = {
             ref: 'Image',
         },
         summaryHtml: {
-            type: Text,
+            type: TextHide,
             label: 'Summary HTML',
             adminConfig: {
                 isReadOnly: true,
             },
         },
         summaryApiData: {
-            type: Text,
+            type: TextHide,
             label: 'Summary API Data',
             adminConfig: {
                 isReadOnly: true,
             },
         },
         briefHtml: {
-            type: Text,
+            type: TextHide,
             label: 'Brief HTML',
             adminConfig: {
                 isReadOnly: true,
             },
         },
         briefApiData: {
-            type: Text,
+            type: TextHide,
             label: 'Brief API Data',
             adminConfig: {
                 isReadOnly: true,
             },
         },
         contentHtml: {
-            type: Text,
+            type: TextHide,
             label: 'Content HTML',
             adminConfig: {
                 isReadOnly: true,
             },
         },
         contentApiData: {
-            type: Text,
+            type: TextHide,
             label: 'Content API Data',
             adminConfig: {
                 isReadOnly: true,
