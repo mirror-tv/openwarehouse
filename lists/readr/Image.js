@@ -22,6 +22,10 @@ const {
     storage: { gcpUrlBase },
 } = require('../../configs/config')
 
+const {
+    generateImageApiDataFromExistingItem,
+} = require('../../utils/imageSizeHandler')
+const mediaUrlBase = 'assets/images/'
 const fileAdapter = new LocalFileAdapter({
     src: './public/images',
     path: `${gcpUrlBase}assets/images`, //function({id, }){}
@@ -132,10 +136,7 @@ module.exports = {
                     )
                     await image_adapter.loadImage({ quality: 80 })
                     if (isWatermarkNeeded(resolvedData, existingItem)) {
-                        let now = Date.now()
-                        console.log('add watermark at', now)
                         await image_adapter.addWatermark()
-                        console.log('adding watermark takes', Date.now() - now)
                     }
 
                     // await image_adapter.uploadOriginalImage()
