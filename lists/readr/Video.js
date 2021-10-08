@@ -9,8 +9,19 @@ const {
 } = require('../../helpers/access/readr')
 const cacheHint = require('../../helpers/cacheHint')
 
+const mediaUrlBase = 'assets/videos/'
 const gcsDir = 'assets/videos/'
 const fileAdapter = new GCSAdapter(gcsDir)
+
+const {
+    getNewFilename,
+    getFileDetail,
+} = require('../../utils/fileDetailHandler')
+const {
+    deleteOldVideoFileInGCSIfNeeded,
+    feedNewVideoData,
+    validateWhichKeyShouldCMSChoose,
+} = require('../../utils/videoHandler')
 
 module.exports = {
     fields: {
