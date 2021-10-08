@@ -1,18 +1,25 @@
-const { Slug, Text, Checkbox, Relationship, Select } = require('@keystonejs/fields');
-const { atTracking, byTracking } = require('@keystonejs/list-plugins');
-const { admin, moderator, allowRoles } = require('../../helpers/access/readr');
-const cacheHint = require('../../helpers/cacheHint');
+const {
+    Slug,
+    Text,
+    Checkbox,
+    Relationship,
+    Select,
+} = require('@keystonejs/fields')
+const { byTracking } = require('@keystonejs/list-plugins')
+const { atTracking } = require('../../helpers/list-plugins')
+const { admin, moderator, allowRoles } = require('../../helpers/access/readr')
+const cacheHint = require('../../helpers/cacheHint')
 
 module.exports = {
     fields: {
         slug: {
-            label: "Slug",
+            label: 'Slug',
             type: Slug,
             isRequired: true,
             isUnique: true,
         },
         name: {
-            label: "名稱",
+            label: '名稱',
             type: Text,
             isRequired: true,
         },
@@ -41,7 +48,10 @@ module.exports = {
         },
     },
     plugins: [
-        atTracking(),
+        atTracking({
+            hasNowBtn: false,
+            isReadOnly: true,
+        }),
         byTracking(),
     ],
     access: {

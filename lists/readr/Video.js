@@ -1,12 +1,26 @@
-const { Text, Relationship, File, Url } = require('@keystonejs/fields')
-const { atTracking, byTracking } = require('@keystonejs/list-plugins')
+const {
+    Text,
+    Checkbox,
+    Select,
+    Relationship,
+    File,
+    Url,
+    Integer,
+} = require('@keystonejs/fields')
+const NewDateTime = require('../../fields/NewDateTime/index.js')
+const CustomRelationship = require('../../fields/CustomRelationship')
+
+const { byTracking } = require('@keystonejs/list-plugins')
+const { atTracking } = require('../../helpers/list-plugins')
 const { GCSAdapter } = require('../../lib/GCSAdapter')
 const {
     admin,
+    bot,
     moderator,
     editor,
+    contributor,
     allowRoles,
-} = require('../../helpers/access/readr')
+} = require('../../helpers/access/mirror-tv')
 const cacheHint = require('../../helpers/cacheHint')
 
 const mediaUrlBase = 'assets/videos/'
@@ -82,7 +96,7 @@ module.exports = {
         },
         duration: {
             label: '影片長度（秒）',
-            type: Text,
+            type: Integer,
             adminConfig: {
                 isReadOnly: true,
             },
@@ -105,26 +119,68 @@ module.exports = {
         defaultSort: '-createdAt',
     },
     hooks: {
-        resolveInput: ({
-            operation,
+        validateInput: async ({
             existingItem,
             resolvedData,
-            originalInput,
+            addValidationError,
         }) => {
-            if (resolvedData.file) {
-                resolvedData.meta = resolvedData.file._meta
-                resolvedData.url = resolvedData.file._meta.url
-                resolvedData.duration = resolvedData.file._meta.duration
+            const keyToUse = validateWhichKeyShouldCMSChoose(
+                existingItem,
+                resolvedData,
+                addValidationError,
+                fileAdapter
+            )
+            if (!keyToUse) return
+
+            switch (keyToUse) {
+                case 'youtubeUrl':
+                    // video is from youtube
+                    resolvedData.url = resolvedData.youtubeUrl
+
+                    deleteOldVideoFileInGCSIfNeeded(
+                        existingItem,
+                        resolvedData,
+                        fileAdapter
+                    )
+                    break
+
+                case 'file':
+                    // video is from file
+
+                    // if it has prev data,
+                    // no matter what, clear youtubeUrl
+                    if (existingItem) {
+                        resolvedData.youtubeUrl = ''
+                    }
+
+                    await feedNewVideoData(resolvedData)
+
+                    deleteOldVideoFileInGCSIfNeeded(
+                        existingItem,
+                        resolvedData,
+                        fileAdapter
+                    )
+                    break
+                case 'no-need-to-update':
+                    break
+
+                default:
+                    break
             }
-            return resolvedData
+        },
+        beforeChange: async ({
+            existingItem,
+            resolvedData,
+            addValidationError,
+        }) => {
+            // validateWhichKeyShouldCMSChoose(
+            //     existingItem,
+            //     resolvedData,
+            //     addValidationError
+            // )
         },
         afterDelete: async ({ existingItem }) => {
-            if (existingItem.file) {
-                await fileAdapter.delete(
-                    existingItem.file.id,
-                    existingItem.file.originalFilename
-                )
-            }
+            deleteOldVideoFileInGCSIfNeeded(existingItem, fileAdapter)
         },
     },
     labelField: 'name',

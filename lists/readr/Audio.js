@@ -1,5 +1,6 @@
 const { Text, Relationship, File, Integer } = require('@keystonejs/fields')
-const { atTracking, byTracking } = require('@keystonejs/list-plugins')
+const { byTracking } = require('@keystonejs/list-plugins')
+const { atTracking } = require('../../helpers/list-plugins')
 const { GCSAdapter } = require('../../lib/GCSAdapter')
 const {
     admin,
@@ -9,8 +10,8 @@ const {
 } = require('../../helpers/access/readr')
 const cacheHint = require('../../helpers/cacheHint')
 
-const gcsDir = 'assets/audios/'
-const fileAdapter = new GCSAdapter(gcsDir)
+const mediaUrlBase = 'assets/audios/'
+const fileAdapter = new GCSAdapter(mediaUrlBase)
 
 module.exports = {
     fields: {
@@ -24,16 +25,6 @@ module.exports = {
             type: File,
             adapter: fileAdapter,
             isRequired: true,
-            hooks: {
-                beforeChange: async ({ existingItem }) => {
-                    if (existingItem && existingItem.file) {
-                        await fileAdapter.delete(
-                            existingItem.file.id,
-                            existingItem.file.originalFilename
-                        )
-                    }
-                },
-            },
         },
         coverPhoto: {
             label: '封面照片',

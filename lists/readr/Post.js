@@ -1,6 +1,7 @@
 const { Integer, Text, Relationship, Select } = require('@keystonejs/fields')
 const CustomRelationship = require('../../fields/CustomRelationship')
-const { atTracking, byTracking } = require('@keystonejs/list-plugins')
+const { byTracking } = require('@keystonejs/list-plugins')
+const { atTracking } = require('../../helpers/list-plugins')
 const { logging } = require('@keystonejs/list-plugins')
 const {
     admin,
