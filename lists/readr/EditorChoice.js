@@ -58,10 +58,6 @@ module.exports = {
             hasNowBtn: true,
             isReadOnly: false,
         },
-        test: {
-            label: 'test',
-            type: Text,
-        },
     },
     plugins: [
         atTracking({
