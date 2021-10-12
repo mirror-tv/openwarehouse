@@ -1,6 +1,6 @@
 # Openwarehouse Changelog
 
-## 2021-09-15, Version 1.1.9 @liyibass
+## 2021-09-15, Version 1.1.10 @liyibass
 
 ### Notable Changes
 
