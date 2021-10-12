@@ -21,7 +21,9 @@ const deleteOldVideoFileInGCSIfNeeded = async (
     fileAdapter
 ) => {
     if (existingItem && existingItem.file) {
-        resolvedData.file = null
+        if (resolvedData) {
+            resolvedData.file = null
+        }
 
         await fileAdapter.delete(
             existingItem.file.id,

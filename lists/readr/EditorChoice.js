@@ -6,7 +6,8 @@ const {
     Url,
 } = require('@keystonejs/fields')
 const CustomRelationship = require('../../fields/CustomRelationship')
-const { atTracking, byTracking } = require('@keystonejs/list-plugins')
+const { byTracking } = require('@keystonejs/list-plugins')
+const { atTracking } = require('../../helpers/list-plugins')
 const { admin, moderator, allowRoles } = require('../../helpers/access/readr')
 const cacheHint = require('../../helpers/cacheHint')
 const NewDateTime = require('../../fields/NewDateTime/index.js')
@@ -56,10 +57,6 @@ module.exports = {
             type: NewDateTime,
             hasNowBtn: true,
             isReadOnly: false,
-        },
-        test: {
-            label: 'test',
-            type: Text,
         },
     },
     plugins: [

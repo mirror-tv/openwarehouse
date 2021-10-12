@@ -1,15 +1,18 @@
 const { Text, Select, Relationship, File, Url } = require('@keystonejs/fields')
-const { atTracking, byTracking } = require('@keystonejs/list-plugins')
-const { ImageAdapter } = require('../../lib/ImageAdapter')
+const { byTracking } = require('@keystonejs/list-plugins')
+const { atTracking } = require('../../helpers/list-plugins')
+const { ImageAdapter, isWatermarkNeeded } = require('../../lib/ImageAdapter')
 const { LocalFileAdapter } = require('@keystonejs/file-adapters')
 const TextHide = require('../../fields/TextHide')
 const fs = require('fs')
 const {
     admin,
+    bot,
     moderator,
     editor,
+    contributor,
     allowRoles,
-} = require('../../helpers/access/readr')
+} = require('../../helpers/access/mirror-tv')
 const cacheHint = require('../../helpers/cacheHint')
 const gcsDir = 'assets/images/'
 const { addWatermarkIfNeeded } = require('../../lib/ImageAdapter')
@@ -17,14 +20,14 @@ const {
     getNewFilename,
     getFileDetail,
 } = require('../../utils/fileDetailHandler')
+const {
+    generateImageApiDataFromExistingItem,
+} = require('../../utils/imageSizeHandler')
 
 const {
     storage: { gcpUrlBase },
 } = require('../../configs/config')
 
-const {
-    generateImageApiDataFromExistingItem,
-} = require('../../utils/imageSizeHandler')
 const mediaUrlBase = 'assets/images/'
 const fileAdapter = new LocalFileAdapter({
     src: './public/images',
@@ -123,7 +126,6 @@ module.exports = {
                 // when create or update newer image
                 if (typeof resolvedData.file !== 'undefined') {
                     // await addWatermarkIfNeeded(resolvedData, existingItem)
-                    let now = Date.now()
                     const { id, newFilename, originalFileName } = getFileDetail(
                         resolvedData
                     )
@@ -167,7 +169,6 @@ module.exports = {
                     // update stored filename
                     // filename ex: 5ff2779ebcfb3420789bf003-image.jpg
                     resolvedData.file.filename = getNewFilename(resolvedData)
-                    console.log('beforeChange takes', Date.now() - now)
                 } else {
                     // resolvedData = false
                     // image is no needed to update
