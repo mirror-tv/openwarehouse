@@ -4,6 +4,29 @@
 
 ### Notable Changes
 
+-   feat(readr): update readr's list and its field with new openwarehouse setting
+-   feat(readr): udpate readr's db column
+
+### commits
+
+-   [[`ebc9e00ceb`](https://github.com/mirror-media/openwarehouse/commit/ebc9e00ceb)] - **chore**: bump version to 1.1.10 (LIYI)
+-   [[`b9e55a5235`](https://github.com/mirror-media/openwarehouse/commit/b9e55a5235)] - refactor(readr): remove duplicate field in Image) (LIYI)
+-   [[`f355a5570f`](https://github.com/mirror-media/openwarehouse/commit/f355a5570f)] - fix(readr): fix miss conflict in Image (LIYI)
+-   [[`abe9e00a2c`](https://github.com/mirror-media/openwarehouse/commit/abe9e00a2c)] - fix(readr): remove unuse field/rename db column in EditorChoice (LIYI)
+-   [[`a77da3cdd4`](https://github.com/mirror-media/openwarehouse/commit/a77da3cdd4)] - fix(readr): update video handler (LIYI)
+-   [[`4892cd938d`](https://github.com/mirror-media/openwarehouse/commit/4892cd938d)] - feat(readr): update createAt field to NewDatetime in readr (LIYI)
+-   [[`665e96f076`](https://github.com/mirror-media/openwarehouse/commit/665e96f076)] - fixed the lists of the Video and Image (Hsin-chan Chien)
+-   [[`41d3a2e98e`](https://github.com/mirror-media/openwarehouse/commit/41d3a2e98e)] - update the list of the readr post (Hsin-chan Chien)
+-   [[`f3cf817edb`](https://github.com/mirror-media/openwarehouse/commit/f3cf817edb)] - fixed the TextHide issue (Hsin-chan Chien)
+-   [[`7e9300ab98`](https://github.com/mirror-media/openwarehouse/commit/7e9300ab98)] - align the multimeida lists of the readr to mirrot-tv (Hsin-chan Chien)
+-   [[`41873db746`](https://github.com/mirror-media/openwarehouse/commit/41873db746)] - remove the modification of the timestamp type (Hsin-chan Chien)
+-   [[`d4d68abbbb`](https://github.com/mirror-media/openwarehouse/commit/d4d68abbbb)] - modify the image utiul in the list of the readr (Hsin-chan Chien)
+-   [[`81cebd9350`](https://github.com/mirror-media/openwarehouse/commit/81cebd9350)] - **chore**: update CHANGELOG.md (LIYI)
+
+## 2021-09-15, Version 1.1.9 @liyibass
+
+### Notable Changes
+
 -   feat: update draft: fix empity embedded code issue (LIYI)
 -   feat: allow bot to update ArtShow and Post
 
