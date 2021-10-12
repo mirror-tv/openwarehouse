@@ -100,12 +100,6 @@ module.exports = {
                 isReadOnly: true,
             },
         },
-        imageApiData: {
-            type: TextHide,
-            adminConfig: {
-                isReadOnly: true,
-            },
-        },
     },
     plugins: [
         atTracking({
