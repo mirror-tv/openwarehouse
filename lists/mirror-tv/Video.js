@@ -201,8 +201,12 @@ module.exports = {
             //     addValidationError
             // )
         },
-        afterDelete: async ({ existingItem }) => {
-            deleteOldVideoFileInGCSIfNeeded(existingItem, fileAdapter)
+        afterDelete: async ({ existingItem, resolvedData }) => {
+            deleteOldVideoFileInGCSIfNeeded(
+                existingItem,
+                resolvedData,
+                fileAdapter
+            )
         },
     },
     labelField: 'name',

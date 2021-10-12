@@ -9,7 +9,7 @@ const {
     allowRoles,
 } = require('../../helpers/access/readr')
 const cacheHint = require('../../helpers/cacheHint')
-
+const ImageRelationship = require('../../fields/ImageRelationship')
 const mediaUrlBase = 'assets/audios/'
 const fileAdapter = new GCSAdapter(mediaUrlBase)
 
@@ -28,7 +28,7 @@ module.exports = {
         },
         coverPhoto: {
             label: '封面照片',
-            type: Relationship,
+            type: ImageRelationship,
             ref: 'Image',
         },
         tags: {

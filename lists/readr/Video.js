@@ -9,6 +9,7 @@ const {
 } = require('@keystonejs/fields')
 const NewDateTime = require('../../fields/NewDateTime/index.js')
 const CustomRelationship = require('../../fields/CustomRelationship')
+const ImageRelationship = require('../../fields/ImageRelationship')
 
 const { byTracking } = require('@keystonejs/list-plugins')
 const { atTracking } = require('../../helpers/list-plugins')
@@ -64,9 +65,13 @@ module.exports = {
                 },
             },
         },
+        youtubeUrl: {
+            label: 'Youtube網址',
+            type: Text,
+        },
         coverPhoto: {
             label: '封面照片',
-            type: Relationship,
+            type: ImageRelationship,
             ref: 'Image',
         },
         description: {
@@ -179,8 +184,12 @@ module.exports = {
             //     addValidationError
             // )
         },
-        afterDelete: async ({ existingItem }) => {
-            deleteOldVideoFileInGCSIfNeeded(existingItem, fileAdapter)
+        afterDelete: async ({ existingItem, resolvedData }) => {
+            deleteOldVideoFileInGCSIfNeeded(
+                existingItem,
+                resolvedData,
+                fileAdapter
+            )
         },
     },
     labelField: 'name',
