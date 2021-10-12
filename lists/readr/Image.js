@@ -28,9 +28,6 @@ const {
     storage: { gcpUrlBase },
 } = require('../../configs/config')
 
-const {
-    generateImageApiDataFromExistingItem,
-} = require('../../utils/imageSizeHandler')
 const mediaUrlBase = 'assets/images/'
 const fileAdapter = new LocalFileAdapter({
     src: './public/images',
