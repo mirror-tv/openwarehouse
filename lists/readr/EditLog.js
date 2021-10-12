@@ -1,5 +1,6 @@
 const { Text, DateTime } = require('@keystonejs/fields')
-const { atTracking, byTracking } = require('@keystonejs/list-plugins')
+const { byTracking } = require('@keystonejs/list-plugins')
+const { atTracking } = require('../../helpers/list-plugins')
 const { admin, allowRoles } = require('../../helpers/access/mirror-tv')
 const HTML = require('../../fields/HTML')
 

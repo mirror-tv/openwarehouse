@@ -1,5 +1,6 @@
 const { Text, Checkbox, Password, Select } = require('@keystonejs/fields')
-const { atTracking, byTracking } = require('@keystonejs/list-plugins')
+const { byTracking } = require('@keystonejs/list-plugins')
+const { atTracking } = require('../../helpers/list-plugins')
 const {
     admin,
     moderator,
@@ -51,7 +52,8 @@ module.exports = {
             isReadOnly: true,
         }),
         byTracking(),
-    ], // access: {
+    ],
+    // access: {
     //     read: allowRoles(admin, moderator, editor, owner),
     //     update: allowRoles(admin, moderator, owner),
     //     create: allowRoles(admin, moderator),

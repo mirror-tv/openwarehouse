@@ -1,7 +1,13 @@
-const { Slug, Text, Relationship, Select } = require('@keystonejs/fields');
-const { atTracking, byTracking } = require('@keystonejs/list-plugins');
-const { admin, moderator, editor, allowRoles } = require('../../helpers/access/readr');
-const cacheHint = require('../../helpers/cacheHint');
+const { Slug, Text, Relationship, Select } = require('@keystonejs/fields')
+const { byTracking } = require('@keystonejs/list-plugins')
+const { atTracking } = require('../../helpers/list-plugins')
+const {
+    admin,
+    moderator,
+    editor,
+    allowRoles,
+} = require('../../helpers/access/readr')
+const cacheHint = require('../../helpers/cacheHint')
 
 module.exports = {
     fields: {
@@ -37,10 +43,7 @@ module.exports = {
             ref: 'Image',
         },
     },
-    plugins: [
-        atTracking(),
-        byTracking(),
-    ],
+    plugins: [atTracking(), byTracking()],
     access: {
         update: allowRoles(admin, moderator, editor),
         create: allowRoles(admin, moderator, editor),
