@@ -18,6 +18,7 @@ const TextHide = require('../../fields/TextHide')
 const { parseResolvedData } = require('../../utils/parseResolvedData')
 const { emitEditLog } = require('../../utils/emitEditLog')
 const { controlCharacterFilter } = require('../../utils/controlCharacterFilter')
+const { countWord } = require('../../utils/draftEditorHandler')
 const {
     validateIfPostNeedPublishTime,
     validateIfPublishTimeIsFutureTime,
@@ -252,6 +253,8 @@ module.exports = {
                 resolvedData
             )
             await parseResolvedData(existingItem, resolvedData)
+
+            resolvedData.wordCount = await countWord(existingItem, resolvedData)
 
             return resolvedData
         },
