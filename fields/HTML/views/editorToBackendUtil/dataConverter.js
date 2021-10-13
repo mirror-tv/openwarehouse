@@ -25,6 +25,14 @@ export function convertDbDataToEditorState(data) {
 
 export function convertEditorStateToDbData(editorState) {
     const content = convertToRaw(editorState.getCurrentContent())
+
+    // remove unwanted undefined inlineStyle
+    content.blocks.forEach((block) => {
+        _.remove(block.inlineStyleRanges, (inlineStyleRange) => {
+            return typeof inlineStyleRange.style === 'undefined'
+        })
+    })
+
     const cHtml = DraftConverter.convertToHtml(content)
     const apiData = DraftConverter.convertToApiData(content)
 

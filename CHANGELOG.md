@@ -1,6 +1,19 @@
 # Openwarehouse Changelog
 
-## 2021-09-15, Version 1.1.10 @liyibass
+## 2021-10-13, Version 1.1.11 @liyibass
+
+### Notable Changes
+
+-   fix undefined inlineStyle cause error
+
+### commits
+
+-   [[`3a1fdb5334`](https://github.com/mirror-media/openwarehouse/commit/3a1fdb5334)] - **chore**: bump version to v1.1.11 (LIYI)
+-   [[`2760ae1c82`](https://github.com/mirror-media/openwarehouse/commit/2760ae1c82)] - **fix**: fix undefined inlineStyle cause error (LIYI)
+-   [[`a5fe535933`](https://github.com/mirror-media/openwarehouse/commit/a5fe535933)] - **chore**: re-update CHANGELOG.md (LIYI)
+-   [[`bae1ec974d`](https://github.com/mirror-media/openwarehouse/commit/bae1ec974d)] - **chore**: update CHANGELOG.md (LIYI))
+
+## 2021-10-12, Version 1.1.10 @liyibass
 
 ### Notable Changes
 
