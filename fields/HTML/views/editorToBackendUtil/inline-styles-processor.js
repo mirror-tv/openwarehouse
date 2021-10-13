@@ -143,6 +143,11 @@ function _inlineTag(inlineTagMap, inlineStyleRanges, tagInsertMap = {}) {
         }
 
         // add starting tag to the end of the array to form the tag nesting
+
+        if (!range.style) {
+            return
+        }
+
         tagInsertMap[range.offset].push(tag[0])
         if (tag[1]) {
             if (!tagInsertMap[range.offset + range.length]) {
