@@ -61,7 +61,7 @@ let defaultEntityTagMap = {
         '</img>',
     ],
     [ENTITY_LIST.IMAGE.type]: [
-        '<img alt="<%= data.title %>" src="<%= data.urlOriginal %>" srcset="<%= data.urlMobileSized %> 800w,  <%= data.urlTabletSized %> 1280w, <%= data.urlDesktopSized %> 2400w" class="center">',
+        '<img alt="<%= data.name %>" src="<%= data.original %>" srcset="<%= data.mobile %> 800w,  <%= data.tablet %> 1280w, <%= data.desktop %> 2400w" class="center">',
         '</img>',
     ],
     /*[ENTITY_LIST.IMAGEDIFF.type]: ['<!-- imageDiff component start --> <ol class="image-diff-container"> <% _.forEach(data, function(image, index) { if (index > 1) { return; } %><li class="image-diff-item"><img src="<%- image.url %>" /></li><% }); %>', '</ol><!-- imageDiff component end-->'],
