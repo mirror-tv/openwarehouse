@@ -57,11 +57,11 @@ let defaultEntityTagMap = {
         '</div>',
     ],
     [ENTITY_LIST.STOREDIMAGE.type]: [
-        '<img alt="<%= data.title %>" src="<%= data.original.url %>" srcset="<%= data.mobile.url %> 800w,  <%= data.tablet.url %> 1280w, <%= data.desktop.url %> 2400w" class="center">',
+        '<img alt="<%= data.title %>" src="<%= data?.original?.url %>" srcset="<%= data?.mobile?.url %> 800w,  <%= data?.tablet?.url %> 1280w, <%= data?.desktop?.url %> 2400w" class="center">',
         '</img>',
     ],
     [ENTITY_LIST.IMAGE.type]: [
-        '<img alt="<%= data.name %>" src="<%= data.original.url %>" srcset="<%= data.mobile.url %> 800w,  <%= data.tablet.url %> 1280w, <%= data.desktop.url %> 2400w" class="center">',
+        '<img alt="<%= data.name %>" src="<%= data?.original?.url %>" srcset="<%= data?.mobile?.url %> 800w,  <%= data?.tablet?.url %> 1280w, <%= data?.desktop?.url %> 2400w" class="center">',
         '</img>',
     ],
     /*[ENTITY_LIST.IMAGEDIFF.type]: ['<!-- imageDiff component start --> <ol class="image-diff-container"> <% _.forEach(data, function(image, index) { if (index > 1) { return; } %><li class="image-diff-item"><img src="<%- image.url %>" /></li><% }); %>', '</ol><!-- imageDiff component end-->'],

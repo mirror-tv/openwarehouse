@@ -172,6 +172,10 @@ function _entityTag(entityTagMap, entityMap, entityRanges, tagInsertMap = {}) {
             data = _.pick(data, 'text', 'annotation', 'pureAnnotationText')
         }
 
+        // some old transformed draft's image has wrong structure in data
+        if (data.src && !data.orginal) {
+            data.original = { url: data.src }
+        }
         let compiledTag0 = _.template(tag[0], { variable: 'data' })(data)
         let compiledTag1 = _.template(tag[1], { variable: 'data' })(data)
 
