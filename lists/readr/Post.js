@@ -137,7 +137,7 @@ module.exports = {
         style: {
             label: '樣式',
             type: Select,
-            options: 'reviews, news, report, memo, dummy, card, qa',
+            options: 'reviews, news, report, memo, dummy, card, qa, project3, embedded',
         },
         summary: {
             label: '重點摘要',
