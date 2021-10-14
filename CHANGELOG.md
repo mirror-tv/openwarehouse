@@ -1,5 +1,22 @@
 # Openwarehouse Changelog
 
+## 2021-10-14, Version 1.1.12 @liyibass
+
+### Notable Changes
+
+-   fix draft-to-html image issue
+
+### commits
+
+-   [[`f034c6f41f`](https://github.com/mirror-media/openwarehouse/commit/f034c6f41f)] - **chore**: bump version to 1.1.12 (LIYI)
+-   [[`6b09f36a86`](https://github.com/mirror-media/openwarehouse/commit/6b09f36a86)] - fix(draft): handle undefined image url in draft (which will cause error in html parser) (LIYI)
+-   [[`39dc064dd0`](https://github.com/mirror-media/openwarehouse/commit/39dc064dd0)] - resolve the object of images (Hsin-chan Chien)
+-   [[`56ed40232b`](https://github.com/mirror-media/openwarehouse/commit/56ed40232b)] - upgrade the node version (Hsin-chan Chien)
+-   [[`a86c1062a1`](https://github.com/mirror-media/openwarehouse/commit/a86c1062a1)] - update the draft-coverter for the image data key (Hsin-chan Chien)
+-   [[`208234fe51`](https://github.com/mirror-media/openwarehouse/commit/208234fe51)] - update the draft-coverter for the image data key (Hsin-chan Chien)
+-   [[`232223dbc4`](https://github.com/mirror-media/openwarehouse/commit/232223dbc4)] - feat(readr): add word count in Post (LIYI)
+-   [[`d07730d016`](https://github.com/mirror-media/openwarehouse/commit/d07730d016)] - **chore**: update CHANGELOG.md (LIYI)
+
 ## 2021-10-13, Version 1.1.11 @liyibass
 
 ### Notable Changes
