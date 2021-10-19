@@ -37,7 +37,7 @@ let inlineTagMap = {
 
 let defaultEntityTagMap = {
     [ENTITY_LIST.ANNOTATION.type]: [
-        '<abbr title="<%= data.body %>"><%= data.text %>',
+        '<abbr title="<%= data?.pureAnnotationText %>" html="<%= data?.annotation %>" >',
         '</abbr>',
     ],
     [ENTITY_LIST.AUDIO.type]: [
@@ -45,8 +45,8 @@ let defaultEntityTagMap = {
         '</div>',
     ],
     [ENTITY_LIST.BLOCKQUOTE.type]: [
-        '<blockquote class="center"><div><%= data.quote %></div><div><%= data.quotedBy %></div>',
-        '<blockquote>',
+        '<blockquote class="center"><div><%= data?.quote %></div><div><%= data?.quoteBy %></div>',
+        '</blockquote>',
     ],
     [ENTITY_LIST.EMBEDDEDCODE.type]: [
         '<div class="embedded <%= data.alignment %>" title="<%= data.caption %>"><%= data.embeddedCode %>',

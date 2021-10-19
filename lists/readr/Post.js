@@ -137,7 +137,8 @@ module.exports = {
         style: {
             label: '樣式',
             type: Select,
-            options: 'reviews, news, report, memo, dummy, card, qa, project3, embedded',
+            options:
+                'reviews, news, report, memo, dummy, card, qa, project3, embedded',
         },
         summary: {
             label: '重點摘要',
@@ -221,9 +222,31 @@ module.exports = {
                 isReadOnly: true,
             },
         },
+
         contentApiData: {
             type: TextHide,
             label: 'Content API Data',
+            adminConfig: {
+                isReadOnly: true,
+            },
+        },
+        tempSummaryHtml: {
+            type: TextHide,
+
+            adminConfig: {
+                isReadOnly: true,
+            },
+        },
+        tempBriefHtml: {
+            type: TextHide,
+
+            adminConfig: {
+                isReadOnly: true,
+            },
+        },
+        tempContentHtml: {
+            type: TextHide,
+
             adminConfig: {
                 isReadOnly: true,
             },
@@ -236,11 +259,11 @@ module.exports = {
         }),
         byTracking(),
     ],
-    access: {
-        update: allowRoles(admin, moderator),
-        create: allowRoles(admin, moderator),
-        delete: allowRoles(admin),
-    },
+    // access: {
+    //     update: allowRoles(admin, moderator),
+    //     create: allowRoles(admin, moderator),
+    //     delete: allowRoles(admin),
+    // },
     adminConfig: {
         defaultColumns: 'sortOrder,name, state, publishTime, createdAt',
         defaultSort: '-createdAt',
@@ -252,6 +275,7 @@ module.exports = {
                 existingItem,
                 resolvedData
             )
+
             await parseResolvedData(existingItem, resolvedData)
 
             resolvedData.wordCount = await countWord(existingItem, resolvedData)
