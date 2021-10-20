@@ -238,11 +238,11 @@ module.exports = {
         }),
         byTracking(),
     ],
-    // access: {
-    //     update: allowRoles(admin, moderator),
-    //     create: allowRoles(admin, moderator),
-    //     delete: allowRoles(admin),
-    // },
+    access: {
+        update: allowRoles(admin, moderator),
+        create: allowRoles(admin, moderator),
+        delete: allowRoles(admin),
+    },
     adminConfig: {
         defaultColumns: 'sortOrder,name, state, publishTime, createdAt',
         defaultSort: '-createdAt',
