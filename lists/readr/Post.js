@@ -137,7 +137,8 @@ module.exports = {
         style: {
             label: '樣式',
             type: Select,
-            options: 'reviews, news, report, memo, dummy, card, qa, project3, embedded',
+            options:
+                'reviews, news, report, memo, dummy, card, qa, project3, embedded',
         },
         summary: {
             label: '重點摘要',
@@ -221,6 +222,7 @@ module.exports = {
                 isReadOnly: true,
             },
         },
+
         contentApiData: {
             type: TextHide,
             label: 'Content API Data',
@@ -252,6 +254,7 @@ module.exports = {
                 existingItem,
                 resolvedData
             )
+
             await parseResolvedData(existingItem, resolvedData)
 
             resolvedData.wordCount = await countWord(existingItem, resolvedData)

@@ -1,5 +1,22 @@
 # Openwarehouse Changelog
 
+## 2021-10-14, Version 1.1.13 @liyibass
+
+### Notable Changes
+
+-   fix null srcset cause html has wrong format in img
+-   add html-to-draft tools
+
+### commits
+
+-   [[`451aefe9e9`](https://github.com/mirror-media/openwarehouse/commit/451aefe9e9)] - **chore**: bump version to 1.1.13 (LIYI)
+-   [[`cb597c9fa3`](https://github.com/mirror-media/openwarehouse/commit/cb597c9fa3)] - **feat**: fix null srcset cause html has wrong format in img (LIYI)
+-   [[`8754082dab`](https://github.com/mirror-media/openwarehouse/commit/8754082dab)] - **fix**: remove unuse field (LIYI)
+-   [[`4afd25f33e`](https://github.com/mirror-media/openwarehouse/commit/4afd25f33e)] - **feat**: add html-to-draft tools in tools folder (#99) (LIYI)
+-   [[`495f70d3be`](https://github.com/mirror-media/openwarehouse/commit/495f70d3be)] - add new style for the Post (Hsin-chan Chien)
+-   [[`0e3db39196`](https://github.com/mirror-media/openwarehouse/commit/0e3db39196)] - **chore**: update CHANGELOG.md (LIYI)
+-   [[`f034c6f41f`](https://github.com/mirror-media/openwarehouse/commit/f034c6f41f)] - **chore**: bump version to 1.1.12 (LIYI)
+
 ## 2021-10-14, Version 1.1.12 @liyibass
 
 ### Notable Changes
