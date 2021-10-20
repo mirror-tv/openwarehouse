@@ -230,27 +230,6 @@ module.exports = {
                 isReadOnly: true,
             },
         },
-        tempSummaryHtml: {
-            type: TextHide,
-
-            adminConfig: {
-                isReadOnly: true,
-            },
-        },
-        tempBriefHtml: {
-            type: TextHide,
-
-            adminConfig: {
-                isReadOnly: true,
-            },
-        },
-        tempContentHtml: {
-            type: TextHide,
-
-            adminConfig: {
-                isReadOnly: true,
-            },
-        },
     },
     plugins: [
         atTracking({
