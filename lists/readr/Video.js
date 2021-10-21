@@ -53,21 +53,6 @@ module.exports = {
             label: '檔案',
             type: File,
             adapter: fileAdapter,
-            isRequired: true,
-            hooks: {
-                beforeChange: async ({ existingItem }) => {
-                    if (existingItem && existingItem.file) {
-                        await fileAdapter.delete(
-                            existingItem.file.id,
-                            existingItem.file.originalFilename
-                        )
-                    }
-                },
-            },
-        },
-        youtubeUrl: {
-            label: 'Youtube網址',
-            type: Text,
         },
         coverPhoto: {
             label: '封面照片',
