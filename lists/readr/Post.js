@@ -257,7 +257,7 @@ module.exports = {
 
             await parseResolvedData(existingItem, resolvedData)
 
-            resolvedData.wordCount = await countWord(existingItem, resolvedData)
+            await countWord(existingItem, resolvedData)
 
             return resolvedData
         },
