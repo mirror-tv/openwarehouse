@@ -5,7 +5,7 @@ const countWord = async (existingItem, resolvedData) => {
             : undefined
 
         // only edited draft editor need to count words
-        if (!content || !content?.blocks) return 0
+        if (!content || !content?.blocks) return
 
         let totalCount = 0
         content.blocks.forEach((block) => {
@@ -13,10 +13,10 @@ const countWord = async (existingItem, resolvedData) => {
             totalCount += blockWordsCount
         })
 
-        return totalCount
+        resolvedData.wordCount = totalCount
     } catch (error) {
         console.error(error)
-        return 0
+        return
     }
 }
 
