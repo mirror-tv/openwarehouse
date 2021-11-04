@@ -46,6 +46,12 @@ module.exports = {
             label: '置頂',
             type: Checkbox,
         },
+        relatedPost: {
+            label: 'Related Post',
+            type: Relationship,
+            ref: 'Post.categories',
+            many: true,
+        },
     },
     plugins: [
         atTracking({

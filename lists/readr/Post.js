@@ -77,7 +77,7 @@ module.exports = {
         categories: {
             label: '分類',
             type: Relationship,
-            ref: 'Category',
+            ref: 'Category.relatedPost',
             many: true,
         },
         writers: {
@@ -156,16 +156,24 @@ module.exports = {
             label: '字數',
             type: Integer,
         },
+        readingTime: {
+            label: '閱讀時間',
+            type: Integer,
+        },
         projects: {
             label: '專題',
             type: Relationship,
             ref: 'Project',
             many: true,
         },
+        actionList: {
+            label: '延伸議題',
+            type: Text,
+        },
         tags: {
             label: '標籤',
             type: Relationship,
-            ref: 'Tag',
+            ref: 'Tag.relatedPost',
             many: true,
         },
         relatedPosts: {
@@ -186,6 +194,24 @@ module.exports = {
             label: 'FB 分享縮圖',
             type: Relationship,
             ref: 'Image',
+        },
+        citation: {
+            label: '引用數據',
+            type: HTML,
+        },
+        citationApiData: {
+            type: TextHide,
+            label: 'Citation API Data',
+            adminConfig: {
+                isReadOnly: true,
+            },
+        },
+        citationHtml: {
+            type: TextHide,
+            label: 'Citation HTML',
+            adminConfig: {
+                isReadOnly: true,
+            },
         },
         summaryHtml: {
             type: TextHide,
@@ -222,7 +248,6 @@ module.exports = {
                 isReadOnly: true,
             },
         },
-
         contentApiData: {
             type: TextHide,
             label: 'Content API Data',
