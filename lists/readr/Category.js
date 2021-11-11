@@ -7,7 +7,12 @@ const {
 } = require('@keystonejs/fields')
 const { byTracking } = require('@keystonejs/list-plugins')
 const { atTracking } = require('../../helpers/list-plugins')
-const { admin, moderator, allowRoles } = require('../../helpers/access/readr')
+const {
+    admin,
+    moderator,
+    editor,
+    allowRoles,
+} = require('../../helpers/access/readr')
 const cacheHint = require('../../helpers/cacheHint')
 
 module.exports = {
@@ -61,8 +66,8 @@ module.exports = {
         byTracking(),
     ],
     access: {
-        update: allowRoles(admin, moderator),
-        create: allowRoles(admin, moderator),
+        update: allowRoles(admin, moderator, editor),
+        create: allowRoles(admin, moderator, editor),
         delete: allowRoles(admin),
     },
     adminConfig: {

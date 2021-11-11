@@ -53,13 +53,13 @@ module.exports = {
         }),
         byTracking(),
     ],
-    // access: {
-    //     read: allowRoles(admin, moderator, editor, owner),
-    //     update: allowRoles(admin, moderator, owner),
-    //     create: allowRoles(admin, moderator),
-    //     delete: allowRoles(admin),
-    //     auth: true,
-    // },
+    access: {
+        read: allowRoles(admin, moderator, editor, owner),
+        update: allowRoles(admin, moderator, owner),
+        create: allowRoles(admin, moderator),
+        delete: allowRoles(admin),
+        // auth: true,
+    },
     hooks: {
         resolveInput: async ({ operation, existingItem, resolvedData }) => {
             if (operation === 'update' && existingItem.isProtected) {
