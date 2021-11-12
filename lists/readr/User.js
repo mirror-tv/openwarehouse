@@ -31,7 +31,7 @@ module.exports = {
             label: '角色權限',
             type: Select,
             dataType: 'string',
-            options: 'contributor, author, editor, moderator, admin',
+            options: 'contributor, editor, moderator, admin',
             defaultValue: 'contributor',
             isRequired: true,
             access: {

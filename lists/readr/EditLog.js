@@ -1,7 +1,13 @@
 const { Text, DateTime } = require('@keystonejs/fields')
 const { byTracking } = require('@keystonejs/list-plugins')
 const { atTracking } = require('../../helpers/list-plugins')
-const { admin, allowRoles } = require('../../helpers/access/mirror-tv')
+const {
+    admin,
+    contributor,
+    editor,
+    moderator,
+    allowRoles,
+} = require('../../helpers/access/mirror-tv')
 const HTML = require('../../fields/HTML')
 
 const { formatChangedList } = require('../../utils/formatChangedList')
@@ -84,7 +90,9 @@ module.exports = {
         byTracking(),
     ],
     access: {
+        read: allowRoles(admin, moderator),
         update: allowRoles(admin),
+        create: allowRoles(admin, contributor, editor, moderator),
         delete: allowRoles(admin),
     },
 

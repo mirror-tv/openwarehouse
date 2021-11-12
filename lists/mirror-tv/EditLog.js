@@ -7,6 +7,7 @@ const {
     allowRoles,
     editor,
     bot,
+    contributor,
 } = require('../../helpers/access/mirror-tv')
 
 const { formatChangedList } = require('../../utils/formatChangedList')
@@ -83,9 +84,10 @@ module.exports = {
         byTracking(),
     ],
     access: {
-        update: allowRoles(admin, moderator, editor, bot),
-        create: allowRoles(admin, moderator, editor),
-        delete: allowRoles(admin, moderator),
+        read: allowRoles(admin, moderator),
+        update: allowRoles(admin),
+        create: allowRoles(admin, contributor, editor, moderator),
+        delete: allowRoles(admin),
     },
     adminConfig: {
         defaultColumns: 'name, operation, createdAt',

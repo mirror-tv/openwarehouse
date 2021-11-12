@@ -40,7 +40,7 @@ module.exports = {
             label: '角色權限',
             type: Select,
             dataType: 'string',
-            options: 'admin, author, bot, contributor, editor, moderator',
+            options: 'admin, bot, contributor, editor, moderator',
             defaultValue: 'contributor',
             isRequired: true,
             access: {
