@@ -1,10 +1,4 @@
-const {
-    Integer,
-    Text,
-    Select,
-    Relationship,
-    Url,
-} = require('@keystonejs/fields')
+const { Integer, Text, Select, Relationship } = require('@keystonejs/fields')
 const CustomRelationship = require('../../fields/CustomRelationship')
 const { byTracking } = require('@keystonejs/list-plugins')
 const { atTracking } = require('../../helpers/list-plugins')
@@ -17,10 +11,6 @@ const {
 const cacheHint = require('../../helpers/cacheHint')
 const NewDateTime = require('../../fields/NewDateTime/index.js')
 
-const {
-    validateIfPostIsPublished,
-} = require('../../utils/validateIfPostIsPublished')
-
 module.exports = {
     fields: {
         sortOrder: {
@@ -28,19 +18,11 @@ module.exports = {
             type: Integer,
             isUnique: true,
         },
-        name: {
-            label: '標題',
-            type: Text,
-            isRequired: true,
-        },
-        choice: {
-            label: '精選文章',
-            type: CustomRelationship,
+        featuredPost: {
+            label: '特色專題',
+            type: Relationship,
             ref: 'Post',
-        },
-        link: {
-            label: '連結',
-            type: Url,
+            isRequired: true,
         },
         state: {
             label: '狀態',
@@ -48,20 +30,15 @@ module.exports = {
             options: 'draft, published, scheduled, archived, invisible',
             defaultValue: 'draft',
         },
-        description: {
-            label: '描述',
-            type: Text,
-        },
-        heroImage: {
-            label: '首圖',
-            type: Relationship,
-            ref: 'Image',
-        },
         publishTime: {
-            label: '發佈時間',
+            label: '發布時間',
             type: NewDateTime,
             hasNowBtn: true,
             isReadOnly: false,
+        },
+        description: {
+            label: '描述',
+            type: Text,
         },
     },
     plugins: [
@@ -76,22 +53,10 @@ module.exports = {
         create: allowRoles(admin, moderator, editor),
         delete: allowRoles(admin),
     },
-    hooks: {
-        validateInput: async ({
-            existingItem,
-            resolvedData,
-            addValidationError,
-        }) => {
-            // await validateIfPostIsPublished(
-            //     resolvedData,
-            //     existingItem,
-            //     addValidationError
-            // )
-        },
-    },
     adminConfig: {
-        defaultColumns: 'choice, state, createdAt',
+        defaultColumns: 'publishTime, featuredPost, description, createdAt',
         defaultSort: '-createdAt',
     },
+    labelField: 'sortOrder',
     cacheHint: cacheHint,
 }

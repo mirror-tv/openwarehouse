@@ -85,7 +85,7 @@ const parseResolvedData = (existingItem, resolvedData, draftFieldNameArray) => {
     function _generateDraftFieldsArray() {
         switch (app.project) {
             case 'readr':
-                return ['summary', 'brief', 'content']
+                return ['summary', 'brief', 'content', 'actionList', 'citation' ]
 
             case 'mirrormedia':
                 return ['brief', 'content']
