@@ -1,23 +1,43 @@
-const countWord = async (existingItem, resolvedData) => {
+const countReadingTime = async (existingItem, resolvedData) => {
     try {
         const content = resolvedData?.content
             ? JSON.parse(resolvedData?.content)
             : undefined
+        
+        // only edited draft editor need to count readTime
+        // if readingTime is manually changed, no need to count readTime either
+        if (!content || !content?.blocks || resolvedData.readingTime) return
 
-        // only edited draft editor need to count words
-        if (!content || !content?.blocks) return
+        const reportStyles = ['project3', 'embedded', 'report']
+        const entityKeys = Object.keys(content.entityMap)
 
-        let totalCount = 0
+        // if style is replaced to report, clear readingTime and return
+        if (reportStyles.includes(resolvedData.style)) {
+            resolvedData.readingTime = null
+            return
+        }
+
+        console.log('content', content)
+
+        // count words
+        let totalWordCount = 0
         content.blocks.forEach((block) => {
             const blockWordsCount = block?.text?.length || 0
-            totalCount += blockWordsCount
+            totalWordCount += blockWordsCount
         })
 
-        resolvedData.wordCount = totalCount
+        // count images and embeddedCode
+        const imageList = entityKeys.filter((key) => content.entityMap[key].type === 'IMAGE' || content.entityMap[key].type === 'EMBEDDEDCODE') || []
+        const totalImageCount = imageList.length
+
+        // count read time which based on words and images
+        const readingTime = Math.round((totalWordCount / 8 + totalImageCount * 10) / 60)
+
+        resolvedData.readingTime = readingTime || 0
     } catch (error) {
         console.error(error)
         return
     }
 }
 
-module.exports = { countWord }
+module.exports = { countReadingTime }
