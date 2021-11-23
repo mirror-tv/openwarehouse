@@ -7,7 +7,6 @@ const {
     editor,
     allowRoles,
 } = require('../../helpers/access/readr')
-const cacheHint = require('../../helpers/cacheHint')
 
 module.exports = {
     fields: {
@@ -49,5 +48,4 @@ module.exports = {
         defaultColumns: 'firebaseId, state, createdAt',
         defaultSort: '-createdAt',
     },
-    cacheHint: cacheHint,
 }
