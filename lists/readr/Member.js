@@ -1,7 +1,6 @@
 const { Text, Select } = require('@keystonejs/fields')
 const { byTracking } = require('@keystonejs/list-plugins')
 const { atTracking } = require('../../helpers/list-plugins')
-const { logging } = require('@keystonejs/list-plugins')
 const {
     admin,
     moderator,
@@ -9,13 +8,6 @@ const {
     allowRoles,
 } = require('../../helpers/access/readr')
 const cacheHint = require('../../helpers/cacheHint')
-
-const {
-    getAccessControlViaServerType,
-} = require('../../helpers/ListAccessHandler')
-const {
-    AclRoleAccessorMethods,
-} = require('@google-cloud/storage/build/src/acl')
 
 module.exports = {
     fields: {
@@ -57,6 +49,5 @@ module.exports = {
         defaultColumns: 'firebaseId, state, createdAt',
         defaultSort: '-createdAt',
     },
-    labelField: 'id',
     cacheHint: cacheHint,
 }

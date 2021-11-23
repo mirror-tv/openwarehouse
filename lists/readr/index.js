@@ -15,4 +15,5 @@ module.exports = {
     User: require('./User'),
     Video: require('./Video'),
     EditLog: require('./EditLog'),
+    Member: require('./Member'),
 }
