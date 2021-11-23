@@ -16,6 +16,7 @@ export default {
                 'Image',
                 'Video',
                 'Audio',
+                'Member',
             ],
         },
         {
