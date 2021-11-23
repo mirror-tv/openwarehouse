@@ -168,7 +168,7 @@ module.exports = {
         },
     },
     adminConfig: {
-        defaultColumns: 'sortOrder, slug, name, email, homepage, createdAt',
+        defaultColumns: 'sortOrder, slug, createdAt',
         defaultSort: '-createdAt',
     },
     labelField: 'name',
