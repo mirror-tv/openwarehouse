@@ -45,12 +45,12 @@ module.exports = {
             type: Text,
         },
         anchorImg: {
-            label: '圖片(大)',
+            label: '長方形圖',
             type: ImageRelationship,
             ref: 'Image',
         },
         showhostImg: {
-            label: '圖片（小）',
+            label: '正方形圖',
             type: ImageRelationship,
             ref: 'Image',
         },
