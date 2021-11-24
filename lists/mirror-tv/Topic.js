@@ -68,6 +68,32 @@ module.exports = {
         brief: {
             label: '前言',
             type: HTML,
+            editorConfig: {
+                blocktypes: [
+                    {
+                        label: 'Normal',
+                        style: 'unstyled',
+                        icon: '',
+                        text: 'Normal',
+                    },
+                ],
+                inlineStyles: [
+                    { label: 'Bold', style: 'BOLD', icon: 'fa-bold', text: '' },
+                    {
+                        label: 'Italic',
+                        style: 'ITALIC',
+                        icon: 'fa-italic',
+                        text: '',
+                    },
+                    {
+                        label: 'Underline',
+                        style: 'UNDERLINE',
+                        icon: 'fa-underline',
+                        text: '',
+                    },
+                ],
+                entityList: {},
+            },
         },
         leading: {
             label: '標頭樣式',
