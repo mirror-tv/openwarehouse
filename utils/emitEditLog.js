@@ -106,7 +106,6 @@ function generateVariablesForGql(operation, editorName, postSlug, editedData) {
             break
 
         case 'readr':
-            // fieldsArray = ['summary', 'content']
             fieldsArray = ['summary', 'content', 'actionList', 'citation']
             break
 
