@@ -63,28 +63,28 @@ module.exports = {
         summary: {
             label: '已更動重點摘要',
             type: HTML,
-            adminConfig: {
+            editorConfig: {
                 isReadOnly: true,
             },
         },
         content: {
             label: '已更動內文',
             type: HTML,
-            adminConfig: {
+            editorConfig: {
                 isReadOnly: true,
             },
         },
         actionList: {
             label: '已更動內文',
             type: HTML,
-            adminConfig: {
+            editorConfig: {
                 isReadOnly: true,
             },
         },
         citation: {
             label: '已更動內文',
             type: HTML,
-            adminConfig: {
+            editorConfig: {
                 isReadOnly: true,
             },
         },
