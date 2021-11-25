@@ -5,19 +5,32 @@ const axios = require('axios')
 
 const { app } = require('../configs/config.js')
 
-const emitEditLog = async (
+const emitEditLog = async ({
     operation,
-    resolvedData,
+    originalInput,
     existingItem,
     context,
-    updatedItem
-) => {
+    updatedItem,
+}) => {
     try {
         const { authedItem, req } = context
 
         const editorName = authedItem.name
-        const postId = updatedItem.id
-        let editedData = { ...resolvedData }
+        const postId = updatedItem?.id || existingItem?.id
+        let editedData = { ...originalInput }
+
+        switch (operation) {
+            case 'create':
+            case 'update':
+                editedData = { ...originalInput }
+                break
+            case 'delete':
+                editedData = { ...existingItem }
+                break
+
+            default:
+                break
+        }
 
         // remove unwanted field
         editedData = removeUnusedKey(editedData)
@@ -39,7 +52,6 @@ const emitEditLog = async (
         })
 
         console.log('===Editlog emitted===\n')
-        console.log(editLog)
     } catch (err) {
         console.log('======err from catch in emit editLog======')
         console.log(err)
@@ -80,7 +92,8 @@ function removeUnusedKey(editData) {
 }
 
 function generateVariablesForGql(operation, editorName, postId, editedData) {
-    const fieldsArray = ['summary', 'brief', 'content']
+    // TODO: this editLog is for tv only
+    const fieldsArray = ['brief', 'content']
     let variables = {
         name: editorName,
         operation: operation,
@@ -95,7 +108,7 @@ function generateVariablesForGql(operation, editorName, postId, editedData) {
             delete editedData[draftField]
         } else {
             // empty draft state
-            // variables[draftField] = ''
+            variables[draftField] = ''
         }
     })
 

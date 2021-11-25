@@ -19,7 +19,9 @@ const { parseResolvedData } = require('../../utils/parseResolvedData')
 const { emitEditLog } = require('../../utils/emitEditLog')
 const { controlCharacterFilter } = require('../../utils/controlCharacterFilter')
 const { countReadingTime } = require('../../utils/draftEditorHandler')
-const { validateIfReportPostHaveSlug } = require('../../utils/validateIfReportPostHaveSlug')
+const {
+    validateIfReportPostHaveSlug,
+} = require('../../utils/validateIfReportPostHaveSlug')
 const {
     validateIfPostNeedPublishTime,
     validateIfPublishTimeIsFutureTime,
@@ -155,8 +157,18 @@ module.exports = {
                     },
                     { label: 'H1', style: 'header-one', icon: '', text: 'H1' },
                     { label: 'H2', style: 'header-two', icon: '', text: 'H2' },
-                    { label: 'OL', style: 'ordered-list-item', icon: 'fa-list-ol', text: '' },
-                    { label: 'UL', style: 'unordered-list-item', icon: 'fa-list-ul', text: '' },
+                    {
+                        label: 'OL',
+                        style: 'ordered-list-item',
+                        icon: 'fa-list-ol',
+                        text: '',
+                    },
+                    {
+                        label: 'UL',
+                        style: 'unordered-list-item',
+                        icon: 'fa-list-ul',
+                        text: '',
+                    },
                 ],
                 inlineStyles: [
                     { label: 'Bold', style: 'BOLD', icon: 'fa-bold', text: '' },
@@ -193,9 +205,24 @@ module.exports = {
                     },
                     { label: 'H1', style: 'header-one', icon: '', text: 'H1' },
                     { label: 'H2', style: 'header-two', icon: '', text: 'H2' },
-                    { label: 'Code Block', style: 'code-block', icon: 'fa-code', text: '' },
-                    { label: 'OL', style: 'ordered-list-item', icon: 'fa-list-ol', text: '' },
-                    { label: 'UL', style: 'unordered-list-item', icon: 'fa-list-ul', text: '' },
+                    {
+                        label: 'Code Block',
+                        style: 'code-block',
+                        icon: 'fa-code',
+                        text: '',
+                    },
+                    {
+                        label: 'OL',
+                        style: 'ordered-list-item',
+                        icon: 'fa-list-ol',
+                        text: '',
+                    },
+                    {
+                        label: 'UL',
+                        style: 'unordered-list-item',
+                        icon: 'fa-list-ul',
+                        text: '',
+                    },
                 ],
                 inlineStyles: [
                     { label: 'Bold', style: 'BOLD', icon: 'fa-bold', text: '' },
@@ -258,7 +285,12 @@ module.exports = {
                         icon: '',
                         text: 'Normal',
                     },
-                    { label: 'UL', style: 'unordered-list-item', icon: 'fa-list-ul', text: '' },
+                    {
+                        label: 'UL',
+                        style: 'unordered-list-item',
+                        icon: 'fa-list-ul',
+                        text: '',
+                    },
                 ],
                 inlineStyles: [
                     { label: 'Bold', style: 'BOLD', icon: 'fa-bold', text: '' },
@@ -301,7 +333,12 @@ module.exports = {
                         icon: 'fa-quote-left',
                         text: '',
                     },
-                    { label: 'UL', style: 'unordered-list-item', icon: 'fa-list-ul', text: '' },
+                    {
+                        label: 'UL',
+                        style: 'unordered-list-item',
+                        icon: 'fa-list-ul',
+                        text: '',
+                    },
                 ],
                 inlineStyles: [
                     { label: 'Bold', style: 'BOLD', icon: 'fa-bold', text: '' },
@@ -468,21 +505,21 @@ module.exports = {
                 addValidationError
             )
         },
-        afterChange: async ({
-            operation,
-            existingItem,
-            resolvedData,
-            context,
-            updatedItem,
-        }) => {
-            emitEditLog(
-                operation,
-                resolvedData,
-                existingItem,
-                context,
-                updatedItem
-            )
-        },
+        // afterChange: async ({
+        //     operation,
+        //     existingItem,
+        //     resolvedData,
+        //     context,
+        //     updatedItem,
+        // }) => {
+        //     emitEditLog(
+        //         operation,
+        //         resolvedData,
+        //         existingItem,
+        //         context,
+        //         updatedItem
+        //     )
+        // },
     },
     labelField: 'name',
     cacheHint: cacheHint,
