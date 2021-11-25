@@ -30,8 +30,8 @@ module.exports = {
                 isReadOnly: true,
             },
         },
-        postId: {
-            label: '文章ID',
+        postSlug: {
+            label: '文章Slug',
             type: Text,
             adminConfig: {
                 isReadOnly: true,
