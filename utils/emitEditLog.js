@@ -39,7 +39,7 @@ const emitEditLog = async (
         }
     } catch (err) {
         console.log('======err from catch in emit editLog======')
-        console.log(error)
+        console.log(err)
     }
 }
 
