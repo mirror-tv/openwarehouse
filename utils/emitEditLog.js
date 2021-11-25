@@ -8,45 +8,39 @@ const emitEditLog = async (
     context,
     updatedItem
 ) => {
-    const { authedItem, req } = context
+    try {
+        const { authedItem, req } = context
 
-    const editorName = authedItem.name
-    const postId = updatedItem.id
-    let editedData = { ...resolvedData }
+        const editorName = authedItem.name
+        const postId = updatedItem.id
+        let editedData = { ...resolvedData }
 
-    // remove unwanted field
-    editedData = removeUnusedKey(editedData)
-    editedData = removeHtmlAndApiData(editedData)
+        // remove unwanted field
+        editedData = removeUnusedKey(editedData)
+        editedData = removeHtmlAndApiData(editedData)
 
-    const variables = generateVariablesForGql(
-        operation,
-        editorName,
-        postId,
-        editedData
-    )
-    axios({
-        // fetch post's slug from api which depend on server's type (dev || staging || prod)
-        url: `http://localhost:3000/admin/api`,
-        method: 'post',
-        data: {
+        const variables = generateVariablesForGql(
+            operation,
+            editorName,
+            postId,
+            editedData
+        )
+        const { data, errors } = await keystone.executeGraphQL({
             query: generateGqlQueryByCMS(),
-            variables,
-        },
-        headers: req.headers,
-    })
-        .then((result) => {
-            // const { data, errors, extensions } = result;
-            // GraphQL errors and extensions are optional
-            console.log('===Editlog emitted===\n')
+            variables: variables,
+        })
 
-            if (result.data.errors) {
-                console.log(result.data.errors)
-            }
-        })
-        .catch((error) => {
-            console.log(error.message)
-            // respond to a network error
-        })
+        if (errors) {
+            console.log('======err from executeGraphQL in emit editLog======')
+            console.log(errors)
+        } else {
+            console.log('===Editlog emitted===\n')
+            console.log(data)
+        }
+    } catch (err) {
+        console.log('======err from catch in emit editLog======')
+        console.log(error)
+    }
 }
 
 function removeHtmlAndApiData(editData) {
