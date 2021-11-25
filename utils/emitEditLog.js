@@ -1,4 +1,8 @@
+const { createItem } = require('@keystonejs/server-side-graphql-client')
+const { keystone } = require('../index')
+
 const axios = require('axios')
+
 const { app } = require('../configs/config.js')
 
 const emitEditLog = async (
@@ -25,18 +29,17 @@ const emitEditLog = async (
             postId,
             editedData
         )
-        const { data, errors } = await keystone.executeGraphQL({
-            query: generateGqlQueryByCMS(),
-            variables: variables,
+
+        const editLog = await createItem({
+            keystone,
+            listKey: 'EditLog',
+            item: variables,
+            returnFields: `id`,
+            context,
         })
 
-        if (errors) {
-            console.log('======err from executeGraphQL in emit editLog======')
-            console.log(errors)
-        } else {
-            console.log('===Editlog emitted===\n')
-            console.log(data)
-        }
+        console.log('===Editlog emitted===\n')
+        console.log(editLog)
     } catch (err) {
         console.log('======err from catch in emit editLog======')
         console.log(err)
@@ -92,7 +95,7 @@ function generateVariablesForGql(operation, editorName, postId, editedData) {
             delete editedData[draftField]
         } else {
             // empty draft state
-            variables[draftField] = ''
+            // variables[draftField] = ''
         }
     })
 
