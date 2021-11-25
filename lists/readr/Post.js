@@ -505,21 +505,36 @@ module.exports = {
                 addValidationError
             )
         },
-        // afterChange: async ({
-        //     operation,
-        //     existingItem,
-        //     resolvedData,
-        //     context,
-        //     updatedItem,
-        // }) => {
-        //     emitEditLog(
-        //         operation,
-        //         resolvedData,
-        //         existingItem,
-        //         context,
-        //         updatedItem
-        //     )
-        // },
+        afterChange: async ({
+            operation,
+            existingItem,
+            context,
+            updatedItem,
+            originalInput,
+        }) => {
+            emitEditLog({
+                operation,
+                originalInput,
+                existingItem,
+                context,
+                updatedItem,
+            })
+        },
+        afterDelete: async ({
+            operation,
+            existingItem,
+            context,
+            updatedItem,
+            originalInput,
+        }) => {
+            emitEditLog({
+                operation,
+                originalInput,
+                existingItem,
+                context,
+                updatedItem,
+            })
+        },
     },
     labelField: 'name',
     cacheHint: cacheHint,

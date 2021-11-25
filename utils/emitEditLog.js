@@ -93,7 +93,27 @@ function removeUnusedKey(editData) {
 
 function generateVariablesForGql(operation, editorName, postId, editedData) {
     // TODO: this editLog is for tv only
-    const fieldsArray = ['brief', 'content']
+    const currentCmsName = app.project
+    let fieldsArray
+
+    switch (currentCmsName) {
+        case 'mirror-tv':
+            fieldsArray = ['brief', 'content']
+            break
+
+        case 'mirrormedia':
+            fieldsArray = ['brief', 'content']
+            break
+
+        case 'readr':
+            fieldsArray = ['summary', 'content']
+            // fieldsArray = ['summary', 'content', 'actionList', 'citation']
+            break
+
+        default:
+            break
+    }
+
     let variables = {
         name: editorName,
         operation: operation,
