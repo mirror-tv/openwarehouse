@@ -20,7 +20,7 @@ module.exports = {
         // Field: Text.views.Field,
 
         Filter: Text.views.Filter,
-        Cell: Text.views.Cell,
+        Cell: require.resolve('./views/Cell'),
     },
     adapters: {
         // back-end code used by Keystone

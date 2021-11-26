@@ -7,6 +7,7 @@ const {
     allowRoles,
     editor,
     bot,
+    contributor,
 } = require('../../helpers/access/mirror-tv')
 
 const { formatChangedList } = require('../../utils/formatChangedList')
@@ -29,8 +30,8 @@ module.exports = {
                 isReadOnly: true,
             },
         },
-        postId: {
-            label: '文章ID',
+        postSlug: {
+            label: '文章Slug',
             type: Text,
             adminConfig: {
                 isReadOnly: true,
@@ -63,14 +64,14 @@ module.exports = {
         brief: {
             label: '已更動前言',
             type: HTML,
-            adminConfig: {
+            editorConfig: {
                 isReadOnly: true,
             },
         },
         content: {
             label: '已更動內文',
             type: HTML,
-            adminConfig: {
+            editorConfig: {
                 isReadOnly: true,
             },
         },
@@ -83,9 +84,10 @@ module.exports = {
         byTracking(),
     ],
     access: {
-        update: allowRoles(admin, moderator, editor, bot),
-        create: allowRoles(admin, moderator, editor),
-        delete: allowRoles(admin, moderator),
+        read: allowRoles(admin, moderator),
+        update: allowRoles(admin),
+        create: allowRoles(admin, contributor, editor, moderator),
+        delete: allowRoles(admin),
     },
     adminConfig: {
         defaultColumns: 'name, operation, createdAt',

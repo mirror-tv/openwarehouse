@@ -32,7 +32,7 @@
         "@keystonejs/file-adapters": "^7.0.8",
         "@keystonejs/keystone": "^19.3.2",
         "@keystonejs/list-plugins": "^7.1.5",
-        "@liyibass/html-draft-editor": "^1.1.6",
+        "@liyibass/html-draft-editor": "^1.1.7",
         "apollo-fetch": "^0.7.0",
         "apollo-server-cache-redis": "^1.2.2",
         "apollo-server-plugin-response-cache": "^0.5.7",
@@ -54,7 +54,7 @@
         "react": "^17.0.2",
         "react-datetime": "^3.0.4",
         "redis": "^3.0.2",
-        "sharp": "^0.28.3",
+        "sharp": "^0.29.3",
         "shortid": "^2.2.16",
         "uuidv4": "^6.2.6"
     }

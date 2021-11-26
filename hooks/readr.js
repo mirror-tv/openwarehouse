@@ -7,6 +7,7 @@ export default {
             children: [
                 'Post',
                 'EditorChoice',
+                'Feature',
                 'Collaboration',
                 'Project',
                 'Quote',
@@ -15,6 +16,7 @@ export default {
                 'Image',
                 'Video',
                 'Audio',
+                'Member',
             ],
         },
         {

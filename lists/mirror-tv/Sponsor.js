@@ -1,4 +1,4 @@
-const { Integer, Relationship } = require('@keystonejs/fields')
+const { Integer, Relationship, Url } = require('@keystonejs/fields')
 
 const { byTracking } = require('@keystonejs/list-plugins')
 const { atTracking } = require('../../helpers/list-plugins')
@@ -24,7 +24,10 @@ module.exports = {
             label: '專題',
             type: Relationship,
             ref: 'Topic',
-            isRequired: true,
+        },
+        url: {
+            label: '外部連結',
+            type: Url,
         },
         logo: {
             label: '首圖',

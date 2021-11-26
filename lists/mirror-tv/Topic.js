@@ -7,6 +7,7 @@ const {
     Relationship,
 } = require('@keystonejs/fields')
 const HTML = require('../../fields/HTML')
+const TextHide = require('../../fields/TextHide')
 const { byTracking } = require('@keystonejs/list-plugins')
 const { atTracking } = require('../../helpers/list-plugins')
 const { uuid } = require('uuidv4')
@@ -16,6 +17,9 @@ const {
     editor,
     allowRoles,
 } = require('../../helpers/access/mirror-tv')
+
+const { parseResolvedData } = require('../../utils/parseResolvedData')
+const { controlCharacterFilter } = require('../../utils/controlCharacterFilter')
 const cacheHint = require('../../helpers/cacheHint')
 
 module.exports = {
@@ -64,6 +68,32 @@ module.exports = {
         brief: {
             label: '前言',
             type: HTML,
+            editorConfig: {
+                blocktypes: [
+                    {
+                        label: 'Normal',
+                        style: 'unstyled',
+                        icon: '',
+                        text: 'Normal',
+                    },
+                ],
+                inlineStyles: [
+                    { label: 'Bold', style: 'BOLD', icon: 'fa-bold', text: '' },
+                    {
+                        label: 'Italic',
+                        style: 'ITALIC',
+                        icon: 'fa-italic',
+                        text: '',
+                    },
+                    {
+                        label: 'Underline',
+                        style: 'UNDERLINE',
+                        icon: 'fa-underline',
+                        text: '',
+                    },
+                ],
+                entityList: {},
+            },
         },
         leading: {
             label: '標頭樣式',
@@ -173,6 +203,20 @@ module.exports = {
             label: '置頂',
             type: Checkbox,
         },
+        briefHtml: {
+            label: 'Brief HTML',
+            type: TextHide,
+            adminConfig: {
+                isReadOnly: true,
+            },
+        },
+        briefApiData: {
+            label: 'Brief API Data',
+            type: TextHide,
+            adminConfig: {
+                isReadOnly: true,
+            },
+        },
     },
     plugins: [
         atTracking({
@@ -186,7 +230,19 @@ module.exports = {
         create: allowRoles(admin, moderator, editor),
         delete: allowRoles(admin, moderator),
     },
-    hooks: {},
+    hooks: {
+        resolveInput: async ({ existingItem, originalInput, resolvedData }) => {
+            await controlCharacterFilter(
+                originalInput,
+                existingItem,
+                resolvedData
+            )
+
+            await parseResolvedData(existingItem, resolvedData)
+
+            return resolvedData
+        },
+    },
     adminConfig: {
         defaultColumns: 'slug, title, state, tags, isFeatured, createdAt',
         defaultSort: '-createdAt',

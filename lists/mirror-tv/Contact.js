@@ -1,4 +1,4 @@
-const { Slug, Text, Url, Checkbox } = require('@keystonejs/fields')
+const { Integer, Slug, Text, Url, Checkbox } = require('@keystonejs/fields')
 const { byTracking } = require('@keystonejs/list-plugins')
 const { atTracking } = require('../../helpers/list-plugins')
 const { uuid } = require('uuidv4')
@@ -18,6 +18,11 @@ const { parseResolvedData } = require('../../utils/parseResolvedData')
 
 module.exports = {
     fields: {
+        sortOrder: {
+            label: '排序順位',
+            type: Integer,
+            isUnique: true,
+        },
         slug: {
             label: 'Slug',
             type: Slug,
@@ -40,12 +45,12 @@ module.exports = {
             type: Text,
         },
         anchorImg: {
-            label: '圖片(大)',
+            label: '長方形圖',
             type: ImageRelationship,
             ref: 'Image',
         },
         showhostImg: {
-            label: '圖片（小）',
+            label: '正方形圖',
             type: ImageRelationship,
             ref: 'Image',
         },
@@ -163,7 +168,7 @@ module.exports = {
         },
     },
     adminConfig: {
-        defaultColumns: 'slug, name, email, homepage, createdAt',
+        defaultColumns: 'sortOrder, slug, createdAt',
         defaultSort: '-createdAt',
     },
     labelField: 'name',

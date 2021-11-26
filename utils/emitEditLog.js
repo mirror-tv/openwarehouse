@@ -1,52 +1,61 @@
+const { createItem } = require('@keystonejs/server-side-graphql-client')
+const { keystone } = require('../index')
+
 const axios = require('axios')
+
 const { app } = require('../configs/config.js')
 
-const emitEditLog = async (
+const emitEditLog = async ({
     operation,
-    resolvedData,
+    originalInput,
     existingItem,
     context,
-    updatedItem
-) => {
-    const { authedItem, req } = context
+    updatedItem,
+}) => {
+    try {
+        const { authedItem, req } = context
 
-    const editorName = authedItem.name
-    const postId = updatedItem.id
-    let editedData = { ...resolvedData }
+        const editorName = authedItem.name
+        const postId = updatedItem?.id || existingItem?.id
+        let editedData = { ...originalInput }
 
-    // remove unwanted field
-    editedData = removeUnusedKey(editedData)
-    editedData = removeHtmlAndApiData(editedData)
+        switch (operation) {
+            case 'create':
+            case 'update':
+                editedData = { ...originalInput }
+                break
+            case 'delete':
+                editedData = { ...existingItem }
+                break
 
-    const variables = generateVariablesForGql(
-        operation,
-        editorName,
-        postId,
-        editedData
-    )
-    axios({
-        // fetch post's slug from api which depend on server's type (dev || staging || prod)
-        url: `http://localhost:3000/admin/api`,
-        method: 'post',
-        data: {
-            query: generateGqlQueryByCMS(),
-            variables,
-        },
-        headers: req.headers,
-    })
-        .then((result) => {
-            // const { data, errors, extensions } = result;
-            // GraphQL errors and extensions are optional
-            console.log('===Editlog emitted===\n')
+            default:
+                break
+        }
 
-            if (result.data.errors) {
-                console.log(result.data.errors)
-            }
+        // remove unwanted field
+        editedData = removeUnusedKey(editedData)
+        editedData = removeHtmlAndApiData(editedData)
+
+        const variables = generateVariablesForGql(
+            operation,
+            editorName,
+            editedData.slug,
+            editedData
+        )
+
+        const editLog = await createItem({
+            keystone,
+            listKey: 'EditLog',
+            item: variables,
+            returnFields: `id`,
+            context,
         })
-        .catch((error) => {
-            console.log(error.message)
-            // respond to a network error
-        })
+
+        console.log('===Editlog emitted===\n')
+    } catch (err) {
+        console.log('======err from catch in emit editLog======')
+        console.log(err)
+    }
 }
 
 function removeHtmlAndApiData(editData) {
@@ -82,12 +91,32 @@ function removeUnusedKey(editData) {
     return editData
 }
 
-function generateVariablesForGql(operation, editorName, postId, editedData) {
-    const fieldsArray = ['summary', 'brief', 'content']
+function generateVariablesForGql(operation, editorName, postSlug, editedData) {
+    // TODO: this editLog is for tv only
+    const currentCmsName = app.project
+    let fieldsArray
+
+    switch (currentCmsName) {
+        case 'mirror-tv':
+            fieldsArray = ['brief', 'content']
+            break
+
+        case 'mirrormedia':
+            fieldsArray = ['brief', 'content']
+            break
+
+        case 'readr':
+            fieldsArray = ['summary', 'content', 'actionList', 'citation']
+            break
+
+        default:
+            break
+    }
+
     let variables = {
         name: editorName,
         operation: operation,
-        postId: postId,
+        postSlug: postSlug,
     }
 
     // pull out draft editor field from editedData
@@ -115,7 +144,7 @@ function generateGqlQueryByCMS() {
             mutation CreateLogList(
               $name: String!
               $operation:String!
-              $postId: String!
+              $postSlug: String!
               $summary: String!
               $brief: String!
               $content: String!
@@ -125,7 +154,7 @@ function generateGqlQueryByCMS() {
                 data: {
                   name: $name
                   operation:$operation
-                  postId: $postId
+                  postSlug: $postSlug
                   summary: $summary
                   brief: $brief
                   content: $content
@@ -142,7 +171,7 @@ function generateGqlQueryByCMS() {
             mutation CreateLogList(
               $name: String!
               $operation:String!
-              $postId: String!
+              $postSlug: String!
               $brief: String!
               $content: String!
               $changedList: String!
@@ -151,7 +180,7 @@ function generateGqlQueryByCMS() {
                 data: {
                   name: $name
                   operation:$operation
-                  postId: $postId
+                  postSlug: $postSlug
                   brief: $brief
                   content: $content
                   changedList: $changedList
@@ -167,7 +196,7 @@ function generateGqlQueryByCMS() {
             mutation CreateLogList(
               $name: String!
               $operation:String!
-              $postId: String!
+              $postSlug: String!
               $brief: String!
               $content: String!
               $changedList: String!
@@ -176,7 +205,7 @@ function generateGqlQueryByCMS() {
                 data: {
                   name: $name
                   operation:$operation
-                  postId: $postId
+                  postSlug: $postSlug
                   brief: $brief
                   content: $content
                   changedList: $changedList
@@ -191,7 +220,7 @@ function generateGqlQueryByCMS() {
             mutation CreateLogList(
               $name: String!
               $operation:String!
-              $postId: String!
+              $postSlug: String!
               $brief: String!
               $content: String!
               $changedList: String!
@@ -200,7 +229,7 @@ function generateGqlQueryByCMS() {
                 data: {
                   name: $name
                   operation:$operation
-                  postId: $postId
+                  postSlug: $postSlug
                   brief: $brief
                   content: $content
                   changedList: $changedList
