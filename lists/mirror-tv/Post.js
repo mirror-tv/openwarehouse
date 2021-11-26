@@ -302,7 +302,6 @@ module.exports = {
 
             await generateSource(existingItem, resolvedData)
 
-
             return resolvedData
         },
         validateInput: async ({
@@ -324,17 +323,32 @@ module.exports = {
         afterChange: async ({
             operation,
             existingItem,
-            resolvedData,
             context,
             updatedItem,
+            originalInput,
         }) => {
-            emitEditLog(
+            emitEditLog({
                 operation,
-                resolvedData,
+                originalInput,
                 existingItem,
                 context,
-                updatedItem
-            )
+                updatedItem,
+            })
+        },
+        afterDelete: async ({
+            operation,
+            existingItem,
+            context,
+            updatedItem,
+            originalInput,
+        }) => {
+            emitEditLog({
+                operation,
+                originalInput,
+                existingItem,
+                context,
+                updatedItem,
+            })
         },
     },
     adminConfig: {
