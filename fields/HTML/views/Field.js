@@ -6,7 +6,8 @@ import DraftEditor from './Editor'
 const HtmlField = ({ onChange, autoFocus, field, value, errors }) => {
     // NOTE: k5 can't use optional chaining......
     const { editorConfig } = field.config || {}
-    const { blocktypes, inlineStyles, entityList } = editorConfig || {}
+    const { blocktypes, inlineStyles, entityList, isReadOnly } =
+        editorConfig || {}
 
     return (
         <FieldContainer>
@@ -29,6 +30,7 @@ const HtmlField = ({ onChange, autoFocus, field, value, errors }) => {
                     customBlocktypes={blocktypes}
                     customInlineStyles={inlineStyles}
                     customEntityList={entityList}
+                    globalReadOnly={isReadOnly}
                 />
                 {/* <DraftEditor value={value} onChange={onChange} /> */}
             </div>

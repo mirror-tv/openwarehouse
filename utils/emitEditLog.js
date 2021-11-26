@@ -39,7 +39,7 @@ const emitEditLog = async ({
         const variables = generateVariablesForGql(
             operation,
             editorName,
-            postId,
+            editedData.slug,
             editedData
         )
 
@@ -91,7 +91,7 @@ function removeUnusedKey(editData) {
     return editData
 }
 
-function generateVariablesForGql(operation, editorName, postId, editedData) {
+function generateVariablesForGql(operation, editorName, postSlug, editedData) {
     // TODO: this editLog is for tv only
     const currentCmsName = app.project
     let fieldsArray
@@ -106,8 +106,7 @@ function generateVariablesForGql(operation, editorName, postId, editedData) {
             break
 
         case 'readr':
-            fieldsArray = ['summary', 'content']
-            // fieldsArray = ['summary', 'content', 'actionList', 'citation']
+            fieldsArray = ['summary', 'content', 'actionList', 'citation']
             break
 
         default:
@@ -117,7 +116,7 @@ function generateVariablesForGql(operation, editorName, postId, editedData) {
     let variables = {
         name: editorName,
         operation: operation,
-        postId: postId,
+        postSlug: postSlug,
     }
 
     // pull out draft editor field from editedData
@@ -145,7 +144,7 @@ function generateGqlQueryByCMS() {
             mutation CreateLogList(
               $name: String!
               $operation:String!
-              $postId: String!
+              $postSlug: String!
               $summary: String!
               $brief: String!
               $content: String!
@@ -155,7 +154,7 @@ function generateGqlQueryByCMS() {
                 data: {
                   name: $name
                   operation:$operation
-                  postId: $postId
+                  postSlug: $postSlug
                   summary: $summary
                   brief: $brief
                   content: $content
@@ -172,7 +171,7 @@ function generateGqlQueryByCMS() {
             mutation CreateLogList(
               $name: String!
               $operation:String!
-              $postId: String!
+              $postSlug: String!
               $brief: String!
               $content: String!
               $changedList: String!
@@ -181,7 +180,7 @@ function generateGqlQueryByCMS() {
                 data: {
                   name: $name
                   operation:$operation
-                  postId: $postId
+                  postSlug: $postSlug
                   brief: $brief
                   content: $content
                   changedList: $changedList
@@ -197,7 +196,7 @@ function generateGqlQueryByCMS() {
             mutation CreateLogList(
               $name: String!
               $operation:String!
-              $postId: String!
+              $postSlug: String!
               $brief: String!
               $content: String!
               $changedList: String!
@@ -206,7 +205,7 @@ function generateGqlQueryByCMS() {
                 data: {
                   name: $name
                   operation:$operation
-                  postId: $postId
+                  postSlug: $postSlug
                   brief: $brief
                   content: $content
                   changedList: $changedList
@@ -221,7 +220,7 @@ function generateGqlQueryByCMS() {
             mutation CreateLogList(
               $name: String!
               $operation:String!
-              $postId: String!
+              $postSlug: String!
               $brief: String!
               $content: String!
               $changedList: String!
@@ -230,7 +229,7 @@ function generateGqlQueryByCMS() {
                 data: {
                   name: $name
                   operation:$operation
-                  postId: $postId
+                  postSlug: $postSlug
                   brief: $brief
                   content: $content
                   changedList: $changedList

@@ -63,10 +63,10 @@ module.exports = {
         byTracking(),
     ],
     access: {
-        // read: allowRoles(admin, moderator, owner),
-        // update: allowRoles(admin, moderator, owner),
-        // create: allowRoles(admin),
-        // delete: allowRoles(admin),
+        read: allowRoles(admin, moderator, owner),
+        update: allowRoles(admin, moderator, owner),
+        create: allowRoles(admin),
+        delete: allowRoles(admin),
     },
     hooks: {
         validateInput: async ({

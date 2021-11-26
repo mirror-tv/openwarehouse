@@ -29,8 +29,8 @@ module.exports = {
                 isReadOnly: true,
             },
         },
-        postId: {
-            label: '文章ID',
+        postSlug: {
+            label: '文章Slug',
             type: Text,
             adminConfig: {
                 isReadOnly: true,
@@ -63,21 +63,28 @@ module.exports = {
         summary: {
             label: '已更動重點摘要',
             type: HTML,
-            adminConfig: {
-                isReadOnly: true,
-            },
-        },
-        brief: {
-            label: '已更動前言',
-            type: HTML,
-            adminConfig: {
+            editorConfig: {
                 isReadOnly: true,
             },
         },
         content: {
             label: '已更動內文',
             type: HTML,
-            adminConfig: {
+            editorConfig: {
+                isReadOnly: true,
+            },
+        },
+        actionList: {
+            label: '已更動內文',
+            type: HTML,
+            editorConfig: {
+                isReadOnly: true,
+            },
+        },
+        citation: {
+            label: '已更動內文',
+            type: HTML,
+            editorConfig: {
                 isReadOnly: true,
             },
         },
