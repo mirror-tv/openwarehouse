@@ -10,9 +10,10 @@ const countReadingTime = async (existingItem, resolvedData) => {
 
         const reportStyles = ['project3', 'embedded', 'report']
         const entityKeys = Object.keys(content.entityMap)
+        const currentStyle = resolvedData?.style || existingItem?.style
 
         // if style is replaced to report, clear readingTime and return
-        if (reportStyles.includes(resolvedData.style)) {
+        if (reportStyles.includes(currentStyle)) {
             resolvedData.readingTime = 0
             return
         }
