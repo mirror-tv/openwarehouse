@@ -75,14 +75,14 @@ module.exports = {
             },
         },
         actionList: {
-            label: '已更動內文',
+            label: '延伸議題',
             type: HTML,
             editorConfig: {
                 isReadOnly: true,
             },
         },
         citation: {
-            label: '已更動內文',
+            label: '引用數據',
             type: HTML,
             editorConfig: {
                 isReadOnly: true,
