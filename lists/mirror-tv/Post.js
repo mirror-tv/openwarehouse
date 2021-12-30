@@ -66,7 +66,7 @@ module.exports = {
                 // 所以在此不給contributor有更動post.state的create/update權限
                 // 但又因post.state的defaultValue是draft
                 // 所以也就變相地達到contributor只能發佈draft的要求
-                create: allowRoles(admin, moderator, editor),
+                create: allowRoles(admin, moderator, editor, bot),
                 update: allowRoles(admin, moderator, editor, bot),
             },
         },
