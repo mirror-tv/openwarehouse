@@ -60,9 +60,9 @@ const validateIfPublishTimeIsFutureTime = async (
               currentPublishTime - nowTime >= -3600000 &&
               currentPublishTime - nowTime < 0
             
-            const notCangeStateAndPublishTime = !resolvedData.state && !resolvedData.publishTime
+            const hasCangeStateOrPublishTime = resolvedData.state || resolvedData.publishTime
             
-            if (!notCangeStateAndPublishTime && !publishTimeIsNow) {
+            if (hasCangeStateOrPublishTime && !publishTimeIsNow) {
               addValidationError('若狀態為「Published」，則發佈時間必須是現在')
             }
         }
