@@ -216,6 +216,9 @@ module.exports = {
         isFeatured: {
             label: '置頂',
             type: Checkbox,
+            adminConfig: {
+                isVisible: false,
+            },
         },
         isAdult: {
             label: '18禁',
