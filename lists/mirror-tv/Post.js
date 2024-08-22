@@ -217,9 +217,8 @@ module.exports = {
             label: '置頂',
             type: Checkbox,
             access: {
-                read: ({ authentication: { item: user } }) => {
-                    return user.isAdmin;
-            },
+                read: ({ authentication }) => authentication.item.isAdmin,
+            }
         },
         isAdult: {
             label: '18禁',
