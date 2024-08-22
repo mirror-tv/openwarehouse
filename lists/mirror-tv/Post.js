@@ -216,9 +216,19 @@ module.exports = {
         isFeatured: {
             label: '置頂',
             type: Checkbox,
-            adminConfig: {
-                isVisible: false,
-            },
+            ui: {
+                createView: {
+                    fieldMode: 'hidden',
+                  },
+                // 隱藏該欄位在 "item" 視圖中
+                itemView: {
+                    fieldMode: 'hidden',
+                  },
+                // 隱藏該欄位在 "list" 視圖中
+                listView: {
+                    fieldMode: 'hidden',
+                  },
+              },
         },
         isAdult: {
             label: '18禁',
